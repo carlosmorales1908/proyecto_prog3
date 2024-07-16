@@ -3,6 +3,6 @@ export const PublicRutes = {
 };
 
 export const PrivateRoutes = {
-  DASHBOARD: "dashboard",
-  HOME: "home",
+  DASHBOARD: "/dashboard",
+  HOME: "/home",
 };
