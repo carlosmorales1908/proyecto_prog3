@@ -8,16 +8,23 @@ const AuthContextProvider = ({ children }) => {
   const [isAutheticated, setIsAutheticated] = useState(
     localStorage.getItem("authenticated") || false
   );
+  const [fetchError, setFetchError] = useState(null);
 
   const login = useCallback(async (data) => {
     const authService = new AuthService();
 
     await authService.login(data);
 
-    const authToken = authService.getToken();
-    setToken(authToken);
-    setIsAutheticated(true);
-    localStorage.setItem("authenticated", true);
+    const loginError = authService.getError();
+
+    if (loginError) {
+      setFetchError(loginError);
+    } else {
+      const authToken = authService.getToken();
+      setToken(authToken);
+      setIsAutheticated(true);
+      localStorage.setItem("authenticated", true);
+    }
   }, []);
 
   const logout = useCallback(() => {
@@ -26,8 +33,8 @@ const AuthContextProvider = ({ children }) => {
   }, []);
 
   const value = useMemo(
-    () => ({ login, logout, token, isAutheticated }),
-    [login, logout, token, isAutheticated]
+    () => ({ login, logout, token, isAutheticated, fetchError }),
+    [login, logout, token, isAutheticated, fetchError]
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

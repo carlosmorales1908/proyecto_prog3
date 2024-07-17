@@ -19,6 +19,7 @@ class AuthService {
 
       const response = await rawResponse.json();
       this.jwt = response.token;
+      console.log(this.token)
     } catch (error) {
       this.error = error;
       console.log(this.error);
@@ -27,6 +28,10 @@ class AuthService {
 
   getToken() {
     return this.jwt;
+  }
+
+  getError() {
+    return this.error;
   }
 }
 
