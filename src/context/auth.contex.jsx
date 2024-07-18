@@ -11,23 +11,27 @@ const AuthContextProvider = ({ children }) => {
   const [fetchError, setFetchError] = useState(null);
 
   const login = useCallback(async (data) => {
-    const authService = new AuthService();
+    try {
+      const authService = new AuthService();
+      await authService.login(data);
+      const loginError = authService.getError();
 
-    await authService.login(data);
+      if (loginError) {
+        throw new Error(loginError);
+      }
 
-    const loginError = authService.getError();
-
-    if (loginError) {
-      setFetchError(loginError);
-    } else {
       const authToken = authService.getToken();
       setToken(authToken);
       setIsAutheticated(true);
       localStorage.setItem("authenticated", true);
+    } catch (error) {
+      setFetchError(error.message || "Error al ingresar");
     }
   }, []);
 
   const logout = useCallback(() => {
+    setToken(null)
+    setIsAutheticated(false)
     localStorage.removeItem("authenticated");
     setToken("");
   }, []);
