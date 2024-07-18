@@ -1,5 +1,6 @@
 class AuthService {
   constructor() {
+    // cambiar luego a una variable de entorno
     this.baseURL = "https://sandbox.academiadevelopers.com/";
     this.jwt = null;
     this.error = null;
