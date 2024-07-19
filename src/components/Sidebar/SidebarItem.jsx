@@ -1,9 +1,10 @@
+import { Link } from "react-router-dom";
 function SidebarItem({ text, href, icon }) {
   return (
     <li className="nav-item border-bottom">
-      <a className="nav-link" href={href}>
-      {icon && <i className={icon}></i>} {text}
-      </a>
+      <Link to={href} className="nav-link link-primary">
+        {icon && <i className={icon}></i>} {text}
+      </Link>
     </li>
   );
 }
