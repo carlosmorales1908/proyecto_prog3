@@ -1,8 +1,10 @@
-import { useState } from 'react';
+import React from 'react';
+import { useState, useRef } from 'react';
 
 const useForm = (initialState, callback) => {
   const [values, setValues] = useState(initialState);
   const [errors, setErrors] = useState({});
+  const refs = useRef({});
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -24,11 +26,8 @@ const useForm = (initialState, callback) => {
   const validate = (values) => {
     let errors = {};
 
-    
-    if (!values.email) {
-      errors.email = 'Email is required';
-    } else if (!/\S+@\S+\.\S+/.test(values.email)) {
-      errors.email = 'Email address is invalid';
+    if (!values.username) {
+      errors.username = 'Username is required';
     }
 
     if (!values.password) {
@@ -40,11 +39,19 @@ const useForm = (initialState, callback) => {
     return errors;
   };
 
+  const getRef = (name) => {
+    if (!refs.current[name]) {
+      refs.current[name] = React.createRef();
+    }
+    return refs.current[name];
+  };
+
   return {
     values,
     errors,
     handleChange,
-    handleSubmit
+    handleSubmit,
+    getRef
   };
 };
 
