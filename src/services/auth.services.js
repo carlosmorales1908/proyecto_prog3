@@ -1,5 +1,6 @@
 class AuthService {
   constructor() {
+    // cambiar luego a una variable de entorno
     this.baseURL = "https://sandbox.academiadevelopers.com/";
     this.jwt = null;
     this.error = null;
@@ -17,12 +18,16 @@ class AuthService {
         body: JSON.stringify(data),
       });
 
+      if (!rawResponse.ok) {
+        throw new Error("Error al ingresar");
+      }
+
       const response = await rawResponse.json();
       this.jwt = response.token;
-      console.log(this.token)
+      this.error = null;
     } catch (error) {
-      this.error = error;
-      console.log(this.error);
+      this.error = error.message || "Error desconocido";
+      console.error("Error de login:", this.error);
     }
   }
 
@@ -32,6 +37,10 @@ class AuthService {
 
   getError() {
     return this.error;
+  }
+
+  clearError() {
+    this.error = null;
   }
 }
 

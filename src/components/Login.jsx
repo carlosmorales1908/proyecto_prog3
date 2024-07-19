@@ -5,15 +5,19 @@ import { PrivateRoutes } from "../routes/routes";
 
 const Login = () => {
   const { login, isAutheticated } = useContext(AuthContext);
-  const username = import.meta.env.VITE_USERNAME;
-  const password = import.meta.env.VITE_PASSWORD;
   const navigate = useNavigate();
 
   isAutheticated && <Navigate to={PrivateRoutes.HOME} />;
 
   const handleClick = async () => {
-    await login({ username, password });
-    navigate(`/${PrivateRoutes.HOME}`, { replace: true });
+    try {
+      const username = import.meta.env.VITE_USERNAME;
+      const password = import.meta.env.VITE_PASSWORD;
+      await login({ username, password });
+      navigate(`${PrivateRoutes.HOME}`, { replace: true });
+    } catch (error) {
+      console.log("Error al logear:", error);
+    }
   };
 
   return (
