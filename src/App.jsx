@@ -7,11 +7,8 @@ import { PrivateRoutes, PublicRutes } from "./routes/routes";
 import AuthGuard from "./guards/auth.guard";
 import Home from "./pages/Home";
 import SidebarLayout from "./components/Sidebar/SidebarLayout";
-<<<<<<< HEAD
 import LoginPage from "./pages/Login.page";
 
-=======
->>>>>>> 164f5c9bb00f9da49b481692ba4e393656c4a094
 
 function App() {
   return (
@@ -20,15 +17,12 @@ function App() {
         <BrowserRouter>
           <RoutesNotFound>
             <Route path="/" element={<Navigate to={PrivateRoutes.HOME} />} />
-<<<<<<< HEAD
             <Route path={PublicRutes.LOGIN} element={<LoginPage />} />
-            <Route element={<AuthGuard privateValidation={true} />}>
-=======
+            <Route element={<AuthGuard privateValidation={true} />}/>
             {/* DEFINIR BIEN RUTA Y ELEMENTO LOGIN */}
             <Route path={PublicRutes.LOGIN} element={<Login />} />
             <Route element={<AuthGuard privateValidation={true} />}>
               {/* DEFINIR BIEN RUTAS PRIVADAS */}
->>>>>>> 164f5c9bb00f9da49b481692ba4e393656c4a094
               <Route path={`/`} element={<SidebarLayout />}>
                 <Route path={`home`} element={<Home />} />
                 <Route
