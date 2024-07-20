@@ -19,7 +19,7 @@ class AuthService {
       });
 
       if (!rawResponse.ok) {
-        throw new Error("Error al ingresar");
+        throw new Error("Incorrect username or password");
       }
 
       const response = await rawResponse.json();
