@@ -4,10 +4,11 @@ import { Suspense } from "react";
 import AuthContextProvider from "./context/auth.contex";
 import RoutesNotFound from "./pages/NotFound.page";
 import { PrivateRoutes, PublicRutes } from "./routes/routes";
-import Login from "./components/Login";
 import AuthGuard from "./guards/auth.guard";
 import Home from "./pages/Home";
 import SidebarLayout from "./components/Sidebar/SidebarLayout";
+import LoginPage from "./pages/Login.page";
+
 
 function App() {
   return (
@@ -16,6 +17,8 @@ function App() {
         <BrowserRouter>
           <RoutesNotFound>
             <Route path="/" element={<Navigate to={PrivateRoutes.HOME} />} />
+            <Route path={PublicRutes.LOGIN} element={<LoginPage />} />
+            <Route element={<AuthGuard privateValidation={true} />}/>
             {/* DEFINIR BIEN RUTA Y ELEMENTO LOGIN */}
             <Route path={PublicRutes.LOGIN} element={<Login />} />
             <Route element={<AuthGuard privateValidation={true} />}>
