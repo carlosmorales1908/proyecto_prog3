@@ -5,20 +5,18 @@ import { PrivateRoutes } from "../../routes/routes";
 import useForm from "../../hooks/useForm";
 
 const LoginForm = () => {
-  const { login, isAutheticated } = useContext(AuthContext);
+  const { login, isAutheticated, fetchError } = useContext(AuthContext);
   const navigate = useNavigate();
-
   const initialState = { username: "", password: "" };
-  const { values, handleChange, handleSubmit, getRef } = useForm(
+  
+  const handleLogin = async () => {
+      await login({ username: values.username, password: values.password });
+      navigate(PrivateRoutes.HOME, { replace: true });
+  };
+  
+  const { values, errors, handleChange, handleSubmit, getRef } = useForm(
     initialState,
-    async () => {
-      try {
-        await login({ username: values.username, password: values.password });
-        navigate(PrivateRoutes.HOME, { replace: true });
-      } catch (error) {
-        console.error("Login error:", error);
-      }
-    }
+    handleLogin
   );
 
   return (
@@ -40,8 +38,8 @@ const LoginForm = () => {
               value={values.username}
               onChange={handleChange}
               ref={getRef("username")}
-              required
             />
+            {errors.username&&(<div className="text-danger mb-3">{errors.username}</div>)}
           </div>
 
           <div className="mb-3">
@@ -57,13 +55,13 @@ const LoginForm = () => {
               value={values.password}
               onChange={handleChange}
               ref={getRef("password")}
-              required
             />
+            {errors.password&&(<div className="text-danger mb-3">{errors.password}</div>)}
           </div>
-
           <button type="submit" className="btn btn-outline-success w-100">
             Login
           </button>
+          {fetchError&&(<div className="text-danger mb-3">{fetchError}</div>)}
         </form>
       )}
     </>
