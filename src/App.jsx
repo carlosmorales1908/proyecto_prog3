@@ -8,47 +8,40 @@ import AuthGuard from "./guards/auth.guard";
 import Home from "./pages/Home";
 import SidebarLayout from "./components/Sidebar/SidebarLayout";
 import LoginPage from "./pages/Login.page";
+import SongsPage from "./pages/Song.page";
 
 
 function App() {
   return (
     <Suspense fallback={<p>Cargando...</p>}>
       <AuthContextProvider>
-        <BrowserRouter>
-          <RoutesNotFound>
-            <Route path="/" element={<Navigate to={PrivateRoutes.HOME} />} />
-            <Route path={PublicRutes.LOGIN} element={<LoginPage />} />
-            <Route element={<AuthGuard privateValidation={true} />}/>
-            {/* DEFINIR BIEN RUTA Y ELEMENTO LOGIN */}
-            <Route path={PublicRutes.LOGIN} element={<Login />} />
-            <Route element={<AuthGuard privateValidation={true} />}>
-              {/* DEFINIR BIEN RUTAS PRIVADAS */}
-              <Route path={`/`} element={<SidebarLayout />}>
-                <Route path={`home`} element={<Home />} />
-                <Route
-                  path={`search`}
-                  element={<h1>INSERT SEARCH PAGE HERE</h1>}
-                />
-                <Route
-                  path={`my-library`}
-                  element={<h1>INSERT MY-LIBRARY PAGE HERE</h1>}
-                />
-                <Route
-                  path={`new-playlist`}
-                  element={<h1>INSERT NEW-PLAYLIST PAGE HERE</h1>}
-                />
-                <Route
-                  path={`upload-song`}
-                  element={<h1>INSERT UPLOAD-SONG PAGE HERE</h1>}
-                />
-                <Route
-                  path={`my-account`}
-                  element={<h1>INSERT MY-ACCOUNT PAGE HERE</h1>}
-                />
+          <BrowserRouter>
+            <RoutesNotFound>
+              <Route path={PublicRutes.LOGIN} element={<LoginPage />} />
+              <Route element={<AuthGuard privateValidation={true} />}>
+                <Route path={`/`} element={<SidebarLayout />}>
+                  <Route path={`home`} element={<Home />} />
+                  <Route
+                    path={`search`}
+                    element={<h1>INSERT SEARCH PAGE HERE</h1>}
+                  />
+                  <Route path={`my-library`} element={<SongsPage />} />
+                  <Route
+                    path={`new-playlist`}
+                    element={<h1>INSERT NEW-PLAYLIST PAGE HERE</h1>}
+                  />
+                  <Route
+                    path={`upload-song`}
+                    element={<h1>INSERT UPLOAD-SONG PAGE HERE</h1>}
+                  />
+                  <Route
+                    path={`my-account`}
+                    element={<h1>INSERT MY-ACCOUNT PAGE HERE</h1>}
+                  />
+                </Route>
               </Route>
-            </Route>
-          </RoutesNotFound>
-        </BrowserRouter>
+            </RoutesNotFound>
+          </BrowserRouter>
       </AuthContextProvider>
     </Suspense>
   );
