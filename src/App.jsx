@@ -8,6 +8,7 @@ import AuthGuard from "./guards/auth.guard";
 import Home from "./pages/Home";
 import SidebarLayout from "./components/Sidebar/SidebarLayout";
 import LoginPage from "./pages/Login.page";
+import UploadSongPage from "./pages/UploadSong.page";
 
 
 function App() {
@@ -33,8 +34,8 @@ function App() {
                   element={<h1>INSERT NEW-PLAYLIST PAGE HERE</h1>}
                 />
                 <Route
-                  path={`upload-song`}
-                  element={<h1>INSERT UPLOAD-SONG PAGE HERE</h1>}
+                  path={PrivateRoutes.UPLOADSONG}
+                  element={<UploadSongPage />}
                 />
                 <Route
                   path={`my-account`}
