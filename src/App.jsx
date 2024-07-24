@@ -21,11 +21,7 @@ function App() {
               <Route path={`/`} element={<SidebarLayout />}>
                 <Route path={`home`} element={<Home />} />
                 <Route
-                  path={`search`}
-                  element={<h1>INSERT SEARCH PAGE HERE</h1>}
-                />
-                <Route
-                  path={`my-library`}
+                  path={`library`}
                   element={<h1>INSERT MY-LIBRARY PAGE HERE</h1>}
                 />
                 <Route
