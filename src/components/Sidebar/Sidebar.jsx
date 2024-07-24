@@ -1,15 +1,14 @@
 import SidebarItem from "./SidebarItem";
 export default function Sidebar() {
   return (
-    <div className="sidebar bg-dark vh-100 p-3">
+    <div className="sidebar bg-black vh-100 p-3">
       <h4 className="text-warning">MusicPlayApp</h4>
       <div className="border"></div>
       <ul className="nav flex-column">
         <SidebarItem text=" Inicio" href="/home" icon="bi bi-house" />
-        <SidebarItem text=" Buscar" href="/search" icon="bi bi-search" />
         <SidebarItem
-          text=" Mi biblioteca"
-          href="/my-library"
+          text=" Biblioteca"
+          href="/library"
           icon="bi bi-music-note-list"
         />
         <SidebarItem

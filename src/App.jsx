@@ -10,38 +10,36 @@ import SidebarLayout from "./components/Sidebar/SidebarLayout";
 import LoginPage from "./pages/Login.page";
 import SongsPage from "./pages/Song.page";
 
-
 function App() {
   return (
     <Suspense fallback={<p>Cargando...</p>}>
       <AuthContextProvider>
-          <BrowserRouter>
-            <RoutesNotFound>
-              <Route path={PublicRutes.LOGIN} element={<LoginPage />} />
-              <Route element={<AuthGuard privateValidation={true} />}>
-                <Route path={`/`} element={<SidebarLayout />}>
-                  <Route path={`home`} element={<Home />} />
-                  <Route
-                    path={`search`}
-                    element={<h1>INSERT SEARCH PAGE HERE</h1>}
-                  />
-                  <Route path={`my-library`} element={<SongsPage />} />
-                  <Route
-                    path={`new-playlist`}
-                    element={<h1>INSERT NEW-PLAYLIST PAGE HERE</h1>}
-                  />
-                  <Route
-                    path={`upload-song`}
-                    element={<h1>INSERT UPLOAD-SONG PAGE HERE</h1>}
-                  />
-                  <Route
-                    path={`my-account`}
-                    element={<h1>INSERT MY-ACCOUNT PAGE HERE</h1>}
-                  />
-                </Route>
+        <BrowserRouter>
+          <RoutesNotFound>
+            <Route path={PublicRutes.LOGIN} element={<LoginPage />} />
+            <Route element={<AuthGuard privateValidation={true} />}>
+              <Route path={`/`} element={<SidebarLayout />}>
+                <Route path={`home`} element={<Home />} />
+                <Route
+                  path={`library`}
+                  element={<h1>INSERT MY-LIBRARY PAGE HERE</h1>}
+                />
+                <Route
+                  path={`new-playlist`}
+                  element={<h1>INSERT NEW-PLAYLIST PAGE HERE</h1>}
+                />
+                <Route
+                  path={`upload-song`}
+                  element={<h1>INSERT UPLOAD-SONG PAGE HERE</h1>}
+                />
+                <Route
+                  path={`my-account`}
+                  element={<h1>INSERT MY-ACCOUNT PAGE HERE</h1>}
+                />
               </Route>
-            </RoutesNotFound>
-          </BrowserRouter>
+            </Route>
+          </RoutesNotFound>
+        </BrowserRouter>
       </AuthContextProvider>
     </Suspense>
   );
