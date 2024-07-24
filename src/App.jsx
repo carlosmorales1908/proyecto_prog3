@@ -16,13 +16,8 @@ function App() {
       <AuthContextProvider>
         <BrowserRouter>
           <RoutesNotFound>
-            <Route path="/" element={<Navigate to={PrivateRoutes.HOME} />} />
             <Route path={PublicRutes.LOGIN} element={<LoginPage />} />
-            <Route element={<AuthGuard privateValidation={true} />}/>
-            {/* DEFINIR BIEN RUTA Y ELEMENTO LOGIN */}
-            <Route path={PublicRutes.LOGIN} element={<Login />} />
             <Route element={<AuthGuard privateValidation={true} />}>
-              {/* DEFINIR BIEN RUTAS PRIVADAS */}
               <Route path={`/`} element={<SidebarLayout />}>
                 <Route path={`home`} element={<Home />} />
                 <Route
