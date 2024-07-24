@@ -7,7 +7,7 @@ export default function SidebarLayout() {
       <div className="col-2">
         <Sidebar />
       </div>
-      <div className="col-10">
+      <div className="col-10 px-4 py-3 text-white">
         <Outlet />
       </div>
     </div>
