@@ -19,7 +19,13 @@ function App() {
             <Route path={PublicRutes.LOGIN} element={<LoginPage />} />
             <Route element={<AuthGuard privateValidation={true} />}>
               <Route path={`/`} element={<SidebarLayout />}>
-                <Route path={`home`} element={<Playlists />} />
+                <Route path={PrivateRoutes.HOME} element={<Playlists />} />
+                {/* HACERUN UN COMPONENTE PLAYLIST QUE MUESTRE LAS CANCIONES DE ESA PLAYLIST */}
+                <Route
+                  path={PrivateRoutes.PLAYLIST}
+                  element={<p>Aqui van los datos de una playlist</p>}
+                />
+                {/* ------ */}
                 <Route
                   path={`library`}
                   element={<h1>INSERT MY-LIBRARY PAGE HERE</h1>}

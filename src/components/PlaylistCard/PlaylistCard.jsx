@@ -1,11 +1,16 @@
 import "../PlaylistCard/PlaylistStyle.css";
+import { PrivateRoutes } from "../../routes/routes";
+import { useNavigate } from "react-router-dom";
 
 export const PlaylistCard = ({ playlist }) => {
+  const navigate = useNavigate();
   return (
     <div
       className="card rounded-4"
       style={{ width: "300px" }}
-      onClick={() => alert("Hisite click en la playlist")}
+      onClick={() =>
+        navigate(`${PrivateRoutes.PLAYLISTS}/${playlist.name}/${playlist.id}`)
+      }
     >
       <div className="container mt-2">
         <img src="src\assets\micro.jpeg" className="card-img-top rounded-4" />
