@@ -1,34 +1,28 @@
 import BaseService from "./base.services";
 
-class PlaylistService extends BaseService{
-  constructor(token, endpoint){
-    super(token, endpoint)
+class PlaylistService extends BaseService {
+  constructor(token) {
+    super(token, import.meta.env.VITE_URI_PLAYLISTS);
   }
 
-  async getPlaylist(playlistId){
-    // revisar el metodo base
-    // agregar un get o modificar el existente para que reciba un id
-    return this.get(`${playlistId}`)
+  async getPlaylist(playlistId) {
+    return this.getOne(playlistId);
   }
 
-  async getAllPlaylists(){
-    return this.get()
+  async getAllPlaylists() {
+    return this.getAll();
   }
 
-  async createPlaylist(playlistData){
-    return this.post(playlistData)
+  async createPlaylist(playlistData) {
+    return this.post(playlistData);
   }
 
-  async updatePlaylist(playlistId, updatedData){
-    // revisar el metodo base
-    // agregar un get o modificar el existente para que reciba un id
-    return this.put(`${playlistId}`, updatedData)
+  async updatePlaylist(playlistId, updatedData) {
+    return this.put(playlistId, updatedData);
   }
 
-  async deletePlaylist(playlistId){
-    // revisar el metodo base
-    // agregar un get o modificar el existente para que reciba un id
-    return this.delete(`${playlistId}`)
+  async deletePlaylist(playlistId) {
+    return this.delete(playlistId);
   }
 }
 

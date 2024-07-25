@@ -8,7 +8,7 @@ import AuthGuard from "./guards/auth.guard";
 import Home from "./pages/Home";
 import SidebarLayout from "./components/Sidebar/SidebarLayout";
 import LoginPage from "./pages/Login.page";
-
+import Playlists from "./pages/Playlists.page";
 
 function App() {
   return (
@@ -36,6 +36,7 @@ function App() {
                   path={`my-account`}
                   element={<h1>INSERT MY-ACCOUNT PAGE HERE</h1>}
                 />
+                <Route path={`playlists`} element={<Playlists />} />
               </Route>
             </Route>
           </RoutesNotFound>

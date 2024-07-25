@@ -5,7 +5,7 @@ class BaseService {
     this.endpoint = endpoint;
   }
 
-  async request(options) {
+  async request(param = null, options = {}) {
     const headers = {
       Accept: "application/json",
       "Content-Type": "application/json",
@@ -14,13 +14,18 @@ class BaseService {
     };
 
     try {
-      const response = await fetch(`${this.baseURL}/${this.endpoint}`, {
+      let URI = `${this.baseURL}/${this.endpoint}`;
+      if (param) {
+        URI += `/${param}`;
+      }
+
+      const response = await fetch(URI, {
         ...options,
         headers,
       });
 
       if (!response.ok) {
-        throw new Error("Response was not ok");
+        throw new Error("Network response was not ok");
       }
 
       return await response.json();
@@ -30,30 +35,35 @@ class BaseService {
     }
   }
 
-  async get() {
-    // HACEER UN getALL() y un getOne
-    // MIRAR TEMA DE URI PARA PASAR IDS EN getOne(), POST, PUT, DELETE
-    return this.request({ method: "GET" });
+  async getOne(param) {
+    return this.request(param, { method: "GET" });
+  }
+
+  async getAll() {
+    return this.request(null, { method: "GET" });
   }
 
   async post(data) {
-    return this.request({
+    return this.request(null, {
       method: "POST",
       body: JSON.stringify(data),
     });
   }
 
-  async put(data) {
-    return this.request({
+  async put(param, data) {
+    return this.request(param, {
       method: "PUT",
       body: JSON.stringify(data),
     });
   }
 
-  async delete() {
-    return this.request({
+  async delete(param) {
+    return this.request(param, {
       method: "DELETE",
     });
   }
 }
+
 export default BaseService;
+
+// USAR DE MODELO playlists.services.js
