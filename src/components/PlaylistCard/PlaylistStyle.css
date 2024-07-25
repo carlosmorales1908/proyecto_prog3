@@ -1,10 +1,10 @@
-.card{
-    background-color: transparent;
-    color: whitesmoke;
-    border: none;
+div > .card{
+  background-color: transparent;
+  color: whitesmoke;
+  border: none;
 }
 
 .card:hover{
-    background-color: rgba(59, 59, 59, 0.5);
-    cursor: pointer;
+  background-color: rgba(59, 59, 59, 0.5);
+  cursor: pointer;
 }

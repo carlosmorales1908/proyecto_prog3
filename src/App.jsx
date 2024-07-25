@@ -1,11 +1,11 @@
-import { BrowserRouter, Navigate, Route } from "react-router-dom";
+import { BrowserRouter, Route } from "react-router-dom";
 import "./App.css";
 import { Suspense } from "react";
 import AuthContextProvider from "./context/auth.contex";
 import RoutesNotFound from "./pages/NotFound.page";
 import { PrivateRoutes, PublicRutes } from "./routes/routes";
 import AuthGuard from "./guards/auth.guard";
-import Home from "./pages/Home";
+// import Home from "./pages/Home";
 import SidebarLayout from "./components/Sidebar/SidebarLayout";
 import LoginPage from "./pages/Login.page";
 import Playlists from "./pages/Playlists.page";
@@ -19,7 +19,7 @@ function App() {
             <Route path={PublicRutes.LOGIN} element={<LoginPage />} />
             <Route element={<AuthGuard privateValidation={true} />}>
               <Route path={`/`} element={<SidebarLayout />}>
-                <Route path={`home`} element={<Home />} />
+                <Route path={`home`} element={<Playlists />} />
                 <Route
                   path={`library`}
                   element={<h1>INSERT MY-LIBRARY PAGE HERE</h1>}

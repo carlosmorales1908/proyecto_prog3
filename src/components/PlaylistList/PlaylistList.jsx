@@ -13,9 +13,9 @@ const PlaylistList = () => {
       .getAllPlaylists()
       .then((playlist) => setPlaylists(playlist));
   }, [token]);
-  
+
   return (
-    <div className="row gx-5 gy-5">
+    <div className="row g-5">
       {playlists.map((playlist) => (
         <div key={playlist.id} className="col-4">
           <PlaylistCard playlist={playlist} />

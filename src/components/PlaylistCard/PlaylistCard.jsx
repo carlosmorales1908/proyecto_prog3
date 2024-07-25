@@ -2,7 +2,11 @@ import "../PlaylistCard/PlaylistStyle.css";
 
 export const PlaylistCard = ({ playlist }) => {
   return (
-    <div className="card" style={{ width: "300px" }}>
+    <div
+      className="card rounded-4"
+      style={{ width: "300px" }}
+      onClick={() => alert("Hisite click en la playlist")}
+    >
       <div className="container mt-2">
         <img src="src\assets\micro.jpeg" className="card-img-top rounded-4" />
         <div className="card-body text-center">
