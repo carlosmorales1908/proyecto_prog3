@@ -1,15 +1,13 @@
-import { useContext, useEffect } from "react";
-import PlaylistService from "../services/playlists.services";
-import { AuthContext } from "../context/auth.contex";
+import PlaylistList from "../components/PlaylistList/PlaylistList";
 
 const Playlists = () => {
-  const { token } = useContext(AuthContext);
-
-  useEffect(() => {
-    const playlistService = new PlaylistService(token);
-    playlistService.getAllPlaylists().then((playlist) => console.log(playlist));
-  }, [token]);
-
-  return <div>Playlists.page</div>;
+  return (
+    <>
+      <div className="m-3 fs-2 text-center">
+        TUS MEJORES PLAYLISTS LAS ECONTRAS AQUI:
+      </div>
+      <PlaylistList />
+    </>
+  );
 };
 export default Playlists;
