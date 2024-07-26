@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState, useRef } from 'react';
 
-const useForm = (initialState, callback) => {
+const useForm = (initialState, callback, validate) => {
   const [values, setValues] = useState(initialState);
   const [errors, setErrors] = useState({});
   const refs = useRef({});
@@ -23,25 +23,9 @@ const useForm = (initialState, callback) => {
     }
   };
 
-  const validate = (values) => {
-    let errors = {};
-
-    if (!values.username) {
-      errors.username = 'Username is required';
-    }
-
-    if (!values.password) {
-      errors.password = 'Password is required';
-    } else if (values.password.length < 6) {
-      errors.password = 'Password must be at least 6 characters long';
-    }
-
-    return errors;
-  };
-
   const getRef = (name) => {
     if (!refs.current[name]) {
-      refs.current[name] = React.createRef();
+      refs.current[name] = createRef();
     }
     return refs.current[name];
   };
