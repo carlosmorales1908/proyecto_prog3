@@ -5,7 +5,7 @@ import { PrivateRoutes } from "../../routes/routes";
 import useForm from "../../hooks/useForm";
 
 const LoginForm = () => {
-  const { login, isAutheticated, fetchError,token } = useContext(AuthContext);
+  const { login, isAutheticated, fetchError} = useContext(AuthContext);
   const navigate = useNavigate();
   const initialState = { username: "", password: "" };
 
