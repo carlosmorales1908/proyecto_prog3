@@ -28,7 +28,6 @@ const LoginForm = () => {
   const handleLogin = async () => {
       await login({ username: values.username, password: values.password });
       navigate(PrivateRoutes.HOME, { replace: true });
-      console.log('Logged in token:', token);
   };
   
   const { values, errors, handleChange, handleSubmit, getRef } = useForm(
