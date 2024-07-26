@@ -5,18 +5,36 @@ import { PrivateRoutes } from "../../routes/routes";
 import useForm from "../../hooks/useForm";
 
 const LoginForm = () => {
-  const { login, isAutheticated, fetchError } = useContext(AuthContext);
+  const { login, isAutheticated, fetchError,token } = useContext(AuthContext);
   const navigate = useNavigate();
   const initialState = { username: "", password: "" };
-  
+
+  const validateLogin = (values) => {
+    let errors = {};
+
+    if (!values.username) {
+      errors.username = 'Username is required';
+    }
+
+    if (!values.password) {
+      errors.password = 'Password is required';
+    } else if (values.password.length < 6) {
+      errors.password = 'Password must be at least 6 characters long';
+    }
+
+    return errors;
+  };
+
   const handleLogin = async () => {
       await login({ username: values.username, password: values.password });
       navigate(PrivateRoutes.HOME, { replace: true });
+      console.log('Logged in token:', token);
   };
   
   const { values, errors, handleChange, handleSubmit, getRef } = useForm(
     initialState,
-    handleLogin
+    handleLogin,
+    validateLogin
   );
 
   return (
