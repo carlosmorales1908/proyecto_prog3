@@ -56,8 +56,8 @@ const SongList = () => {
         <Spinner />
       ) : (
         <div
-          className={`overflow-auto ${showScrollbar ? 'scrollbar-thin' : ''}`}
-          style={{ maxHeight: 'calc(80vh - 70px)' }}
+          className={`overflow-auto ${showScrollbar ? "scrollbar-thin" : ""}`}
+          style={{ maxHeight: "calc(80vh - 70px)" }}
           onMouseEnter={() => setShowScrollbar(true)}
           onMouseLeave={() => setShowScrollbar(false)}
         >
@@ -69,7 +69,10 @@ const SongList = () => {
               <div className="flex-grow-1">
                 <strong>Título</strong>
               </div>
-              <div className=" position-relative text-center flex-grow-2"  style={{ right: "38%" }}>
+              <div
+                className=" position-relative text-center flex-grow-2"
+                style={{ right: "38%" }}
+              >
                 <i className="bi bi-clock"></i>
               </div>
             </div>
