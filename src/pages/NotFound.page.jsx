@@ -13,7 +13,6 @@ const RoutesNotFound = ({ children }) => {
               color: "black",
               height: "100vh",
               fontWeight: "bold",
-              fontSize: "10rem",
             }}
           >
             NOT FOUND
