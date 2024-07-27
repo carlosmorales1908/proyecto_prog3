@@ -1,13 +1,13 @@
 class SongService{
     constructor(){
-        this.baseURL = import.meta.env.VITE_BASE_URL;
+        this.baseURL = import.meta.env.VITE_BASE_URL
         this.error = null;
         this.token = import.meta.env.VITE_AUTH_TOKEN;
     } 
 
     async getAllSongs(){
         try {
-            const URI = `${this.baseURL}harmonyhub/songs/`
+            const URI = `${this.baseURL}harmonyhub/songs`
             const rawResponse = await fetch(URI,{
                 method:"GET",
                 headers:{
@@ -58,7 +58,9 @@ class SongService{
             const formData = new FormData();
         
             for (const key in data) {
-                formData.append(key, data[key] || '');
+               
+                    formData.append(key, data[key] || '');
+               
             }
             const rawResponse = await fetch(URI, {
                 method: "POST",
@@ -73,7 +75,8 @@ class SongService{
             console.log('Server Response:', response);
         
             if (!rawResponse.ok) {
-                throw new Error(`Error adding the song: ${responseText}`);
+                const errorText = await rawResponse.text(); 
+                throw new Error(`Error adding the song: ${errorText}`);
             }
         } catch (error) {
             this.error = error.message || "Unknown error";
