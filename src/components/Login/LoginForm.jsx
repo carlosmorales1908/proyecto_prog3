@@ -5,7 +5,7 @@ import { PrivateRoutes } from "../../routes/routes";
 import useForm from "../../hooks/useForm";
 
 const LoginForm = () => {
-  const { login, isAutheticated, fetchError} = useContext(AuthContext);
+  const { login, isAuthenticated, fetchError } = useContext(AuthContext);
   const navigate = useNavigate();
   const initialState = { username: "", password: "" };
 
@@ -38,7 +38,7 @@ const LoginForm = () => {
 
   return (
     <>
-      {isAutheticated ? (
+      {isAuthenticated ? (
         <Navigate replace to={PrivateRoutes.HOME} />
       ) : (
         <form onSubmit={handleSubmit}>
