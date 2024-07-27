@@ -5,5 +5,7 @@ export const PublicRutes = {
 export const PrivateRoutes = {
   DASHBOARD: "/dashboard",
   HOME: "/home",
+  PLAYLISTS: "/playlists",
+  PLAYLIST: "/playlists/:playlistName/:id",
   LIBRARY: "/library",
 };
