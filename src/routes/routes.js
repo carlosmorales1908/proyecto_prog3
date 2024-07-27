@@ -7,4 +7,5 @@ export const PrivateRoutes = {
   HOME: "/home",
   PLAYLISTS: "/playlists",
   PLAYLIST: "/playlists/:playlistName/:id",
+  LIBRARY: "/library",
 };

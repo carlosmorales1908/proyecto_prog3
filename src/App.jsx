@@ -8,11 +8,15 @@ import AuthGuard from "./guards/auth.guard";
 // import Home from "./pages/Home";
 import SidebarLayout from "./components/Sidebar/SidebarLayout";
 import LoginPage from "./pages/Login.page";
+
 import Playlists from "./pages/Playlists.page";
+
+import SongsPage from "./pages/Song.page";
+import Spinner from "./components/Spinner/Spinner";
 
 function App() {
   return (
-    <Suspense fallback={<p>Cargando...</p>}>
+    <Suspense fallback={<Spinner/>}>
       <AuthContextProvider>
         <BrowserRouter>
           <RoutesNotFound>
@@ -26,17 +30,14 @@ function App() {
                   element={<p>Aqui van los datos de una playlist</p>}
                 />
                 {/* ------ */}
-                <Route
-                  path={`library`}
-                  element={<h1>INSERT MY-LIBRARY PAGE HERE</h1>}
-                />
+                <Route path={PrivateRoutes.LIBRARY} element={<SongsPage />} />
                 <Route
                   path={`new-playlist`}
                   element={<h1>INSERT NEW-PLAYLIST PAGE HERE</h1>}
                 />
                 <Route
-                  path={`upload-song`}
-                  element={<h1>INSERT UPLOAD-SONG PAGE HERE</h1>}
+                    path={`upload-song`}
+                    element={<h1>INSERT UPLOAD-SONG PAGE HERE</h1>}
                 />
                 <Route
                   path={`my-account`}
