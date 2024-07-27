@@ -1,12 +1,13 @@
 class SongService{
     constructor(){
-        this.baseURL = "https://sandbox.academiadevelopers.com/";
+        this.baseURL = import.meta.env.VITE_BASE_URL;
         this.error = null;
+        this.token = import.meta.env.VITE_AUTH_TOKEN;
     } 
 
     async getAllSongs(){
         try {
-            const URI = `${this.baseURL}harmonyhub/songs`
+            const URI = `${this.baseURL}harmonyhub/songs/`
             const rawResponse = await fetch(URI,{
                 method:"GET",
                 headers:{
@@ -53,50 +54,66 @@ class SongService{
 
     async addSong(data) {
         try {
-            const URI = `${this.baseURL}harmonyhub/songs`;
+            const URI = `${this.baseURL}harmonyhub/songs/`;
+            const formData = new FormData();
+        
+            for (const key in data) {
+                formData.append(key, data[key] || '');
+            }
             const rawResponse = await fetch(URI, {
                 method: "POST",
                 headers: {
                     Accept: "application/json",
-                    "Content-Type": "application/json",
-                    Authorization: `Token ${this.jwt}`
+                    Authorization: `Token ${this.token}`,
                 },
-                body: JSON.stringify(data),
+                body: formData,
             });
-            if (!rawResponse.ok) {
-                throw new Error("Error adding the data");
-            }
+            
             const response = await rawResponse.json();
-            this.error = null;
-            return response;
+            console.log('Server Response:', response);
+        
+            if (!rawResponse.ok) {
+                throw new Error(`Error adding the song: ${responseText}`);
+            }
         } catch (error) {
             this.error = error.message || "Unknown error";
-            console.error("Error adding the data: ", this.error);
+            console.error("Error adding the song: ", this.error);
         }
     }
 
-    async updateSong(id, data) {
+
+    async updateSong(id,data) {
         try {
             const URI = `${this.baseURL}harmonyhub/songs/${id}/`;
+            const formData = new FormData();
+        
+            for (const key in data) {
+               
+                    formData.append(key, data[key] || '');
+               
+            }
             const rawResponse = await fetch(URI, {
                 method: "PUT",
                 headers: {
                     Accept: "application/json",
-                    "Content-Type": "application/json",
-                    Authorization: `Token ${this.jwt}`
+                    Authorization: `Token ${this.token}`,
                 },
-                body: JSON.stringify(data),
+                body: formData,
             });
+            
 
             if (!rawResponse.ok) {
-                throw new Error(`Error updating data with ID ${id}`);
+                const errorText = await rawResponse.text(); 
+                throw new Error(`Error update the song: ${errorText}`);
             }
+
             const response = await rawResponse.json();
-            this.error = null;
-            return response;
+            console.log('Server Response:', response);
+        
+           
         } catch (error) {
             this.error = error.message || "Unknown error";
-            console.error(`Error updating data with ID ${id}`, this.error);
+            console.error("Error updating the song: ", this.error);
         }
     }
 
