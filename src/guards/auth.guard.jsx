@@ -4,8 +4,8 @@ import { useContext } from "react";
 import { PublicRutes } from "../routes/routes";
 
 export const AuthGuard = ({ privateValidation }) => {
-  const { isAutheticated } = useContext(AuthContext);
-  return isAutheticated ? (
+  const { isAuthenticated } = useContext(AuthContext);
+  return isAuthenticated ? (
     privateValidation ? (
       <Outlet />
     ) : (
