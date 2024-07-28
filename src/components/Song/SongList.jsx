@@ -1,5 +1,6 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState, useMemo, useContext } from "react";
 import Song from "./Song";
+import { AuthContext } from "../../context/auth.contex";
 import SongService from "../../services/song.services";
 import Spinner from "../Spinner/Spinner";
 
@@ -9,7 +10,8 @@ const SongList = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [playingAudio, setPlayingAudio] = useState(null);
   const [showScrollbar, setShowScrollbar] = useState(false);
-  const songService = useMemo(() => new SongService(), []);
+  const { token } = useContext(AuthContext);
+  const songService = useMemo(() => new SongService(token), [token]);
 
   useEffect(() => {
     const fetchSongs = async () => {
