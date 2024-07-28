@@ -13,6 +13,8 @@ import Playlists from "./pages/Playlists.page";
 
 import SongsPage from "./pages/Song.page";
 import Spinner from "./components/Spinner/Spinner";
+import UploadSongPage from "./pages/UploadSong.page";
+
 
 function App() {
   return (
@@ -36,8 +38,8 @@ function App() {
                   element={<h1>INSERT NEW-PLAYLIST PAGE HERE</h1>}
                 />
                 <Route
-                    path={`upload-song`}
-                    element={<h1>INSERT UPLOAD-SONG PAGE HERE</h1>}
+                  path={PrivateRoutes.UPLOADSONG}
+                  element={<UploadSongPage />}
                 />
                 <Route
                   path={`my-account`}
