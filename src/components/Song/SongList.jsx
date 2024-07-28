@@ -44,6 +44,10 @@ const SongList = () => {
     setFetchError(null);
   };
 
+  const handleDelete = (songId) => {
+    setSongs((prevSongs) => prevSongs.filter((song) => song.id !== songId));
+  };
+
   return (
     <div className="container mt-5">
       {fetchError && (
@@ -88,6 +92,7 @@ const SongList = () => {
                   onPlay={() => handlePlayAudio(song)}
                   isPlaying={playingAudio === song.id}
                   index={index + 1}
+                  onDelete={handleDelete}
                 />
               ))
             ) : (
