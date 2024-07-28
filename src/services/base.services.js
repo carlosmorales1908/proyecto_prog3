@@ -9,7 +9,7 @@ class BaseService {
     const headers = {
       Accept: "application/json",
       "Content-Type": "application/json",
-      Authorization: `Bearer ${this.token}`,
+      Authorization: `Token ${this.token}`,
       ...options.headers,
     };
 
