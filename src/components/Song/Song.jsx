@@ -1,12 +1,24 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useContext, useMemo } from "react";
 import "./Song.css";
+import { AuthContext } from "../../context/auth.contex";
+import SongService from "../../services/song.services";
 
-const Song = ({ song, onPlay, isPlaying, index }) => {
+const Song = ({ song, onPlay, isPlaying, index, onDelete }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
   const audioRef = useRef(null);
   const iconRef = useRef(null);
   const menuRef = useRef(null);
+  const { token } = useContext(AuthContext);
+
+  useEffect(() => {
+    console.log("Token in Song component:", token);
+  }, [token]);
+
+  const songService = useMemo(() => {
+    console.log("Creating new SongService instance with token:", token);
+    return new SongService(token);
+  }, [token]);
 
   useEffect(() => {
     if (isPlaying) {
@@ -37,9 +49,16 @@ const Song = ({ song, onPlay, isPlaying, index }) => {
     setShowMenu((prevShowMenu) => !prevShowMenu);
   };
 
-  const handleMenuAction = (action) => {
+  const handleMenuAction = async (action) => {
     if (action === "delete") {
-      console.log("Eliminar Canción");
+      try {
+        console.log("Attempting to delete song with ID:", song.id);
+        await songService.deleteSong(song.id);
+        console.log("Canción eliminada con éxito");
+        if (onDelete) onDelete(song.id); // Notificar al padre sobre la eliminación
+      } catch (error) {
+        console.error("Error eliminando la canción:", error);
+      }
     } else if (action === "add") {
       console.log("Agregar a la Lista");
     }
