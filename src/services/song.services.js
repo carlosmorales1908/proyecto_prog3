@@ -58,9 +58,7 @@ class SongService{
             const formData = new FormData();
         
             for (const key in data) {
-               
-                    formData.append(key, data[key] || '');
-               
+                formData.append(key, data[key] || '');
             }
             const rawResponse = await fetch(URI, {
                 method: "POST",
@@ -71,16 +69,17 @@ class SongService{
                 body: formData,
             });
             
-            const response = await rawResponse.json();
-            console.log('Server Response:', response);
-        
             if (!rawResponse.ok) {
-                const errorText = await rawResponse.text(); 
-                throw new Error(`Error adding the song: ${errorText}`);
+                const response = await rawResponse.json();
+                throw new Error(response.non_field_errors[0]);
             }
+
+            const response = await rawResponse.json();
+            return { success: true, data: response };
+
         } catch (error) {
             this.error = error.message || "Unknown error";
-            console.error("Error adding the song: ", this.error);
+            return { success: false, error: error.message || "Unknown error" };
         }
     }
 
