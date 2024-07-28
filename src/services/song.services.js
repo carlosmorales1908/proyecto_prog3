@@ -1,55 +1,15 @@
-class SongService{
-    constructor(){
-        this.baseURL = import.meta.env.VITE_BASE_URL
-        this.error = null;
-        this.token = import.meta.env.VITE_AUTH_TOKEN;
-    } 
+import BaseService from "./base.services";
+
+class SongService extends BaseService{
+    constructor(token) {
+        super(token, import.meta.env.VITE_URI_SONGS);
+      }
 
     async getAllSongs(){
-        try {
-            const URI = `${this.baseURL}harmonyhub/songs`
-            const rawResponse = await fetch(URI,{
-                method:"GET",
-                headers:{
-                    Accept:"application/json",
-                    "Content-Type":"application/json"
-            },
-        });
-        
-        if(!rawResponse.ok){
-            throw new Error("Error getting the songs");
-        }
-
-        const response = await rawResponse.json();
-        this.error = null;
-        return response;
-        } catch (error) {
-            this.error = error.message || "Unknown error";
-            console.error("Error getting the songs: ",this.error)
-        }
+      return this.getAll();
     }
-
-
-    async getSongById(id){
-        try {
-        const URI = `${this.baseURL}harmonyhub/songs/${id}/`;
-        const rawResponse = await fetch(URI,{
-            method:"GET",
-            headers:{
-                Accept:"application/json",
-                 "Content-Type":"application/json",
-                },
-            });
-            if (!rawResponse.ok){
-                throw new Error(`Error getting the song with the ID: ${id}`);
-            }
-            const response = await rawResponse.json();
-            this.error = null;
-            return response;
-        } catch (error) {
-            this.error = error.message || "Unknown error";
-            console.error(`Error getting the song with the ID ${id}`, this.error);
-        }
+    async getSongById(songId){
+       return this.getOne(songId);
     }
 
     async addSong(data) {
@@ -83,7 +43,6 @@ class SongService{
             console.error("Error adding the song: ", this.error);
         }
     }
-
 
     async updateSong(id,data) {
         try {
