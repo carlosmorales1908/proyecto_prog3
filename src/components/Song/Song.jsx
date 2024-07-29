@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect, useContext, useMemo } from "react";
 import "./Song.css";
 import { AuthContext } from "../../context/auth.contex";
 import SongService from "../../services/song.services";
+import PlaylistService from "../../services/playlists.services";
 
 const Song = ({ song, onPlay, isPlaying, index, onDelete }) => {
   const [isHovered, setIsHovered] = useState(false);
@@ -10,16 +11,9 @@ const Song = ({ song, onPlay, isPlaying, index, onDelete }) => {
   const iconRef = useRef(null);
   const menuRef = useRef(null);
   const { token } = useContext(AuthContext);
-
-  useEffect(() => {
-    console.log("Token in Song component:", token);
-  }, [token]);
-
-  const songService = useMemo(() => {
-    console.log("Creating new SongService instance with token:", token);
-    return new SongService(token);
-  }, [token]);
-
+  const playlistService = useMemo(() => new PlaylistService(token), [token]);
+  const [selectedPlaylist, setSelectedPlaylist] = useState("");
+  const [playlists, setPlaylists] = useState([]);
   useEffect(() => {
     if (isPlaying) {
       audioRef.current.play();
@@ -52,17 +46,36 @@ const Song = ({ song, onPlay, isPlaying, index, onDelete }) => {
   const handleMenuAction = async (action) => {
     if (action === "delete") {
       try {
-        console.log("Attempting to delete song with ID:", song.id);
-        await songService.deleteSong(song.id);
-        console.log("Canción eliminada con éxito");
-        if (onDelete) onDelete(song.id); // Notificar al padre sobre la eliminación
+        const songService = new SongService(token);
+        await songService.delete(song.id);
+
+        if (onDelete) onDelete(song.id);
       } catch (error) {
-        console.error("Error eliminando la canción:", error);
+        if (error.status == 403) {
+          alert("No tienes permiso de eliminar la cancion");
+        }
       }
     } else if (action === "add") {
       console.log("Agregar a la Lista");
     }
     setShowMenu(false);
+  };
+
+  useEffect(() => {
+    const fetchPlaylists = async () => {
+      try {
+        const data = await playlistService.getAllPlaylists();
+        setPlaylists(data);
+      } catch (error) {
+        console.error("Error fetching playlists:", error);
+      }
+    };
+
+    fetchPlaylists();
+  }, [playlistService]);
+
+  const handlePlaylistChange = (event) => {
+    setSelectedPlaylist(event.target.value);
   };
 
   return (
@@ -111,7 +124,11 @@ const Song = ({ song, onPlay, isPlaying, index, onDelete }) => {
             ref={iconRef}
             onClick={handleMenuClick}
           ></i>
-          <ul className={`dropdown-menu dropdown-menu-dark ${showMenu ? "show" : ""}`}>
+          <ul
+            className={`dropdown-menu dropdown-menu-dark ${
+              showMenu ? "show" : ""
+            }`}
+          >
             <li className="item">
               <a
                 className="dropdown-item text-light"
@@ -127,8 +144,22 @@ const Song = ({ song, onPlay, isPlaying, index, onDelete }) => {
                 role="button"
                 onClick={() => handleMenuAction("add")}
               >
-                Agregar a la Lista
+                Agregar a una playlist
               </a>
+            </li>
+            <li className="item">
+              <select
+                value={selectedPlaylist}
+                onChange={handlePlaylistChange}
+                className="dropdown-item text-light"
+              >
+                <option className="bg-dark" >Selecciona una playlist</option>
+                {playlists.map((playlist) => (
+                  <option className="bg-dark" key={playlist.id} value={playlist.id}>
+                    {playlist.name}
+                  </option>
+                ))}
+              </select>
             </li>
           </ul>
         </div>
