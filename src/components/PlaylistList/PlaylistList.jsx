@@ -11,7 +11,7 @@ const PlaylistList = () => {
     const playlistService = new PlaylistService(token);
     playlistService
       .getAllPlaylists()
-      .then((playlist) => setPlaylists(playlist));
+      .then((playlist) => setPlaylists(playlist.results));
   }, [token]);
 
   return (
