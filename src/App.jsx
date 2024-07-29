@@ -14,11 +14,11 @@ import Playlists from "./pages/Playlists.page";
 import SongsPage from "./pages/Song.page";
 import Spinner from "./components/Spinner/Spinner";
 import UploadSongPage from "./pages/UploadSong.page";
-
+import Profile from "./pages/Profile.page";
 
 function App() {
   return (
-    <Suspense fallback={<Spinner/>}>
+    <Suspense fallback={<Spinner />}>
       <AuthContextProvider>
         <BrowserRouter>
           <RoutesNotFound>
@@ -46,6 +46,7 @@ function App() {
                   element={<h1>INSERT MY-ACCOUNT PAGE HERE</h1>}
                 />
                 <Route path={`playlists`} element={<Playlists />} />
+                <Route path={`profile`} element={<Profile />} />
               </Route>
             </Route>
           </RoutesNotFound>
