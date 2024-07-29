@@ -5,16 +5,12 @@ const Search = ({ onSearch }) => {
 
     const handleChange = (e) => {
         setQuery(e.target.value);
-    };
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        onSearch(query);
+        onSearch(e.target.value); 
     };
 
     return (
-        <div className='container mt-4'>
-            <form className="d-flex" role="search" onSubmit={handleSubmit}>
+        <div className="mb-3">
+            <form className="d-flex" role="search" onSubmit={(e) => e.preventDefault()}>
                 <input
                     className="form-control me-2 bg-dark text-light"
                     type="search"
@@ -23,7 +19,6 @@ const Search = ({ onSearch }) => {
                     value={query}
                     onChange={handleChange}
                 />
-                <button className="btn btn-outline-secondary" type="submit">Search</button>
             </form>
         </div>
     );
