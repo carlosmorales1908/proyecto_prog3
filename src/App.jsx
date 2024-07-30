@@ -6,6 +6,8 @@ import RoutesNotFound from "./pages/NotFound.page";
 import { PrivateRoutes, PublicRutes } from "./routes/routes";
 import AuthGuard from "./guards/auth.guard";
 import Spinner from "./components/Spinner/Spinner";
+import UploadSongPage from "./pages/UploadSong.page";
+
 
 const SidebarLayout = lazy(() => import("./components/Sidebar/SidebarLayout"));
 const LoginPage = lazy(() => import("./pages/Login.page"));
@@ -34,8 +36,8 @@ function App() {
                   element={<h1>INSERT NEW-PLAYLIST PAGE HERE</h1>}
                 />
                 <Route
-                  path={`upload-song`}
-                  element={<h1>INSERT UPLOAD-SONG PAGE HERE</h1>}
+                  path={PrivateRoutes.UPLOADSONG}
+                  element={<UploadSongPage />}
                 />
                 <Route
                   path={`my-account`}
