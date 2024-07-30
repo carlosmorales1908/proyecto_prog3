@@ -61,14 +61,6 @@ class SongService extends BaseService {
             this.error = error.message || "Unknown error";
             return { success: false, error: error.message || "Unknown error" };
         }
-        return this.request(null, {
-            method: "POST",
-            body: formData,
-            headers: {
-                "Accept": "application/json",
-                "Authorization": `Token ${this.token}`,
-            },
-        });
     }
 
     async updateSong(id, data) {
