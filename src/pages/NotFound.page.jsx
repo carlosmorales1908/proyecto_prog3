@@ -1,4 +1,5 @@
 import { Route, Routes } from "react-router-dom";
+import NotFound from "../components/NotFound/NotFound";
 
 const RoutesNotFound = ({ children }) => {
   return (
@@ -7,16 +8,7 @@ const RoutesNotFound = ({ children }) => {
       <Route
         path="*"
         element={
-          <div
-            style={{
-              backgroundColor: "aquamarine",
-              color: "black",
-              height: "100vh",
-              fontWeight: "bold",
-            }}
-          >
-            NOT FOUND
-          </div>
+          <NotFound/>
         }
       />
     </Routes>
