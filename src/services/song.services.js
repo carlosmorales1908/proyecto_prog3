@@ -1,55 +1,35 @@
-class SongService{
-    constructor(){
-        this.baseURL = import.meta.env.VITE_BASE_URL
-        this.error = null;
-        this.token = import.meta.env.VITE_AUTH_TOKEN;
-    } 
+import BaseService from "./base.services";
 
-    async getAllSongs(){
-        try {
-            const URI = `${this.baseURL}harmonyhub/songs`
-            const rawResponse = await fetch(URI,{
-                method:"GET",
-                headers:{
-                    Accept:"application/json",
-                    "Content-Type":"application/json"
-            },
-        });
-        
-        if(!rawResponse.ok){
-            throw new Error("Error getting the songs");
-        }
-
-        const response = await rawResponse.json();
-        this.error = null;
-        return response;
-        } catch (error) {
-            this.error = error.message || "Unknown error";
-            console.error("Error getting the songs: ",this.error)
-        }
+class SongService extends BaseService {
+    constructor(token) {
+        super(token, import.meta.env.VITE_URI_SONGS);
     }
 
 
-    async getSongById(id){
-        try {
-        const URI = `${this.baseURL}harmonyhub/songs/${id}/`;
-        const rawResponse = await fetch(URI,{
-            method:"GET",
-            headers:{
-                Accept:"application/json",
-                 "Content-Type":"application/json",
-                },
-            });
-            if (!rawResponse.ok){
-                throw new Error(`Error getting the song with the ID: ${id}`);
-            }
-            const response = await rawResponse.json();
-            this.error = null;
-            return response;
-        } catch (error) {
-            this.error = error.message || "Unknown error";
-            console.error(`Error getting the song with the ID ${id}`, this.error);
+    // Si alguien lee esto quiero decirle que fue un hardcodeo de ultima hora
+    // el programador que lo hizo se estreso
+    // posdata: toy cansado jefe
+  async getSongsByPage(page, pageSize) {
+    try {
+      const URI = `${import.meta.env.VITE_BASE_URL}harmonyhub/songs/?page=${page}&page_size=${pageSize}`;
+      const response = await fetch(URI, {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          Authorization: `Token ${this.token}`
         }
+      });
+      if (!response.ok) {
+        throw new Error("Failed to fetch songs");
+      }
+      return await response.json();
+    } catch (error) {
+      console.error("Error fetching songs by page: ", error);
+      throw error;
+    }
+  }
+    async getSongById(songId) {
+        return this.getOne(songId);
     }
 
     async addSong(data) {
@@ -81,74 +61,33 @@ class SongService{
             this.error = error.message || "Unknown error";
             return { success: false, error: error.message || "Unknown error" };
         }
+        return this.request(null, {
+            method: "POST",
+            body: formData,
+            headers: {
+                "Accept": "application/json",
+                "Authorization": `Token ${this.token}`,
+            },
+        });
     }
 
-
-    async updateSong(id,data) {
-        try {
-            const URI = `${this.baseURL}harmonyhub/songs/${id}/`;
-            const formData = new FormData();
-        
-            for (const key in data) {
-               
-                    formData.append(key, data[key] || '');
-               
-            }
-            const rawResponse = await fetch(URI, {
-                method: "PUT",
-                headers: {
-                    Accept: "application/json",
-                    Authorization: `Token ${this.token}`,
-                },
-                body: formData,
-            });
-            
-
-            if (!rawResponse.ok) {
-                const errorText = await rawResponse.text(); 
-                throw new Error(`Error update the song: ${errorText}`);
-            }
-
-            const response = await rawResponse.json();
-            console.log('Server Response:', response);
-        
-           
-        } catch (error) {
-            this.error = error.message || "Unknown error";
-            console.error("Error updating the song: ", this.error);
+    async updateSong(id, data) {
+        const formData = new FormData();
+        for (const key in data) {
+            formData.append(key, data[key] || '');
         }
+        return this.request(id, {
+            method: "PUT",
+            body: formData,
+            headers: {
+                "Accept": "application/json",
+                "Authorization": `Token ${this.token}`,
+            },
+        });
     }
 
     async deleteSong(id) {
-        try {
-            const URI = `${this.baseURL}harmonyhub/songs/${id}/`;
-            const rawResponse = await fetch(URI, {
-                method: "DELETE",
-                headers: {
-                    Accept: "application/json",
-                    "Content-Type": "application/json",
-                    Authorization: `Token ${this.jwt}`
-                },
-            });
-            if (!rawResponse.ok) {
-                throw new Error(`Error deleting data with ID ${id}`);
-            }
-
-            const response = await rawResponse.json();
-            this.error = null;
-            return response;
-        } catch (error) {
-            this.error = error.message || "Unknown error";
-            console.error(`Error deleting data with ID ${id}: `, this.error);
-        }
-    }
-
-    getError() {
-        return this.error;
-    }
-
-    clearError() {
-        this.error = null;
+        return this.delete(id);
     }
 }
 
