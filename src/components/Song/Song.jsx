@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect, useContext, useMemo } from "react";
+import React, { useRef, useState, useEffect, useContext } from "react";
 import "./Song.css";
 import { AuthContext } from "../../context/auth.contex";
 import SongService from "../../services/song.services";
@@ -11,9 +11,14 @@ const Song = ({ song, onPlay, isPlaying, index, onDelete }) => {
   const iconRef = useRef(null);
   const menuRef = useRef(null);
   const { token } = useContext(AuthContext);
-  const playlistService = useMemo(() => new PlaylistService(token), [token]);
+  
+  // Instancia del servicio directamente en el componente
+  const playlistService = new PlaylistService(token);
+  const songService = new SongService(token);
+
   const [selectedPlaylist, setSelectedPlaylist] = useState("");
   const [playlists, setPlaylists] = useState([]);
+
   useEffect(() => {
     if (isPlaying) {
       audioRef.current.play();
@@ -46,13 +51,11 @@ const Song = ({ song, onPlay, isPlaying, index, onDelete }) => {
   const handleMenuAction = async (action) => {
     if (action === "delete") {
       try {
-        const songService = new SongService(token);
         await songService.delete(song.id);
-
         if (onDelete) onDelete(song.id);
       } catch (error) {
-        if (error.status == 403) {
-          alert("No tienes permiso de eliminar la cancion");
+        if (error.status === 403) {
+          alert("No tienes permiso de eliminar la canción");
         }
       }
     } else if (action === "add") {
@@ -65,7 +68,7 @@ const Song = ({ song, onPlay, isPlaying, index, onDelete }) => {
     const fetchPlaylists = async () => {
       try {
         const data = await playlistService.getAllPlaylists();
-        setPlaylists(data);
+        setPlaylists(data.results);
       } catch (error) {
         console.error("Error fetching playlists:", error);
       }
