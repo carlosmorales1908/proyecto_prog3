@@ -12,7 +12,6 @@ const Song = ({ song, onPlay, isPlaying, index, onDelete }) => {
   const menuRef = useRef(null);
   const { token } = useContext(AuthContext);
   
-  // Instancia del servicio directamente en el componente
   const playlistService = new PlaylistService(token);
   const songService = new SongService(token);
 
