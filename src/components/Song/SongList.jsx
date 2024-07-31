@@ -14,12 +14,17 @@ const SongList = () => {
   const [showScrollbar, setShowScrollbar] = useState(false);
   const [query, setQuery] = useState(""); 
   const { token } = useContext(AuthContext);
-  const [page, setPage] = useState(1);
-  const [hasMore, setHasMore] = useState(true);
+
+
+  const [page, setPage] = useState(1); // estado de la pagina (por defecto empezando en 1)
+  const [hasMore, setHasMore] = useState(true); // este estado sirve para indicar si hay mas canciones
 
   const songService = new SongService(token);
 
+
   const observer = useRef();
+  //Utiliza useCallback para tener la referencia del ultimo elemento de la lista
+  //que en este caso seria las canciones
   const lastSongElementRef = useCallback(node => {
     if (isLoading) return;
     if (observer.current) observer.current.disconnect();
@@ -31,14 +36,19 @@ const SongList = () => {
     if (node) observer.current.observe(node);
   }, [isLoading, hasMore]);
 
+
+  
   const fetchSongs = async (page, reset = false) => {
+    // este fetchSongs recibe la pagina donde tienen las canciones y su reseteo
+    // lo ultimo sirve mas para verificar si se debe agregar las canciones que faltan.
+    // Esa verificacion permitira que el scroll siga bajando
     setIsLoading(true);
     try {
-      const data = await songService.getSongsByPage(page, 5);
+      const data = await songService.getSongsByPage(page, 5); //Esto llama al servicio para que saque las canciones por pagina
       if (data.results) {
-        setSongs(prevSongs => reset ? data.results : [...prevSongs, ...data.results]);
+        setSongs(prevSongs => reset ? data.results : [...prevSongs, ...data.results]); // todo esto actualiza el estado de las canciones
         setFilteredSongs(prevSongs => reset ? data.results : [...prevSongs, ...data.results]);
-        setHasMore(!!data.next);
+        setHasMore(!!data.next); // esto se actualiza si hay otra pagina
       }
     } catch (error) {
       setFetchError(error.message || "Error al obtener las canciones");
@@ -48,14 +58,22 @@ const SongList = () => {
   };
 
   const handleLoadMore = () => {
+    // Bueno, este sirve para pasar de pagina o sea,incrementa el numero de pagina para mostrar las otras canciones
     if (hasMore) {
       setPage(prevPage => prevPage + 1);
     }
   };
 
+  
   useEffect(() => {
-    fetchSongs(page);
+    // este useEffect llama a fetchSongs cada vez que el valor de la pagina cambia
+    fetchSongs(page); 
   }, [page]);
+
+  // bueno ya lo otro fue explicado en meet, si no te acuerdas puedes comunicarte al siguiente numero
+  // 3878236079
+  // estare dias de descanso asi que tardare en responder
+  // Buena suerte, la necesitaras
 
   useEffect(() => {
     const results = songs.filter(song =>
