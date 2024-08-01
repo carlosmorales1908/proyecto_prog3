@@ -2,7 +2,6 @@ import React, { useRef, useState, useEffect, useContext } from "react";
 import "./Song.css";
 import { AuthContext } from "../../context/auth.contex";
 import SongService from "../../services/song.services";
-import PlaylistService from "../../services/playlists.services";
 
 const Song = ({ song, onPlay, isPlaying, index, onDelete }) => {
   const [isHovered, setIsHovered] = useState(false);
@@ -11,12 +10,9 @@ const Song = ({ song, onPlay, isPlaying, index, onDelete }) => {
   const iconRef = useRef(null);
   const menuRef = useRef(null);
   const { token } = useContext(AuthContext);
-  
-  const playlistService = new PlaylistService(token);
+
   const songService = new SongService(token);
 
-  const [selectedPlaylist, setSelectedPlaylist] = useState("");
-  const [playlists, setPlaylists] = useState([]);
 
   useEffect(() => {
     if (isPlaying) {
@@ -53,31 +49,12 @@ const Song = ({ song, onPlay, isPlaying, index, onDelete }) => {
         await songService.delete(song.id);
         if (onDelete) onDelete(song.id);
       } catch (error) {
-        if (error.status === 403) {
-          alert("No tienes permiso de eliminar la canción");
-        }
+        console.log("No se puede eliminar la cancion", error)
       }
     } else if (action === "add") {
       console.log("Agregar a la Lista");
     }
     setShowMenu(false);
-  };
-
-  useEffect(() => {
-    const fetchPlaylists = async () => {
-      try {
-        const data = await playlistService.getAllPlaylists();
-        setPlaylists(data.results);
-      } catch (error) {
-        console.error("Error fetching playlists:", error);
-      }
-    };
-
-    fetchPlaylists();
-  }, [playlistService]);
-
-  const handlePlaylistChange = (event) => {
-    setSelectedPlaylist(event.target.value);
   };
 
   return (
@@ -148,20 +125,6 @@ const Song = ({ song, onPlay, isPlaying, index, onDelete }) => {
               >
                 Agregar a una playlist
               </a>
-            </li>
-            <li className="item">
-              <select
-                value={selectedPlaylist}
-                onChange={handlePlaylistChange}
-                className="dropdown-item text-light"
-              >
-                <option className="bg-dark" >Selecciona una playlist</option>
-                {playlists.map((playlist) => (
-                  <option className="bg-dark" key={playlist.id} value={playlist.id}>
-                    {playlist.name}
-                  </option>
-                ))}
-              </select>
             </li>
           </ul>
         </div>
