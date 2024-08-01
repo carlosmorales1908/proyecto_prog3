@@ -1,68 +1,19 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { PlaylistCard } from "../PlaylistCard/PlaylistCard";
+import usePlaylists from "../../hooks/usePlaylists";
+import useInfiniteScroll from "../../hooks/useInfiniteScroll";
 
 const PlaylistList = () => {
   const [page, setPage] = useState(1);
-  const [nextUrl, setNextUrl] = useState(null);
-  const [playlists, setPlaylists] = useState([]);
-  const [isError, setIsError] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const { playlists, nextUrl, isError, isLoading } = usePlaylists(page);
 
-  const observerRef = useRef();
-  const lastPlaylistElementRef = useRef(null);
+  const loadMorePlaylists = () => setPage((prevPage) => prevPage + 1);
 
-  const doFetch = async () => {
-    setIsLoading(true);
-    try {
-      const response = await fetch(
-        `${
-          import.meta.env.VITE_BASE_URL
-        }/harmonyhub/playlists/?page=${page}&page_size=10`
-      );
-      if (!response.ok) {
-        throw new Error("No se pudieron cargar las playlists");
-      }
-      const data = await response.json();
-      if (data.results) {
-        setPlaylists((prevPlaylists) => [...prevPlaylists, ...data.results]);
-        setNextUrl(data.next);
-      }
-    } catch (error) {
-      setIsError(true);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    doFetch();
-  }, [page]);
-
-  useEffect(() => {
-    if (isLoading || !nextUrl) return;
-
-    if (observerRef.current) {
-      observerRef.current.disconnect();
-    }
-
-    const observer = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting && nextUrl) {
-        setPage((prevPage) => prevPage + 1);
-      }
-    });
-
-    observerRef.current = observer;
-
-    if (lastPlaylistElementRef.current) {
-      observer.observe(lastPlaylistElementRef.current);
-    }
-
-    return () => {
-      if (observerRef.current) {
-        observerRef.current.disconnect();
-      }
-    };
-  }, [isLoading, nextUrl]);
+  const lastElementRef = useInfiniteScroll(
+    nextUrl,
+    isLoading,
+    loadMorePlaylists
+  );
 
   if (isError) return <p>Error al cargar las playlists.</p>;
   if (!playlists.length && !isLoading)
@@ -77,7 +28,7 @@ const PlaylistList = () => {
             <div
               key={`${playlist.id}-${index}`}
               className="col-4"
-              ref={isLastElement ? lastPlaylistElementRef : null}
+              ref={isLastElement ? lastElementRef : null}
             >
               <PlaylistCard playlist={playlist} />
             </div>
