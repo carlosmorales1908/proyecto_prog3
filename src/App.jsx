@@ -1,24 +1,22 @@
 import { BrowserRouter, Route } from "react-router-dom";
 import "./App.css";
-import { Suspense } from "react";
+import { Suspense, lazy } from "react";
 import AuthContextProvider from "./context/auth.contex";
 import RoutesNotFound from "./pages/NotFound.page";
 import { PrivateRoutes, PublicRutes } from "./routes/routes";
 import AuthGuard from "./guards/auth.guard";
-// import Home from "./pages/Home";
-import SidebarLayout from "./components/Sidebar/SidebarLayout";
-import LoginPage from "./pages/Login.page";
-
-import Playlists from "./pages/Playlists.page";
-
-import SongsPage from "./pages/Song.page";
 import Spinner from "./components/Spinner/Spinner";
 import UploadSongPage from "./pages/UploadSong.page";
 
 
+const SidebarLayout = lazy(() => import("./components/Sidebar/SidebarLayout"));
+const LoginPage = lazy(() => import("./pages/Login.page"));
+const Playlists = lazy(() => import("./pages/Playlists.page"));
+const SongsPage = lazy(() => import("./pages/Song.page"));
+
 function App() {
   return (
-    <Suspense fallback={<Spinner/>}>
+    <Suspense fallback={<Spinner />}>
       <AuthContextProvider>
         <BrowserRouter>
           <RoutesNotFound>
