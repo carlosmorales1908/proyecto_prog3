@@ -1,10 +1,13 @@
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import useForm from "../../hooks/useForm";
 import SongService from "../../services/song.services";
+import AlbumService from "../../services/album.services";
 import InfoModal from "../InfoModal/InfoModal";
 import Spinner from "../Spinner/Spinner";
+import { AuthContext } from "../../context/auth.contex";
 
 export default function UploadSongForm() {
+  const { token } = useContext(AuthContext);
   const fileInputRef = useRef(null);
   //    For Spinner
   const [isLoading, setIsLoading] = useState(false);
@@ -12,11 +15,10 @@ export default function UploadSongForm() {
   const [showModal, setShowModal] = useState(false);
   const [modalTitle, setModalTitle] = useState("");
   const [modalText, setModalText] = useState("");
-  let modalBody = <p>{modalText}</p>;
 
   function handleOpenModal() {
     setShowModal(true);
-  };
+  }
 
   //    For useForm
   const initialState = {
@@ -29,8 +31,18 @@ export default function UploadSongForm() {
 
   async function handleUploadSong() {
     try {
+      const albumService = new AlbumService(token);
+      const response = await albumService.getAllAlbums();
+      console.log(response);
+   
+    } catch (error) {
+      console.log("Unexpected error:", error);
+    }
+
+    
+    try {
       setIsLoading(true);
-      const songService = new SongService();
+      const songService = new SongService(token);
       const response = await songService.addSong(values);
 
       if (response.success) {
@@ -72,13 +84,11 @@ export default function UploadSongForm() {
     Object.keys(values).forEach((key) => {
       if (key == "song_file") {
         values[key] = null;
-      }
-      else {
+      } else {
         values[key] = "";
       }
     });
   }
-  
 
   //    UploadSongForm
   return (
@@ -88,8 +98,7 @@ export default function UploadSongForm() {
         setShow={setShowModal}
         handleOpen={handleOpenModal}
         title={modalTitle}
-        children={modalBody}
-      />
+      ><p>{modalText}</p></InfoModal>
       <h1 className="mb-4">Subir Canción</h1>
       <div className="d-flex justify-content-center pt-5">
         <form
@@ -99,7 +108,9 @@ export default function UploadSongForm() {
           noValidate
         >
           <div className="input-group">
-            {/* <label htmlFor="title" className="me-2 mb-3">Título:</label> */}
+            {/* <label htmlFor="title" className="me-2 mb-3">
+              Título:
+            </label> */}
             <span
               className="input-group-text bg-black bg-gradient text-primary"
               id="inputGroup-sizing-default"
@@ -174,7 +185,20 @@ export default function UploadSongForm() {
             >
               Album
             </span>
-            <input
+            <select
+              id="album"
+              name="album"
+              value={values.album}
+              onChange={handleChange}
+              required
+              className="form-control"
+            >
+              <option value="">Seleccione un album</option>
+              <option value="50">MG-2</option>
+              <option value="51">G-ALBUM -E-255</option>
+              <option value="32">Purpose</option>
+            </select>
+            {/* <input
               type="number"
               className="form-control"
               id="album"
@@ -182,7 +206,7 @@ export default function UploadSongForm() {
               minLength={1}
               value={values.album}
               onChange={(e) => handleChange(e)}
-            />
+            /> */}
           </div>
           <div className="input-group mt-3">
             {/* <label htmlFor="audio" className="me-2">Archivo de audio:</label> */}
@@ -214,17 +238,17 @@ export default function UploadSongForm() {
             )}
           </div>
           {/* {fetchError&&(<div className="text-center text-danger mt-3">{fetchError}</div>)} */}
-          
+
           <div className="text-center">
-          {isLoading ? (
-            <div className="mt-4 px-4">
-              <Spinner />
-            </div>
-            
-          ) : (
-            <button type="submit" className="btn btn-success mt-4 px-4">
-              Enviar
-            </button>)}
+            {isLoading ? (
+              <div className="mt-4 px-4">
+                <Spinner />
+              </div>
+            ) : (
+              <button type="submit" className="btn btn-success mt-4 px-4">
+                Enviar
+              </button>
+            )}
           </div>
         </form>
       </div>
