@@ -39,10 +39,10 @@ function App() {
                   path={PrivateRoutes.UPLOADSONG}
                   element={<UploadSongPage />}
                 />
-                <Route
+                {/* <Route
                   path={`my-account`}
                   element={<h1>INSERT MY-ACCOUNT PAGE HERE</h1>}
-                />
+                /> */}
                 <Route path={`playlists`} element={<Playlists />} />
                 <Route path={`profile`} element={<Profile />} />
               </Route>
