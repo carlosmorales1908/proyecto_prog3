@@ -18,7 +18,7 @@ const PlaylistList = () => {
   if (isError) return <p>Error al cargar las playlists.</p>;
   if (!playlists.length && !isLoading)
     return <p>No hay playlists disponibles</p>;
-
+  
   return (
     <>
       <div className="row g-5">
