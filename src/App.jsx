@@ -1,4 +1,4 @@
-import { BrowserRouter, Route } from "react-router-dom";
+import { BrowserRouter, Navigate, Route } from "react-router-dom";
 import "./App.css";
 import { Suspense, lazy } from "react";
 import AuthContextProvider from "./context/auth.contex";
@@ -22,6 +22,7 @@ function App() {
             <Route path={PublicRutes.LOGIN} element={<LoginPage />} />
             <Route element={<AuthGuard privateValidation={true} />}>
               <Route path={`/`} element={<SidebarLayout />}>
+                <Route index element={<Navigate to={PrivateRoutes.HOME} />} />
                 <Route
                   path={PrivateRoutes.HOME}
                   index={true}
