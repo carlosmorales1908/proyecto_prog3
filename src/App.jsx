@@ -7,6 +7,7 @@ import { PrivateRoutes, PublicRutes } from "./routes/routes";
 import AuthGuard from "./guards/auth.guard";
 import Spinner from "./components/Spinner/Spinner";
 import UploadSongPage from "./pages/UploadSong.page";
+import PlaylistSongsPage from "./pages/PlaylistSongs.page";
 
 const SidebarLayout = lazy(() => import("./components/Sidebar/SidebarLayout"));
 const LoginPage = lazy(() => import("./pages/Login.page"));
@@ -30,7 +31,7 @@ function App() {
                 {/* HACERUN UN COMPONENTE PLAYLIST QUE MUESTRE LAS CANCIONES DE ESA PLAYLIST */}
                 <Route
                   path={PrivateRoutes.PLAYLIST}
-                  element={<p>Aqui van los datos de una playlist</p>}
+                  element={<PlaylistSongsPage />}
                 />
                 {/* ------ */}
                 <Route path={PrivateRoutes.LIBRARY} element={<SongsPage />} />
