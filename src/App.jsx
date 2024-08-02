@@ -8,7 +8,6 @@ import AuthGuard from "./guards/auth.guard";
 import Spinner from "./components/Spinner/Spinner";
 import UploadSongPage from "./pages/UploadSong.page";
 
-
 const SidebarLayout = lazy(() => import("./components/Sidebar/SidebarLayout"));
 const LoginPage = lazy(() => import("./pages/Login.page"));
 const Playlists = lazy(() => import("./pages/Playlists.page"));
@@ -23,7 +22,11 @@ function App() {
             <Route path={PublicRutes.LOGIN} element={<LoginPage />} />
             <Route element={<AuthGuard privateValidation={true} />}>
               <Route path={`/`} element={<SidebarLayout />}>
-                <Route path={PrivateRoutes.HOME} element={<Playlists />} />
+                <Route
+                  path={PrivateRoutes.HOME}
+                  index={true}
+                  element={<Playlists />}
+                />
                 {/* HACERUN UN COMPONENTE PLAYLIST QUE MUESTRE LAS CANCIONES DE ESA PLAYLIST */}
                 <Route
                   path={PrivateRoutes.PLAYLIST}
