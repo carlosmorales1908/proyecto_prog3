@@ -7,6 +7,7 @@ import { PrivateRoutes, PublicRutes } from "./routes/routes";
 import AuthGuard from "./guards/auth.guard";
 import Spinner from "./components/Spinner/Spinner";
 import UploadSongPage from "./pages/UploadSong.page";
+import Profile from "./pages/Profile.page";
 
 const SidebarLayout = lazy(() => import("./components/Sidebar/SidebarLayout"));
 const LoginPage = lazy(() => import("./pages/Login.page"));
