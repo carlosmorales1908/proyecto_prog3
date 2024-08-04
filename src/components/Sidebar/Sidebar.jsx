@@ -1,3 +1,4 @@
+import { PrivateRoutes } from "../../routes/routes";
 import SidebarItem from "./SidebarItem";
 export default function Sidebar() {
   return (
@@ -11,17 +12,22 @@ export default function Sidebar() {
           href="/library"
           icon="bi bi-music-note-list"
         />
-        <SidebarItem
+        {/* <SidebarItem
           text=" Nueva playlist"
           href="/new-playlist"
           icon="bi bi-plus-square"
-        />
+        /> */}
+        {/* HACER UN MODAL */}
         <SidebarItem
           text=" Subir canción"
           href="/upload-song"
           icon="bi bi-cloud-arrow-up"
         />
-        <SidebarItem text=" Mi cuenta" href="/my-account" icon="bi bi-person" />
+        <SidebarItem
+          text=" Mi perfil"
+          href={PrivateRoutes.PROFILE}
+          icon="bi bi-person"
+        />
       </ul>
     </div>
   );
