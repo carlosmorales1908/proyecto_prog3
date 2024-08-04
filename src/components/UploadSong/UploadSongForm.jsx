@@ -1,10 +1,12 @@
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
+import { AuthContext } from "../../context/auth.contex";
 import useForm from "../../hooks/useForm";
 import SongService from "../../services/song.services";
 import InfoModal from "../InfoModal/InfoModal";
 import Spinner from "../Spinner/Spinner";
 
 export default function UploadSongForm() {
+  const { token } = useContext(AuthContext);
   const fileInputRef = useRef(null);
   //    For Spinner
   const [isLoading, setIsLoading] = useState(false);
@@ -30,7 +32,7 @@ export default function UploadSongForm() {
   async function handleUploadSong() {
     try {
       setIsLoading(true);
-      const songService = new SongService();
+      const songService = new SongService(token);
       const response = await songService.addSong(values);
 
       if (response.success) {

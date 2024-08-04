@@ -1,7 +1,7 @@
 import SidebarItem from "./SidebarItem";
 export default function Sidebar() {
   return (
-    <div className="sidebar bg-black vh-100 p-3">
+    <div className="sidebar sticky-top bg-black vh-100 p-3">
       <h4 className="text-warning">MusicPlayApp</h4>
       <div className="border"></div>
       <ul className="nav flex-column">

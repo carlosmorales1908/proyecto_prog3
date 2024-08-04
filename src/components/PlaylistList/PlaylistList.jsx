@@ -1,27 +1,44 @@
-import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../../context/auth.contex";
-import PlaylistService from "../../services/playlists.services";
+import { useState } from "react";
 import { PlaylistCard } from "../PlaylistCard/PlaylistCard";
+import usePlaylists from "../../hooks/usePlaylists";
+import useInfiniteScroll from "../../hooks/useInfiniteScroll";
+import Spinner from "../Spinner/Spinner";
 
 const PlaylistList = () => {
-  const { token } = useContext(AuthContext);
-  const [playlists, setPlaylists] = useState([]);
+  const [page, setPage] = useState(1);
+  const { playlists, nextUrl, isError, isLoading } = usePlaylists(page);
 
-  useEffect(() => {
-    const playlistService = new PlaylistService(token);
-    playlistService
-      .getAllPlaylists()
-      .then((playlist) => setPlaylists(playlist.results));
-  }, [token]);
+  const loadMorePlaylists = () => setPage((prevPage) => prevPage + 1);
+
+  const lastElementRef = useInfiniteScroll(
+    nextUrl,
+    isLoading,
+    loadMorePlaylists
+  );
+
+  if (isError) return <p>Error al cargar las playlists.</p>;
+  if (!playlists.length && !isLoading)
+    return <p>No hay playlists disponibles</p>;
 
   return (
-    <div className="row g-5">
-      {playlists.map((playlist) => (
-        <div key={playlist.id} className="col-4">
-          <PlaylistCard playlist={playlist} />
-        </div>
-      ))}
-    </div>
+    <>
+      <div className="row g-5">
+        {playlists.map((playlist, index) => {
+          const isLastElement = index === playlists.length - 1;
+          return (
+            <div
+              key={`${playlist.id}-${index}`}
+              className="col-4"
+              ref={isLastElement ? lastElementRef : null}
+            >
+              <PlaylistCard playlist={playlist} />
+            </div>
+          );
+        })}
+      </div>
+      {isLoading && <Spinner />}
+    </>
   );
 };
+
 export default PlaylistList;
