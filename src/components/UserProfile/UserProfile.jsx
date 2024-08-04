@@ -42,7 +42,7 @@ const UserProfile = () => {
   };
 
   const handleImageClick = () => {
-    fileInputRef.current.click();
+    editMode && fileInputRef.current.click();
   };
 
   const handleChangeImg = (event) => {
