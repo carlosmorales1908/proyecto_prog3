@@ -143,7 +143,7 @@ const UserProfile = () => {
                     ? `${import.meta.env.VITE_BASE_URL}${userProfile.image}`
                     : "src/assets/sin_perfil.jpeg"
                 }
-                className="header-card-img rounded-circle m-2"
+                className={`header-card-img object-fit-cover rounded-circle m-2 ${editMode && "img-edit"}`}
                 onClick={handleImageClick}
                 alt="Profile"
               />
@@ -259,12 +259,3 @@ const UserProfile = () => {
 };
 
 export default UserProfile;
-
-/*
-user__id
-username
-first_name
-last_name
-email
-image
-*/
