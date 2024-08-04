@@ -1,0 +1,17 @@
+.card-profile {
+  background-color: rgba(59, 59, 59, 0.5);
+  box-shadow: 0px 0px 8px 7px rgb(49, 49, 49);
+}
+
+.header-card{
+  background-color: rgba(32, 32, 32, 0.5);
+}
+
+.header-card-img{
+  width: 150px;
+  height: 150px;
+}
+
+.header-card-img:hover{
+  cursor: pointer;
+}
