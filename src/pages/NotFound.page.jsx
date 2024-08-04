@@ -1,5 +1,8 @@
+import { lazy } from "react";
 import { Route, Routes } from "react-router-dom";
-import NotFound from "../components/NotFound/NotFound";
+// import NotFound from "../components/NotFound/NotFound";
+
+const NotFound = lazy(() => import("../components/NotFound/NotFound"));
 
 const RoutesNotFound = ({ children }) => {
   return (
