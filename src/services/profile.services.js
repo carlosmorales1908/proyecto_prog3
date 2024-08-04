@@ -8,6 +8,10 @@ class UserProfileService extends BaseService{
   async getProfile() {
     return this.getAll();
   }
+
+  async getProfileById(id){
+    return this.getOne(id);
+  }
 }
 
 export default UserProfileService;
