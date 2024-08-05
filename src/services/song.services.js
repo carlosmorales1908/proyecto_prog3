@@ -83,7 +83,13 @@ class SongService extends BaseService {
             
             if (!rawResponse.ok) {
                 const response = await rawResponse.json();
-                throw new Error(response.non_field_errors[0]);
+                console.log(response);
+                if ('detail' in response) { 
+                    throw new Error(response.detail);
+                }
+                else {
+                    throw new Error(response.non_field_errors[0]);
+                }
             }
 
             const response = await rawResponse.json();

@@ -49,7 +49,7 @@ function App() {
                   element={<h1>INSERT MY-ACCOUNT PAGE HERE</h1>}
                 /> */}
                 <Route path={`playlists`} element={<Playlists />} />
-                <Route path={`profile`} element={<Profile />} />
+                <Route path={PrivateRoutes.PROFILE} element={<Profile />} />
               </Route>
             </Route>
           </RoutesNotFound>
