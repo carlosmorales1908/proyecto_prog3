@@ -8,6 +8,7 @@ import AuthGuard from "./guards/auth.guard";
 import Spinner from "./components/Spinner/Spinner";
 import UploadSongPage from "./pages/UploadSong.page";
 import Profile from "./pages/Profile.page";
+import LogoutPage from "./pages/Logout.page";
 
 const SidebarLayout = lazy(() => import("./components/Sidebar/SidebarLayout"));
 const LoginPage = lazy(() => import("./pages/Login.page"));
@@ -49,7 +50,8 @@ function App() {
                   element={<h1>INSERT MY-ACCOUNT PAGE HERE</h1>}
                 /> */}
                 <Route path={`playlists`} element={<Playlists />} />
-                <Route path={`profile`} element={<Profile />} />
+                <Route path={PrivateRoutes.PROFILE} element={<Profile />} />
+                <Route path={PrivateRoutes.LOGOUT} element={<LogoutPage />} />
               </Route>
             </Route>
           </RoutesNotFound>

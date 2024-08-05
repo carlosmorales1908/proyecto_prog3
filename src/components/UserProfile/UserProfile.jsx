@@ -42,7 +42,7 @@ const UserProfile = () => {
   };
 
   const handleImageClick = () => {
-    fileInputRef.current.click();
+    editMode && fileInputRef.current.click();
   };
 
   const handleChangeImg = (event) => {
@@ -132,8 +132,7 @@ const UserProfile = () => {
 
   return (
     <>
-      <h1 className="mb-3">USER PROFILE</h1>
-      <div className="container card-profile g-0">
+      <div className="container card-profile g-0 mt-2" style={{ width: "60%" }}>
         <div className="user-info">
           <div className="header-card d-flex">
             <div>
@@ -143,7 +142,9 @@ const UserProfile = () => {
                     ? `${import.meta.env.VITE_BASE_URL}${userProfile.image}`
                     : "src/assets/sin_perfil.jpeg"
                 }
-                className={`header-card-img object-fit-cover rounded-circle m-2 ${editMode && "img-edit"}`}
+                className={`header-card-img object-fit-cover rounded-circle m-2 ${
+                  editMode && "img-edit"
+                }`}
                 onClick={handleImageClick}
                 alt="Profile"
               />
@@ -157,13 +158,13 @@ const UserProfile = () => {
                 />
               )}
             </div>
-            <div className="user-name-header d-block mx-5 fs-2 mt-5 fw-bold">
-              <p>{userProfile.first_name}</p>
+            <div className="user-name-header d-block mx-5 mt-5 fw-bold">
+              <h2>{userProfile.first_name}</h2>
             </div>
           </div>
           <div className="body-card m-2">
-            <div className="user-name-body fs-5">
-              <p className="my-1 fw-bold fs-4">Nombre de Usuario:</p>
+            <div className="user-name-body">
+              <p className="my-1 fw-bold fs-6">Nombre de Usuario:</p>
               {editMode ? (
                 <input
                   type="text"
@@ -172,11 +173,11 @@ const UserProfile = () => {
                   onChange={handleInputChange}
                 />
               ) : (
-                <p>{userProfile.username}</p>
+                <p className="fs-5">{userProfile.username}</p>
               )}
             </div>
-            <div className="first-name-body fs-5">
-              <p className="my-1 fw-bold fs-4">Nombres:</p>
+            <div className="first-name-body">
+              <p className="my-1 fw-bold fs-6">Nombres:</p>
               {editMode ? (
                 <input
                   type="text"
@@ -185,11 +186,11 @@ const UserProfile = () => {
                   onChange={handleInputChange}
                 />
               ) : (
-                <p>{userProfile.first_name}</p>
+                <p className="fs-5">{userProfile.first_name}</p>
               )}
             </div>
-            <div className="last-name-body fs-5">
-              <p className="my-1 fw-bold fs-4">Apellidos:</p>
+            <div className="last-name-body">
+              <p className="my-1 fw-bold fs-6">Apellidos:</p>
               {editMode ? (
                 <input
                   type="text"
@@ -198,11 +199,11 @@ const UserProfile = () => {
                   onChange={handleInputChange}
                 />
               ) : (
-                <p>{userProfile.last_name}</p>
+                <p className="fs-5">{userProfile.last_name}</p>
               )}
             </div>
-            <div className="email-body fs-5 mt-3 mb-3">
-              <p className="fw-bold fs-4">Correo Electrónico:</p>
+            <div className="email-body mt-3 mb-3">
+              <p className="fw-bold fs-6">Correo Electrónico:</p>
               {editMode ? (
                 <input
                   type="email"
@@ -212,10 +213,12 @@ const UserProfile = () => {
                 />
               ) : (
                 <div className="email-info d-flex">
-                  <p>{!showEmail ? parseEmail(email) : email}</p>
+                  <p className="fs-5">
+                    {!showEmail ? parseEmail(email) : email}
+                  </p>
                   <p
                     onClick={handleShowEmail}
-                    className="text-primary mx-2"
+                    className="text-primary mx-2 fs-5"
                     style={{ cursor: "pointer" }}
                   >
                     Mostrar
@@ -228,14 +231,14 @@ const UserProfile = () => {
                 <>
                   <button
                     type="submit"
-                    className="btn btn-success mx-2 fs-5"
+                    className="btn btn-success mx-2 fs-5 mb-2"
                     onClick={handleSaveChanges}
                   >
                     Guardar
                   </button>
                   <button
                     type="button"
-                    className="btn btn-secondary mx-2 fs-5"
+                    className="btn btn-secondary mx-2 fs-5 mb-2"
                     onClick={handleCancelEdit}
                   >
                     Cancelar
@@ -244,7 +247,7 @@ const UserProfile = () => {
               ) : (
                 <button
                   type="button"
-                  className="btn btn-primary fs-5"
+                  className="btn btn-primary fs-5 mb-2"
                   onClick={handleEdit}
                 >
                   Editar Perfil de Usuario
