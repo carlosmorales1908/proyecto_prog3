@@ -8,6 +8,7 @@ import AuthGuard from "./guards/auth.guard";
 import Spinner from "./components/Spinner/Spinner";
 import UploadSongPage from "./pages/UploadSong.page";
 import Profile from "./pages/Profile.page";
+import LogoutPage from "./pages/Logout.page";
 
 const SidebarLayout = lazy(() => import("./components/Sidebar/SidebarLayout"));
 const LoginPage = lazy(() => import("./pages/Login.page"));
@@ -50,6 +51,7 @@ function App() {
                 /> */}
                 <Route path={`playlists`} element={<Playlists />} />
                 <Route path={PrivateRoutes.PROFILE} element={<Profile />} />
+                <Route path={PrivateRoutes.LOGOUT} element={<LogoutPage />} />
               </Route>
             </Route>
           </RoutesNotFound>
