@@ -4,6 +4,8 @@ import UserProfileService from "../../services/profile.services";
 import parseEmail from "../../utility/parseEmail";
 import "./UserProfile.css";
 import Spinner from "../Spinner/Spinner";
+import { Link } from "react-router-dom";
+import { PrivateRoutes } from "../../routes/routes";
 
 const UserProfile = () => {
   const { token } = useContext(AuthContext);
@@ -132,7 +134,16 @@ const UserProfile = () => {
 
   return (
     <>
-      <h1 className="mb-3">USER PROFILE</h1>
+      <div className="d-flex justify-content-between">
+        <h1 className="mb-3">USER PROFILE</h1>
+        <Link
+          className="btn btn-primary fs-6 text-light"
+          style={{ height: "40px", padding: "4px" }}
+          to={PrivateRoutes.LOGOUT}
+        >
+          Cerrar Sesión
+        </Link>
+      </div>
       <div className="container card-profile g-0">
         <div className="user-info">
           <div className="header-card d-flex">
@@ -143,7 +154,9 @@ const UserProfile = () => {
                     ? `${import.meta.env.VITE_BASE_URL}${userProfile.image}`
                     : "src/assets/sin_perfil.jpeg"
                 }
-                className={`header-card-img object-fit-cover rounded-circle m-2 ${editMode && "img-edit"}`}
+                className={`header-card-img object-fit-cover rounded-circle m-2 ${
+                  editMode && "img-edit"
+                }`}
                 onClick={handleImageClick}
                 alt="Profile"
               />
@@ -244,7 +257,7 @@ const UserProfile = () => {
               ) : (
                 <button
                   type="button"
-                  className="btn btn-primary fs-5"
+                  className="btn btn-primary fs-5 m-2"
                   onClick={handleEdit}
                 >
                   Editar Perfil de Usuario
