@@ -1,10 +1,12 @@
 import UserProfile from "../components/UserProfile/UserProfile";
+import UserProfileTitle from "../components/UserProfile/UserProfileTitle";
 
 const Profile = () => {
   return (
-    <div className="my-1" style={{width:"50vw", background:"none"}}>
+    <>
+      <UserProfileTitle />
       <UserProfile />
-    </div>
+    </>
   );
 };
 export default Profile;
