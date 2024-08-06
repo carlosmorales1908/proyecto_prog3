@@ -52,11 +52,15 @@ const AllSongList = () => {
   const loadMoreSongs = () => {
     if (nextUrl) setPage((prevPage) => prevPage + 1);
   };
-  
+
   const lastElementRef = useInfiniteScroll(nextUrl, isLoading, loadMoreSongs);
 
   const handleSearch = (query) => {
     setSearchQuery(query);
+  };
+
+  const handleDelete = (songId) => {
+    setSongs((prevSongs) => prevSongs.filter((song) => song.id !== songId));
   };
 
   if (isError)
@@ -68,6 +72,7 @@ const AllSongList = () => {
       <SongList
         songs={filteredSongs}
         lastElementRef={nextUrl ? lastElementRef : null}
+        onDelete={handleDelete}
       />
       {isLoading && <Spinner />}
       {songs.length === 0 && !isLoading && (
