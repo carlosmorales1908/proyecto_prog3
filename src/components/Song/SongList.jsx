@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Song from "./Song";
 
-const SongList = ({ songs = [], lastElementRef = null }) => {
+const SongList = ({ songs = [], lastElementRef = null, onDelete }) => {
   const [playingAudio, setPlayingAudio] = useState(null);
 
   const handlePlayAudio = (song) => {
@@ -13,10 +13,6 @@ const SongList = ({ songs = [], lastElementRef = null }) => {
       }
     }
     setPlayingAudio(playingAudio === song.id ? null : song.id);
-  };
-
-  const handleDelete = (songId) => {
-    setSongs((prevSongs) => prevSongs.filter((song) => song.id !== songId));
   };
 
   return (
@@ -50,7 +46,7 @@ const SongList = ({ songs = [], lastElementRef = null }) => {
                 index={index + 1}
                 onPlay={() => handlePlayAudio(song)}
                 isPlaying={playingAudio === song.id}
-                onDelete={handleDelete}
+                onDelete={onDelete ? () => onDelete(song.id) : null}
               />
             </div>
           );
