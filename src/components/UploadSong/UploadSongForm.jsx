@@ -1,12 +1,11 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../../context/auth.contex";
-import Select from "react-select";
-import CreatableSelect from "react-select/creatable";
 import useForm from "../../hooks/useForm";
 import SongService from "../../services/song.services";
 import AlbumService from "../../services/album.services";
 import InfoModal from "../InfoModal/InfoModal";
 import Spinner from "../Spinner/Spinner";
+import ApiSelect from "../Select/ApiSelect";
 
 export default function UploadSongForm() {
     const { token } = useContext(AuthContext);
@@ -18,50 +17,35 @@ export default function UploadSongForm() {
     const [modalTitle, setModalTitle] = useState("");
     const [modalText, setModalText] = useState("");
 
-    const [options, setOptions] = useState([]);
-
-    useEffect(() => {
-        loadAlbumOptions();
-    }, []);
-
-    async function loadAlbumOptions() {
-        try {
-            setIsLoading(true);
-            const albumService = new AlbumService(token);
-            const response = await albumService.getAllAlbums();
-            let albumOptions;
-            if (response.length > 0) {
-                albumOptions = response.map((album) => ({
-                    value: album.id,
-                    label: album.title,
-                }));
-            }
-            setOptions(albumOptions);
-        } catch (error) {
-            console.log("Unexpected error:", error);
-        } finally {
-            setIsLoading(false);
+    //    For Select
+    async function getAlbumOptions(term) {
+        if (!term || term.length < 2) {
+            return [];
         }
-    }
-
-    async function createNewAlbum(inputValue) {
+        
         try {
-            setIsLoading(true);
+            // setIsLoading(true);
             const albumService = new AlbumService(token);
-            const response = await albumService.addAlbum(inputValue);
-            if (response.success) {
-                console.log("Success:", response.data);
-                loadAlbumOptions();
-            } else {
-                console.log("Error:", response.error);
+            const response = await albumService.getAlbumsByTitle(term);
+
+            if (response) {
+                let albumOptions;
+                if (response.results.length > 0) {
+                    albumOptions = response.results.map((album) => ({
+                        value: album.id,
+                        label: album.title,
+                    }));
+                }
+                return albumOptions;
             }
         } catch (error) {
             console.log("Unexpected error:", error);
         } finally {
-            setIsLoading(false);
+            // setIsLoading(false);
         }
     }
 
+    //    For Modal
     function handleOpenModal() {
         setShowModal(true);
     }
@@ -208,58 +192,17 @@ export default function UploadSongForm() {
                             onChange={(e) => handleChange(e)}
                         />
                     </div>
-                    {/* <div className="input-group mt-3">
-            
-            <span
-              className="input-group-text bg-black bg-gradient text-primary"
-              id="inputGroup-sizing-default"
-            >
-              Album
-            </span>
-            <div style={{ minWidth: "30%" }}>
-              <CreatableSelect 
-                id="album"
-                name="album"
-                placeholder="Seleccione un album"
-                options={options}
-                onCreateOption={(inputValue) => createNewAlbum(inputValue)}
-                // onChange={(e) => handleChange(e)}
-                styles={{
-                  control: (styles) => {
-                    console.log(styles);
-                    return {
-                      ...styles,
-                      backgroundColor: "black"
-                    }
-                    
-                  }
-                }}
-                />
-            </div> */}
-
-                    {/* <select
-              id="album"
-              name="album"
-              value={values.album}
-              onChange={handleChange}
-              required
-              className="form-control"
-            >
-              <option value="">Seleccione un album</option>
-              <option value="50">MG-2</option>
-              <option value="51">G-ALBUM -E-255</option>
-              <option value="32">Purpose</option>
-            </select> */}
-                    {/* <input
-              type="number"
-              className="form-control"
-              id="album"
-              name="album"
-              minLength={1}
-              value={values.album}
-              onChange={(e) => handleChange(e)}
-            /> */}
-                    {/* </div> */}
+                    <div className="input-group mt-3">
+                        <span
+                            className="input-group-text bg-black bg-gradient text-primary"
+                            id="inputGroup-sizing-default"
+                        >
+                            Album
+                        </span>
+                        <div style={{ minWidth: "85%" }}>
+                            <ApiSelect id='album' name='album' getOptions={getAlbumOptions} handleChange={handleChange} />
+                        </div>
+                    </div>
                     <div className="input-group mt-3">
                         {/* <label htmlFor="audio" className="me-2">Archivo de audio:</label> */}
                         {/* <br /> */}
