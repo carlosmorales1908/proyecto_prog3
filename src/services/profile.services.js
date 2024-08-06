@@ -10,7 +10,10 @@ class UserProfileService extends BaseService{
   }
 
   async getProfileById(id){
-    return this.getOne(id);
+    this.endpoint = import.meta.env.VITE_URI_USER_PROFILE_BY_ID;
+    const response = await this.getOne(id);
+    this.endpoint = import.meta.env.VITE_URI_USER_PROFILE;
+    return response;
   }
 }
 
