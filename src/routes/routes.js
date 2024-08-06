@@ -9,5 +9,6 @@ export const PrivateRoutes = {
   PLAYLISTS: "/playlists",
   PLAYLIST: "/playlists/:playlistName/:id",
   LIBRARY: "/library",
-  PROFILE: "/profile"
+  PROFILE: "/profile",
+  LOGOUT: "/logout"
 };
