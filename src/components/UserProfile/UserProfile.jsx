@@ -4,6 +4,9 @@ import UserProfileService from "../../services/profile.services";
 import parseEmail from "../../utility/parseEmail";
 import "./UserProfile.css";
 import Spinner from "../Spinner/Spinner";
+import CardButtons from "./CardButtons";
+import ContentBodyCard from "./ContentBodyCard";
+import HeaderCard from "./HeaderCard";
 
 const UserProfile = () => {
   const { token } = useContext(AuthContext);
@@ -13,7 +16,6 @@ const UserProfile = () => {
   const [profileImg, setProfileImg] = useState(null);
   const [imgFile, setImgFile] = useState(null);
   const fileInputRef = useRef(null);
-
   const [editMode, setEditMode] = useState(false);
   const [data, setData] = useState({
     username: "",
@@ -101,25 +103,23 @@ const UserProfile = () => {
 
       const updatedData = await response.json();
 
-      setData((prevData) => ({
-        ...prevData,
-        firstName: updatedData.first_name,
+      setUserProfile((prevProfile) => ({
+        ...prevProfile,
+        username: updatedData.username,
+        first_name: updatedData.first_name,
+        last_name: updatedData.last_name,
+        email: updatedData.email,
+        image: updatedData.image || prevProfile.image,
       }));
+
+      if (updatedData.image) {
+        setProfileImg(updatedData.image);
+      }
 
       setEditMode(false);
     } catch (error) {
       console.error(error);
     }
-    fetch(
-      `${import.meta.env.VITE_BASE_URL}users/profiles/${userProfile.user__id}/`,
-      {
-        method: "PATCH",
-        headers: {
-          Authorization: `Token ${token}`,
-        },
-        body: formData,
-      }
-    );
     setEditMode(false);
   };
 
@@ -134,127 +134,68 @@ const UserProfile = () => {
     <>
       <div className="container card-profile g-0 mt-2" style={{ width: "60%" }}>
         <div className="user-info">
-          <div className="header-card d-flex">
-            <div>
-              <img
-                src={
-                  profileImg
-                    ? `${import.meta.env.VITE_BASE_URL}${userProfile.image}`
-                    : "src/assets/sin_perfil.jpeg"
-                }
-                className={`header-card-img object-fit-cover rounded-circle m-2 ${
-                  editMode && "img-edit"
-                }`}
-                onClick={handleImageClick}
-                alt="Profile"
-              />
-              {editMode && (
-                <input
-                  ref={fileInputRef}
-                  type="file"
-                  accept="image/*"
-                  className="d-none"
-                  onChange={handleChangeImg}
-                />
-              )}
-            </div>
-            <div className="user-name-header d-block mx-5 mt-5 fw-bold">
-              <h2>{userProfile.first_name}</h2>
-            </div>
-          </div>
+          <HeaderCard
+            userProfile={userProfile}
+            profileImg={profileImg}
+            fileInputRef={fileInputRef}
+            editMode={editMode}
+            handleImageClick={handleImageClick}
+            handleChangeImg={handleChangeImg}
+          />
           <div className="body-card m-2">
-            <div className="user-name-body">
-              <p className="my-1 fw-bold fs-6">Nombre de Usuario:</p>
-              {editMode ? (
-                <input
-                  type="text"
-                  name="username"
-                  value={data.username}
-                  onChange={handleInputChange}
-                />
-              ) : (
-                <p className="fs-5">{userProfile.username}</p>
-              )}
-            </div>
-            <div className="first-name-body">
-              <p className="my-1 fw-bold fs-6">Nombres:</p>
-              {editMode ? (
-                <input
-                  type="text"
-                  name="firstName"
-                  value={data.firstName}
-                  onChange={handleInputChange}
-                />
-              ) : (
-                <p className="fs-5">{userProfile.first_name}</p>
-              )}
-            </div>
-            <div className="last-name-body">
-              <p className="my-1 fw-bold fs-6">Apellidos:</p>
-              {editMode ? (
-                <input
-                  type="text"
-                  name="lastName"
-                  value={data.lastName}
-                  onChange={handleInputChange}
-                />
-              ) : (
-                <p className="fs-5">{userProfile.last_name}</p>
-              )}
-            </div>
-            <div className="email-body mt-3 mb-3">
-              <p className="fw-bold fs-6">Correo Electrónico:</p>
-              {editMode ? (
-                <input
-                  type="email"
-                  name="email"
-                  value={data.email}
-                  onChange={handleInputChange}
-                />
-              ) : (
-                <div className="email-info d-flex">
-                  <p className="fs-5">
-                    {!showEmail ? parseEmail(email) : email}
-                  </p>
-                  <p
-                    onClick={handleShowEmail}
-                    className="text-primary mx-2 fs-5"
-                    style={{ cursor: "pointer" }}
-                  >
-                    Mostrar
-                  </p>
-                </div>
-              )}
-            </div>
-            <div className="buttons-container d-flex justify-content-center">
-              {editMode ? (
-                <>
-                  <button
-                    type="submit"
-                    className="btn btn-success mx-2 fs-5 mb-2"
-                    onClick={handleSaveChanges}
-                  >
-                    Guardar
-                  </button>
-                  <button
-                    type="button"
-                    className="btn btn-secondary mx-2 fs-5 mb-2"
-                    onClick={handleCancelEdit}
-                  >
-                    Cancelar
-                  </button>
-                </>
-              ) : (
-                <button
-                  type="button"
-                  className="btn btn-primary fs-5 mb-2"
-                  onClick={handleEdit}
-                >
-                  Editar Perfil de Usuario
-                </button>
-              )}
-            </div>
+            <ContentBodyCard
+              title="Nombre de Usuario:"
+              name="username"
+              profileKey={userProfile.username}
+              editMode={editMode}
+              dataKey={data.username}
+              handleInputChange={handleInputChange}
+            />
+            <ContentBodyCard
+              title="Nombres:"
+              name="firstName"
+              profileKey={userProfile.first_name}
+              editMode={editMode}
+              dataKey={data.firstName}
+              handleInputChange={handleInputChange}
+            />
+            <ContentBodyCard
+              title="Apellidos:"
+              name="lastName"
+              profileKey={userProfile.last_name}
+              editMode={editMode}
+              dataKey={data.lastName}
+              handleInputChange={handleInputChange}
+            />
           </div>
+          <div className="email-body mt-3 mb-3">
+            <p className="fw-bold fs-6">Correo Electrónico:</p>
+            {editMode ? (
+              <input
+                type="email"
+                name="email"
+                value={data.email}
+                onChange={handleInputChange}
+              />
+            ) : (
+              <div className="email-info d-flex">
+                <p className="fs-5">{!showEmail ? parseEmail(email) : email}</p>
+                <p
+                  onClick={handleShowEmail}
+                  className="text-primary mx-2 fs-5"
+                  style={{ cursor: "pointer" }}
+                >
+                  Mostrar
+                </p>
+              </div>
+            )}
+          </div>
+          <CardButtons
+            editMode={editMode}
+            handleEdit={handleEdit}
+            handleCancelEdit={handleCancelEdit}
+            handleSaveChanges={handleSaveChanges}
+          />
         </div>
       </div>
     </>
