@@ -1,4 +1,5 @@
 import BaseService from "./base.services";
+import convertToSecure from "../utility/secureUrl";
 
 class SongService extends BaseService {
     constructor(token) {
@@ -32,7 +33,7 @@ class SongService extends BaseService {
   async getSongsById(songIds) {
         try {
             let songs = [];
-            let nextPageUrl = `${import.meta.env.VITE_BASE_URL}harmonyhub/songs/?ordering=created_at&page=${1}&page_size=${10}`;
+            let nextPageUrl = `${import.meta.env.VITE_BASE_URL}harmonyhub/songs/?ordering=created_at&page=1&page_size=10`;
             while (nextPageUrl && songIds.size != 0) {
                 const response = await fetch(nextPageUrl, {
                     headers: {
