@@ -59,6 +59,10 @@ const AllSongList = () => {
     setSearchQuery(query);
   };
 
+  const handleDelete = (songId) => {
+    setSongs((prevSongs) => prevSongs.filter((song) => song.id !== songId));
+  };
+
   if (isError)
     return <p className="text-warning">Error al cargar las canciones.</p>;
 
@@ -68,6 +72,7 @@ const AllSongList = () => {
       <SongList
         songs={filteredSongs}
         lastElementRef={nextUrl ? lastElementRef : null}
+        onDelete={handleDelete}
       />
       {isLoading && <Spinner />}
       {songs.length === 0 && !isLoading && (
