@@ -13,7 +13,6 @@ const Song = ({ song, onPlay, isPlaying, index, onDelete }) => {
 
   const songService = new SongService(token);
 
-
   useEffect(() => {
     if (isPlaying) {
       audioRef.current.play();
@@ -49,7 +48,7 @@ const Song = ({ song, onPlay, isPlaying, index, onDelete }) => {
         await songService.delete(song.id);
         if (onDelete) onDelete(song.id);
       } catch (error) {
-        console.log("No se puede eliminar la cancion", error)
+        console.log("No se puede eliminar la cancion", error);
       }
     } else if (action === "add") {
       console.log("Agregar a la Lista");
@@ -81,11 +80,7 @@ const Song = ({ song, onPlay, isPlaying, index, onDelete }) => {
       <div className={`flex-grow-1 me-3`} onClick={onPlay} role="button">
         <h6 className={`mb-1`}>{song.title}</h6>
       </div>
-      <div
-        className="text-light position-relative flex-grow-2"
-        role="button"
-        style={{ right: "36%" }}
-      >
+      <div className="text-light position-relative flex-grow-2" role="button">
         <small>{song.duration}</small>
       </div>
       <div className="d-flex align-items-center ms-3">

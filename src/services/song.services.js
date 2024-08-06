@@ -1,14 +1,10 @@
 import BaseService from "./base.services";
 import convertToSecure from "../utility/secureUrl";
-
 class SongService extends BaseService {
-  constructor(token) {
-    super(token, import.meta.env.VITE_URI_SONGS);
-  }
+    constructor(token) {
+        super(token, import.meta.env.VITE_URI_SONGS);
+    }
 
-  // Si alguien lee esto quiero decirle que fue un hardcodeo de ultima hora
-  // el programador que lo hizo se estreso
-  // posdata: toy cansado jefe
   async getSongsByPage(page, pageSize) {
     try {
       const URI = `${
