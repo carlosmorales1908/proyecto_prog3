@@ -1,29 +1,30 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback } from "react";
 
-function useSearch(initialItems = [], initialQuery = '', filterFn = () => true) {
-    const [items, setItems] = useState(initialItems);
-    const [query, setQuery] = useState(initialQuery);
+function useSearch(
+  initialItems = [],
+  initialQuery = "",
+  filterFn = () => true
+) {
+  const [items, setItems] = useState(initialItems);
+  const [query, setQuery] = useState(initialQuery);
 
+  const handleChange = useCallback((event) => {
+    setQuery(event.target.value);
+  }, []);
 
-    const handleChange = useCallback((event) => {
-        setQuery(event.target.value);
-    }, []);
+  const handleSubmit = useCallback((event) => {
+    event.preventDefault();
+  }, []);
 
-    
-    const handleSubmit = useCallback((event) => {
-        event.preventDefault();
-    }, []);
+  const filteredItems = items.filter((item) => filterFn(item, query));
 
-   
-    const filteredItems = items.filter(item => filterFn(item, query));
-
-    return {
-        query,
-        filteredItems,
-        handleChange,
-        handleSubmit,
-        setItems,
-    };
+  return {
+    query,
+    filteredItems,
+    handleChange,
+    handleSubmit,
+    setItems,
+  };
 }
 
 export default useSearch;

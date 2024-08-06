@@ -52,7 +52,7 @@ const AllSongList = () => {
   const loadMoreSongs = () => {
     if (nextUrl) setPage((prevPage) => prevPage + 1);
   };
-
+  
   const lastElementRef = useInfiniteScroll(nextUrl, isLoading, loadMoreSongs);
 
   const handleSearch = (query) => {

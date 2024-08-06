@@ -25,12 +25,15 @@ class BaseService {
       });
 
       if (!response.ok) {
-        throw new Error({error: response});
+        const errorData = await response.json();
+        throw new Error(
+          `Error ${response.status}: ${JSON.stringify(errorData)}`
+        );
       }
 
       return await response.json();
     } catch (error) {
-      console.error(error);
+      console.error("Request failed:", error);
       throw error;
     }
   }
@@ -65,5 +68,3 @@ class BaseService {
 }
 
 export default BaseService;
-
-// USAR DE MODELO playlists.services.js
