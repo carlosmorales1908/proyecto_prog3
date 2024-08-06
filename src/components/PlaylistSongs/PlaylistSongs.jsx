@@ -5,6 +5,8 @@ import { AuthContext } from "../../context/auth.contex";
 import Spinner from "../Spinner/Spinner";
 import SongService from "../../services/song.services";
 import UserProfileService from "../../services/profile.services";
+import SongList from "../Song/SongList";
+
 
 let songIds;
 export default function PlaylistSongs() {
@@ -61,7 +63,7 @@ export default function PlaylistSongs() {
         } catch (error) {
             console.log("Unexpected error:", error);
         } finally {
-            setIsLoading(false);
+            //setIsLoading(false);
         }
     }
 
@@ -111,7 +113,7 @@ export default function PlaylistSongs() {
                     <h3 className="text-center text-secondary">No hay canciones en esta playlist</h3>
                 ):(
                     <>
-                    {/* Llamar aqui al componente de lista de canciones y pasarle "songList" */}
+                    <SongList songs={songList}/>
                     </>
                 )}
 
