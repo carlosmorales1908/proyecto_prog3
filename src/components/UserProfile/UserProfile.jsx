@@ -29,7 +29,7 @@ const UserProfile = () => {
     userProfileService.getProfile().then((profile) => {
       setUserProfile(profile);
       setEmail(profile.email || "");
-      setProfileImg(profile.image || null);
+      setProfileImg(`${import.meta.env.VITE_BASE_URL}${profile.image}` || null);
       setData({
         username: profile.username || "",
         firstName: profile.first_name || "",
