@@ -1,18 +1,18 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
+import useSearch from '../../hooks/useSearch';
 
 const Search = ({ onSearch }) => {
-    const [query, setQuery] = useState('');
-
-    const handleChange = (e) => {
-        setQuery(e.target.value);
-        onSearch(e.target.value); 
-    };
+    const { query, handleChange, handleSubmit } = useSearch();
+    
+    useEffect(() => {
+        onSearch(query);
+    }, [query, onSearch]);
 
     return (
         <div className="mb-3">
-            <form className="d-flex" role="search" onSubmit={(e) => e.preventDefault()}>
+            <form className="d-flex" role="search" onSubmit={handleSubmit}>
                 <input
-                    className="form-control me-2 bg-dark text-light"
+                    className="form-control mr-sm-2 text-light bg-dark"
                     type="search"
                     placeholder="Search"
                     aria-label="Search"

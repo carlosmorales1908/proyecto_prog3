@@ -115,8 +115,8 @@ const UserProfile = () => {
       if (updatedData.image) {
         setProfileImg(updatedData.image);
       }
-
       setEditMode(false);
+      window.location.reload();
     } catch (error) {
       console.error(error);
     }
@@ -168,7 +168,7 @@ const UserProfile = () => {
               handleInputChange={handleInputChange}
             />
           </div>
-          <div className="email-body mt-3 mb-3">
+          <div className="email-body mt-3 mb-3 mx-2">
             <p className="fw-bold fs-6">Correo Electrónico:</p>
             {editMode ? (
               <input

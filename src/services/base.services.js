@@ -25,12 +25,12 @@ class BaseService {
       });
 
       if (!response.ok) {
-        throw new Error("Network response was not ok");
+        throw new Error({error: response});
       }
 
       return await response.json();
     } catch (error) {
-      console.error("Error:", error);
+      console.error(error);
       throw error;
     }
   }
