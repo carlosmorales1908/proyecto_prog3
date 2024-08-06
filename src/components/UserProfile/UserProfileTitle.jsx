@@ -5,12 +5,8 @@ const UserProfileTitle = () => {
   return (
     <div className="d-flex justify-content-between">
       <h1 className="mb-3">Mi Perfil</h1>
-      <Link
-        className="btn btn-primary fs-5 text-light"
-        style={{ height: "40px", padding: "4px" }}
-        to={PrivateRoutes.LOGOUT}
-      >
-        Cerrar Sesión
+      <Link to={PrivateRoutes.LOGOUT}>
+        <span className="btn btn-sm btn-primary">Cerrar Sesión</span>
       </Link>
     </div>
   );

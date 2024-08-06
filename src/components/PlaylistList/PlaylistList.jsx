@@ -24,9 +24,7 @@ const PlaylistList = () => {
   return (
     <>
       <div className="header d-flex justify-content-between">
-        <div className="m-3 mt-0 fs-1 fw-fw-bolt text-center ">
-          TUS MEJORES PLAYLISTS LAS ECONTRAS AQUI:
-        </div>
+        <h1 className="m-3 mt-0 fs-1">Playlist</h1>
         <div>
           <NewPlaylist />
         </div>
