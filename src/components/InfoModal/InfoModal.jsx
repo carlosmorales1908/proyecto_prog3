@@ -1,4 +1,4 @@
-export default function InfoModal({ show, setShow, title, children }) {
+export default function InfoModal({ show, setShow, title, handleClickAcept=null ,children }) {
   function handleClose() {
     setShow(false);
   }
@@ -27,7 +27,7 @@ export default function InfoModal({ show, setShow, title, children }) {
             >
               Cerrar
             </button>
-            {/* <button type="button" className="btn btn-primary">Save changes</button> */}
+            {handleClickAcept && <button type="button" onClick={handleClickAcept} className="btn btn-primary">Aceptar</button>}
           </div>
         </div>
       </div>
