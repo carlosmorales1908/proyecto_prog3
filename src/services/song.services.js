@@ -1,4 +1,5 @@
 import BaseService from "./base.services";
+import convertToSecure from "../utility/secureUrl";
 
 class SongService extends BaseService {
     constructor(token) {
@@ -28,6 +29,38 @@ class SongService extends BaseService {
       throw error;
     }
   }
+
+  async getSongsById(songIds) {
+        try {
+            let songs = [];
+            let nextPageUrl = `${import.meta.env.VITE_BASE_URL}harmonyhub/songs/?ordering=created_at&page=1&page_size=10`;
+            while (nextPageUrl && songIds.size != 0) {
+                const response = await fetch(nextPageUrl, {
+                    headers: {
+                        Authorization: `Token ${this.token}`,
+                    },
+                });
+                if (!response.ok) {
+                    throw new Error("Failed to fetch songs");
+                }
+                const data = await response.json();
+                data.results.forEach(song => {                    
+                    if (songIds.includes(song.id)) {
+                        songs.push(song);
+                        songIds = songIds.filter(object => object.id !== song.id);
+                    }
+                });
+            
+                nextPageUrl = data.next && convertToSecure(data.next);
+            }
+
+            return songs;
+
+        } catch (error) {
+            console.error("Error fetching songs by page: ", error);
+            throw error;
+        }
+    }
     async getSongById(songId) {
         return this.getOne(songId);
     }
