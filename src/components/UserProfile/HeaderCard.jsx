@@ -5,7 +5,7 @@ const HeaderCard = (props) => {
         <img
           src={
             props.profileImg
-              ? `${import.meta.env.VITE_BASE_URL}${props.userProfile.image}`
+              ? `${props.profileImg}`
               : "src/assets/sin_perfil.jpeg"
           }
           className={`header-card-img object-fit-cover rounded-circle m-2 ${
