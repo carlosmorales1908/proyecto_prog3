@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { AuthContext } from "../../context/auth.contex";
 import useForm from "../../hooks/useForm";
 import SongService from "../../services/song.services";
@@ -6,23 +6,34 @@ import AlbumService from "../../services/album.services";
 import InfoModal from "../InfoModal/InfoModal";
 import Spinner from "../Spinner/Spinner";
 import ApiSelect from "../Select/ApiSelect";
+import NewAlbumModal from "../NewAlbum/NewAlbumModal";
+
 
 export default function UploadSongForm() {
     const { token } = useContext(AuthContext);
     const fileInputRef = useRef(null);
     //    For Spinner
     const [isLoading, setIsLoading] = useState(false);
-    //    For Modal
+    //    For InfoModal
     const [showModal, setShowModal] = useState(false);
     const [modalTitle, setModalTitle] = useState("");
-    const [modalText, setModalText] = useState("");
+    const [modalChildren, setModalChildren] = useState("");
+    //     For NewAlbumModal
+    const [showNewAlbumModal, setShowNewAlbumModal] = useState(false);
+
+    //    For InfoModal
+    function handleOpenModal(title, children) {
+        setModalTitle(title);
+        setModalChildren(children);
+        setShowModal(true);
+    }
 
     //    For Select
     async function getAlbumOptions(term) {
         if (!term || term.length < 2) {
             return [];
         }
-        
+
         try {
             // setIsLoading(true);
             const albumService = new AlbumService(token);
@@ -45,11 +56,6 @@ export default function UploadSongForm() {
         }
     }
 
-    //    For Modal
-    function handleOpenModal() {
-        setShowModal(true);
-    }
-
     //    For useForm
     const initialState = {
         title: "",
@@ -67,15 +73,14 @@ export default function UploadSongForm() {
 
             if (response.success) {
                 console.log("Success:", response.data);
-                setModalTitle("Listo");
-                setModalText("La canción ha sido subida correctamente.");
-                handleOpenModal();
+                handleOpenModal(
+                    "Completado",
+                    <p>"La canción ha sido subida correctamente."</p>
+                );
                 setIsLoading(false);
                 clearForm();
             } else {
-                setModalTitle("Error");
-                setModalText(response.error);
-                handleOpenModal();
+                handleOpenModal("Error", <p>{response.error}</p>);
                 setIsLoading(false);
             }
         } catch (error) {
@@ -113,14 +118,6 @@ export default function UploadSongForm() {
     //    UploadSongForm
     return (
         <>
-            <InfoModal
-                show={showModal}
-                setShow={setShowModal}
-                handleOpen={handleOpenModal}
-                title={modalTitle}
-            >
-                <p>{modalText}</p>
-            </InfoModal>
             <h1 className="mb-4">Subir Canción</h1>
             <div className="d-flex justify-content-center pt-5">
                 <form
@@ -199,9 +196,20 @@ export default function UploadSongForm() {
                         >
                             Album
                         </span>
-                        <div style={{ minWidth: "85%" }}>
-                            <ApiSelect id='album' name='album' getOptions={getAlbumOptions} handleChange={handleChange} />
+                        <div style={{ minWidth: "60%" }}>
+                            <ApiSelect
+                                id="album"
+                                name="album"
+                                getOptions={getAlbumOptions}
+                                handleChange={handleChange}
+                            />
                         </div>
+                        <span
+                            className="btn btn-primary ms-2 rounded"
+                            onClick={() => setShowNewAlbumModal(true)}
+                        >
+                            Nuevo album
+                        </span>
                     </div>
                     <div className="input-group mt-3">
                         {/* <label htmlFor="audio" className="me-2">Archivo de audio:</label> */}
@@ -251,6 +259,15 @@ export default function UploadSongForm() {
                         )}
                     </div>
                 </form>
+                <InfoModal
+                    show={showModal}
+                    setShow={setShowModal}
+                    handleOpen={handleOpenModal}
+                    title={modalTitle}
+                >
+                    {modalChildren}
+                </InfoModal>
+                <NewAlbumModal showModal={showNewAlbumModal} setShowModal={setShowNewAlbumModal}></NewAlbumModal>
             </div>
         </>
     );
