@@ -83,25 +83,13 @@ const UserProfile = () => {
     formData.append("email", data.email);
     imgFile && formData.append("image", imgFile);
 
+    const userProfileService = new UserProfileService(token);
+
     try {
-      const response = await fetch(
-        `${import.meta.env.VITE_BASE_URL}users/profiles/${
-          userProfile.user__id
-        }/`,
-        {
-          method: "PATCH",
-          headers: {
-            Authorization: `Token ${token}`,
-          },
-          body: formData,
-        }
+      const updatedData = await userProfileService.updateProfile(
+        userProfile.user__id,
+        formData
       );
-
-      if (!response.ok) {
-        throw new Error("Error al actualizar los datos");
-      }
-
-      const updatedData = await response.json();
 
       setUserProfile((prevProfile) => ({
         ...prevProfile,
