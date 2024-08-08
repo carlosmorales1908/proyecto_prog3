@@ -21,12 +21,16 @@ const NewPlaylist = () => {
     setData({ ...data, [name]: value });
   };
 
-  const handleClickAccept = (e) => {
+  const handleClickAccept = async (e) => {
     e.preventDefault();
     const playlistService = new PlaylistService(token);
-    playlistService.createPlaylist(data);
-    setShowModal(false);
-    setData({ name: "", description: "" });
+    try {
+      playlistService.createPlaylist(data);
+      setShowModal(false);
+      setData({ name: "", description: "" });
+    } catch (error) {
+      console.error("Error Creando la  playlist:", error);
+    }
   };
 
   return (
