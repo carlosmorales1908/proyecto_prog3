@@ -15,7 +15,7 @@ const LoginPage = () => {
                     style={{ fontSize: "2rem" }}
                   ></i>
                   <h2 className="card-title mt-3">
-                    <strong>Log in to MusicApp</strong>
+                    <strong>Inicia sesión en Melodify</strong>
                   </h2>
                 </div>
                 <LoginForm />

@@ -2,15 +2,17 @@ import React, { useRef, useState, useEffect, useContext } from "react";
 import "./Song.css";
 import { AuthContext } from "../../context/auth.contex";
 import SongService from "../../services/song.services";
+import NewSongToPlaylistModal from "../NewSongToPlaylist/NewSongToPlaylistModal";
 
 const Song = ({ song, onPlay, isPlaying, index, onDelete }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [volume, setVolume] = useState(1);
   const audioRef = useRef(null);
   const iconRef = useRef(null);
   const menuRef = useRef(null);
   const { token } = useContext(AuthContext);
-
   const songService = new SongService(token);
 
   useEffect(() => {
@@ -20,6 +22,10 @@ const Song = ({ song, onPlay, isPlaying, index, onDelete }) => {
       audioRef.current.pause();
     }
   }, [isPlaying]);
+
+  useEffect(() => {
+    audioRef.current.volume = volume;
+  }, [volume]);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -39,7 +45,9 @@ const Song = ({ song, onPlay, isPlaying, index, onDelete }) => {
   }, []);
 
   const handleMenuClick = () => {
-    setShowMenu((prevShowMenu) => !prevShowMenu);
+    if (song.song_file) {
+      setShowMenu((prevShowMenu) => !prevShowMenu);
+    }
   };
 
   const handleMenuAction = async (action) => {
@@ -48,82 +56,105 @@ const Song = ({ song, onPlay, isPlaying, index, onDelete }) => {
         await songService.delete(song.id);
         if (onDelete) onDelete(song.id);
       } catch (error) {
-        console.log("No se puede eliminar la cancion", error);
+        console.log("No se puede eliminar la canción", error);
       }
     } else if (action === "add") {
-      console.log("Agregar a la Lista");
+      setShowModal(true);
     }
-    setShowMenu(false);
+  };
+
+  const handleVolumeChange = (event) => {
+    setVolume(event.target.value);
   };
 
   return (
     <div
-      className={`position-relative d-flex align-items-center p-2 rounded-3 song-container text-light ${
-        !song.song_file && "not-song"
-      }`}
+      className={`song-container p-2 rounded-3 ${!song.song_file && "text-muted"}`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+      style={{ cursor: song.song_file ? "pointer" : "default" }}
     >
-      <div className="col-1">
-        {isHovered || isPlaying ? (
-          <i
-            className={`bi ${
-              isPlaying ? "bi-pause-fill" : "bi-play-fill"
-            } fs-5`}
-            role="button"
-            onClick={onPlay}
-          ></i>
-        ) : (
-          index
-        )}
-      </div>
-      <div className={`flex-grow-1 me-3`} onClick={onPlay} role="button">
-        <h6 className={`mb-1`}>{song.title}</h6>
-      </div>
-      <div className="text-light position-relative flex-grow-2" role="button">
-        <small>{song.duration}</small>
-      </div>
-      <div className="d-flex align-items-center ms-3">
-        <audio
-          ref={audioRef}
-          src={song.song_file}
-          onEnded={() => onPlay(null)}
-        />
-
-        <div className="dropdown" ref={menuRef}>
-          <i
-            className={`bi bi-three-dots fs-5 ${
-              isHovered ? "d-block" : "d-none"
-            }`}
-            ref={iconRef}
-            onClick={handleMenuClick}
-          ></i>
-          <ul
-            className={`dropdown-menu dropdown-menu-dark ${
-              showMenu ? "show" : ""
-            }`}
+      <div className="row align-items-center w-100 z-1">
+        <div className="col-1">
+          {isHovered || isPlaying ? (
+            <i
+              className={`bi ${isPlaying ? "bi-pause-fill" : "bi-play-fill"} fs-5`}
+              role="button"
+              onClick={song.song_file ? onPlay : null}
+              style={{ pointerEvents: song.song_file ? "auto" : "none" }}
+            ></i>
+          ) : (
+            index
+          )}
+        </div>
+        <div
+          className={`col text-truncate`}
+          onClick={song.song_file ? onPlay : null}
+          role="button"
+          style={{ pointerEvents: song.song_file ? "auto" : "none" }}
+        >
+          <h6 className={`mb-0 text-light ${!song.song_file && "text-muted"}`}>
+            {song.title}
+          </h6>
+        </div>
+        <div className="col-auto d-flex align-items-center">
+          <input
+            type="range"
+            min="0"
+            max="1"
+            step="0.01"
+            value={volume}
+            onChange={handleVolumeChange}
+            className="form-range me-3"
+            disabled={!song.song_file}
+          />
+          <div
+            className="text-light me-2"
+            style={{ width: "60px", textAlign: "center" }}
           >
-            <li className="item">
-              <a
-                className="dropdown-item text-light"
-                role="button"
-                onClick={() => handleMenuAction("delete")}
-              >
-                Eliminar Canción
-              </a>
-            </li>
-            <li className="item">
-              <a
-                className="dropdown-item text-light"
-                role="button"
-                onClick={() => handleMenuAction("add")}
-              >
-                Agregar a una playlist
-              </a>
-            </li>
-          </ul>
+            <small>{song.duration}</small>
+          </div>
+          <audio
+            ref={audioRef}
+            src={song.song_file}
+            onEnded={() => onPlay(null)}
+          />
+          {song.song_file && (
+            <div className="dropdown" ref={menuRef}>
+              <i
+                className={`bi bi-three-dots fs-5 ${isHovered ? "d-block" : "d-none"}`}
+                ref={iconRef}
+                onClick={handleMenuClick}
+              ></i>
+              <ul className={`dropdown-menu dropdown-menu-dark ${showMenu ? "show" : ""}`}>
+                <li className="item">
+                  <a
+                    className="dropdown-item text-light"
+                    role="button"
+                    onClick={() => handleMenuAction("delete")}
+                  >
+                    Eliminar Canción
+                  </a>
+                </li>
+                <li className="item">
+                  <a
+                    className="dropdown-item text-light"
+                    role="button"
+                    onClick={() => handleMenuAction("add")}
+                  >
+                    Agregar a una playlist
+                  </a>
+                </li>
+              </ul>
+            </div>
+          )}
         </div>
       </div>
+      <NewSongToPlaylistModal
+        showModal={showModal}
+        setShowModal={setShowModal}
+        songId={song.id}
+      />
     </div>
   );
 };

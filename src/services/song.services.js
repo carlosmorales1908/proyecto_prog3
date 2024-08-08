@@ -112,6 +112,33 @@ class SongService extends BaseService {
     });
   }
 
+  async addSongToPlaylist(songId, playlistId) {
+    try {
+      console.log("Adding song to playlist with IDs:", { songId, playlistId });
+      const response = await fetch(`https://sandbox.academiadevelopers.com/harmonyhub/playlist-entries/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Token ${this.token}`
+        },
+        body: JSON.stringify({
+          song: songId,
+          playlist: playlistId,
+          order: 1
+        })
+      });
+      if (!response.ok) {
+        const errorDetails = await response.text();
+        console.error("Error adding song to playlist:", errorDetails);
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      return await response.json();
+    } catch (error) {
+      console.error("Unexpected error:", error);
+      throw error;
+    }
+  }
+
   async deleteSong(id) {
     return this.delete(id);
   }

@@ -16,19 +16,19 @@ const SongList = ({ songs = [], lastElementRef = null, onDelete }) => {
   };
 
   return (
-    <div className="overflow-auto" style={{ maxHeight: "calc(70vh - 70px)" }}>
+    <div className="overflow-auto" style={{ maxHeight: "calc(70vh - 70px)"}}>
       <div className="sticky-top bg-dark text-light p-2 z-1">
         <div className="d-flex justify-content-between align-items-center">
           <strong>#</strong>
           <strong
-            className="flex-grow-1 text-center position-relative"
+            className=" text-center position-relative"
             style={{ right: "36%" }}
           >
             Título
           </strong>
           <i
-            className="bi bi-clock position-relative"
-            style={{ right: "2%" }}
+            className="bi bi-clock position-relative text-end"
+            style={{ right: "4%" }}
           ></i>
         </div>
       </div>
@@ -47,6 +47,7 @@ const SongList = ({ songs = [], lastElementRef = null, onDelete }) => {
                 onPlay={() => handlePlayAudio(song)}
                 isPlaying={playingAudio === song.id}
                 onDelete={onDelete ? () => onDelete(song.id) : null}
+               
               />
             </div>
           );
