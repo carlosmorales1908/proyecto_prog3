@@ -24,6 +24,10 @@ class BaseService {
         headers,
       });
 
+      if (response.status === 204) {
+        return;
+      }
+
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(
