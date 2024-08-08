@@ -62,8 +62,10 @@ const AllSongList = () => {
         onDelete={handleDelete}
       />
       {isLoading && <Spinner />}
-      {songs.length === 0 && !isLoading && (
-        <p className="text-center text-warning">No hay canciones disponibles</p>
+      {!isLoading && filteredSongs.length === 0 && (
+        <p className="text-center text-warning">
+          No hay canciones disponibles
+        </p>
       )}
     </div>
   );
