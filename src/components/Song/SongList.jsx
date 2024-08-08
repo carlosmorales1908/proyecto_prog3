@@ -28,7 +28,7 @@ const SongList = ({ songs = [], lastElementRef = null, onDelete }) => {
           </strong>
           <i
             className="bi bi-clock position-relative text-end"
-            style={{ right: "2%" }}
+            style={{ right: "4%" }}
           ></i>
         </div>
       </div>
