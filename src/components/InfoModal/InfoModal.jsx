@@ -1,4 +1,4 @@
-export default function InfoModal({ show, setShow, title, handleClickAcept=null ,children }) {
+export default function InfoModal({ show, setShow, title, handleClickAcept=null ,children }) {  
   function handleClose() {
     setShow(false);
   }
@@ -9,16 +9,16 @@ export default function InfoModal({ show, setShow, title, handleClickAcept=null 
       aria-labelledby="infoModal"
       aria-hidden={!show}
     >
-      <div className="modal-dialog modal-dialog-centered">
+      <div className="modal-dialog modal-dialog-centered text-white">
         <div className="modal-content bg-dark bg-gradient">
           <div className="modal-header">
-            <h1 className="modal-title fs-5" id="infoModal">
+            <h5 className="modal-title" id="titleModal">
               {title}
-            </h1>
+            </h5>
             {/* <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={handleClose}></button> */}
           </div>
           <div className="modal-body text-center">{children}</div>
-          <div className="modal-footer">
+          <div className={`modal-footer ${handleClickAcept? 'justify-content-between' : 'justify-content-center'}`}>
             <button
               type="button"
               className="btn btn-secondary"
@@ -27,7 +27,7 @@ export default function InfoModal({ show, setShow, title, handleClickAcept=null 
             >
               Cerrar
             </button>
-            {handleClickAcept && <button type="button" onClick={handleClickAcept} className="btn btn-primary">Aceptar</button>}
+            {handleClickAcept && <button type="button" onClick={handleClickAcept} className="btn btn-success">Aceptar</button>}
           </div>
         </div>
       </div>

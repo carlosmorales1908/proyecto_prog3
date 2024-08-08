@@ -25,10 +25,16 @@ export default function ApiSelect({ id, name, getOptions, handleChange }) {
             placeholder={customAriaLabels.selectPlaceholder}
             noOptionsMessage={() => customAriaLabels.noOptions}
             loadingMessage={() => customAriaLabels.loadingMessage}
+            components={customComponents}
             styles={styles}
         />
     );
 }
+
+const customComponents = {
+    DropdownIndicator: () => null, // Oculta el botón de flecha
+    IndicatorSeparator: () => null, // Oculta el separador de la flecha
+  };
 
 const styles = {
     //Estiliza el contenedor del control del select

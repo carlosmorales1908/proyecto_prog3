@@ -38,11 +38,11 @@ export default function SidebarLayout() {
     return (
         <>
             {isLoading ? (
-                <div className="mt-4 px-4">
-                <Spinner />
-              </div>
+                <div className="d-flex justify-content-center align-content-center align-items-center vh-100 mt-4 px-4">
+                    <Spinner />
+                </div>
             ) : (
-                <div className="row g-0">
+                <div className="bg-black bg-gradient row g-0">
                     <div className="col-2">
                         <Sidebar profile={profileData}/>
                     </div>
