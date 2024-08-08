@@ -44,14 +44,14 @@ const LoginForm = () => {
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
             <label htmlFor="inputUsername" className="form-label text-light ">
-              Username
+              Nombre de usuario
             </label>
             <input
               type="text"
               className="form-control bg-transparent text-light border border-success "
               id="inputUsername"
               name="username"
-              placeholder="Username"
+              placeholder="Nombre de usuario"
               value={values.username}
               onChange={handleChange}
               ref={getRef("username")}
@@ -61,14 +61,14 @@ const LoginForm = () => {
 
           <div className="mb-3">
             <label htmlFor="inputPassword" className="form-label text-light">
-              Password
+              Contraseña
             </label>
             <input
               type="password"
               className="form-control bg-transparent text-light border border-success"
               id="inputPassword"
               name="password"
-              placeholder="********"
+              placeholder="Contraseña"
               value={values.password}
               onChange={handleChange}
               ref={getRef("password")}
@@ -76,7 +76,7 @@ const LoginForm = () => {
             {errors.password&&(<div className="text-danger mb-3">{errors.password}</div>)}
           </div>
           <button type="submit" className="btn btn-outline-success w-100">
-            Login
+            Iniciar Sesión
           </button>
           {fetchError&&(<div className="text-danger mb-3">{fetchError}</div>)}
         </form>
