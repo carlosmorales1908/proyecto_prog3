@@ -9,6 +9,10 @@ class PlaylistService extends BaseService {
     return this.getOne(playlistId);
   }
 
+  async getPlaylistsByName(term) {
+    return this.request(`?name=${term}`);
+  }
+
   async getAllPlaylists() {
     return this.getAll();
   }
