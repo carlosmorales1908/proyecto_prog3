@@ -6,7 +6,7 @@ const HeaderCard = (props) => {
           src={
             props.profileImg
               ? `${props.profileImg}`
-              : "src/assets/sin_perfil.jpeg"
+              : "/assets/sin_perfil.jpeg"
           }
           className={`header-card-img object-fit-cover rounded-circle m-2 ${
             props.editMode && "img-edit"

@@ -13,7 +13,7 @@ import LogoutPage from "./pages/Logout.page";
 
 const SidebarLayout = lazy(() => import("./components/Sidebar/SidebarLayout"));
 const LoginPage = lazy(() => import("./pages/Login.page"));
-const Playlists = lazy(() => import("./pages/Playlists.page"));
+const PlaylistListPage = lazy(() => import("./pages/Playlists.page"));
 const SongsPage = lazy(() => import("./pages/Song.page"));
 
 function App() {
@@ -29,28 +29,17 @@ function App() {
                 <Route
                   path={PrivateRoutes.HOME}
                   index={true}
-                  element={<Playlists />}
+                  element={<PlaylistListPage />}
                 />
-                {/* HACERUN UN COMPONENTE PLAYLIST QUE MUESTRE LAS CANCIONES DE ESA PLAYLIST */}
                 <Route
                   path={PrivateRoutes.PLAYLIST}
                   element={<PlaylistSongsPage />}
                 />
-                {/* ------ */}
                 <Route path={PrivateRoutes.LIBRARY} element={<SongsPage />} />
-                <Route
-                  path={`new-playlist`}
-                  element={<h1>INSERT NEW-PLAYLIST PAGE HERE</h1>}
-                />
                 <Route
                   path={PrivateRoutes.UPLOADSONG}
                   element={<UploadSongPage />}
                 />
-                {/* <Route
-                  path={`my-account`}
-                  element={<h1>INSERT MY-ACCOUNT PAGE HERE</h1>}
-                /> */}
-                <Route path={`playlists`} element={<Playlists />} />
                 <Route path={PrivateRoutes.PROFILE} element={<Profile />} />
                 <Route path={PrivateRoutes.LOGOUT} element={<LogoutPage />} />
               </Route>
