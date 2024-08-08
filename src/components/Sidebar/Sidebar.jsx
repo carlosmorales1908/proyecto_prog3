@@ -5,7 +5,10 @@ export default function Sidebar({profile}) {
   return (
     <div className="sidebar d-flex flex-column sticky-top bg-black vh-100 p-0 border-end border-dark">
       <div className="ps-3 bg-black bg-gradient pt-3 pb-2">
-        <h4 className="text-warning">Melodify</h4>
+        <div>
+          <img src="/assets/letras2.png" alt="logo" style={{width: "200px", height:"55px"}} />
+        </div>
+
       </div>
       <div className="border border-dark"></div>
       <ul className="nav flex-column flex-grow-1">
