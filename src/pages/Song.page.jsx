@@ -3,9 +3,9 @@ import AllSongList from "../components/AllSongList/AllSongList";
 const SongsPage = () => {
   return (
     <div> 
-      <div className="m-3 mt-0 fs-1 fw-fw-bolt">
-        Biblioteca de sentimientos
-      </div>
+      <h1 className="mb-4 mt-2 fw-bolder">
+        Biblioteca
+      </h1>
       <AllSongList />
     </div>
     

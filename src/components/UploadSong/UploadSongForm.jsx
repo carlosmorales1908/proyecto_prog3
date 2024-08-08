@@ -118,7 +118,7 @@ export default function UploadSongForm() {
     //    UploadSongForm
     return (
         <>
-            <h1 className="mb-4">Subir Canción</h1>
+            <h1 className="mb-4 mt-2 fw-bolder">Subir Canción</h1>
             <div className="d-flex justify-content-center pt-5">
                 <form
                     onSubmit={handleSubmit}
