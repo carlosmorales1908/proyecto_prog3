@@ -4,7 +4,7 @@ const SongsPage = () => {
   return (
     <div> 
       <div className="m-3 mt-0 fs-1 fw-fw-bolt">
-        Biblioteca de sentimientos
+        Biblioteca
       </div>
       <AllSongList />
     </div>
