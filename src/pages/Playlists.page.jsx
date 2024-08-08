@@ -1,10 +1,10 @@
 import PlaylistList from "../components/PlaylistList/PlaylistList";
 
-const Playlists = () => {
+const PlaylistListPage = () => {
   return (
     <>
       <PlaylistList />
     </>
   );
 };
-export default Playlists;
+export default PlaylistListPage;
