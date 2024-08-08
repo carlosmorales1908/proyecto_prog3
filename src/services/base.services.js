@@ -28,6 +28,12 @@ class BaseService {
         return;
       }
 
+      if (response.status === 404) {
+        const errorData = await response.json();
+        errorData["status"] = response.status;
+        return errorData;
+      }
+
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(
