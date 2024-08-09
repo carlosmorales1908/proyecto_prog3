@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect, useContext } from "react";
+import { useRef, useState, useEffect, useContext } from "react";
 import "./Song.css";
 import { AuthContext } from "../../context/auth.contex";
 import SongService from "../../services/song.services";
@@ -14,6 +14,8 @@ const Song = ({
   const [isHovered, setIsHovered] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
   const [volume, setVolume] = useState(1);
+  const [isMuted, setIsMuted] = useState(false);
+  const [previousVolume, setPreviousVolume] = useState(1);
   const audioRef = useRef(null);
   const iconRef = useRef(null);
   const menuRef = useRef(null);
@@ -29,8 +31,10 @@ const Song = ({
   }, [isPlaying]);
 
   useEffect(() => {
-    audioRef.current.volume = volume;
-  }, [volume]);
+    if (audioRef.current) {
+      audioRef.current.volume = isMuted ? 0 : volume;
+    }
+  }, [volume, isMuted]);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -72,8 +76,19 @@ const Song = ({
     setVolume(parseFloat(event.target.value));
   };
 
+  const toggleMute = () => {
+    if (isMuted) {
+      setVolume(previousVolume);
+      setIsMuted(false);
+    } else {
+      setPreviousVolume(volume);
+      setVolume(0);
+      setIsMuted(true);
+    }
+  };
+
   const getVolumeIcon = () => {
-    if (volume === 0) return "bi-volume-mute";
+    if (isMuted || volume === 0) return "bi-volume-mute";
     if (volume <= 0.7) return "bi-volume-down";
     return "bi-volume-up";
   };
@@ -118,6 +133,7 @@ const Song = ({
               <i
                 className={`bi ${getVolumeIcon()} fs-5 me-2`}
                 style={{ cursor: "pointer" }}
+                onClick={toggleMute}
               ></i>
               <input
                 type="range"
@@ -127,7 +143,6 @@ const Song = ({
                 value={volume}
                 onChange={handleVolumeChange}
                 className="form-range me-3"
-                disabled={!song.song_file}
               />
             </>
           )}
