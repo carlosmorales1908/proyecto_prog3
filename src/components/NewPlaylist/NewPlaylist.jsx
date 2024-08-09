@@ -11,6 +11,7 @@ const NewPlaylist = () => {
     name: "",
     description: "",
   });
+  const [required, setRequired] = useState(false)
 
   const handleOpenModal = () => {
     setShowModal(true);
@@ -25,9 +26,13 @@ const NewPlaylist = () => {
     e.preventDefault();
     const playlistService = new PlaylistService(token);
     try {
-      playlistService.createPlaylist(data);
-      setShowModal(false);
-      setData({ name: "", description: "" });
+      if (!data.name || !data.description) {
+        setRequired(true)
+      } else {
+        playlistService.createPlaylist(data);
+        setShowModal(false);
+        setData({ name: "", description: "" });
+      }
     } catch (error) {
       console.error("Error Creando la  playlist:", error);
     }
@@ -45,7 +50,7 @@ const NewPlaylist = () => {
         handleClickAcept={handleClickAccept}
         title="Nueva Playlist"
       >
-        <FormNewPlaylist handleInputChange={handleInputChange} values={data} />
+        <FormNewPlaylist handleInputChange={handleInputChange} values={data} required={required}/>
       </InfoModal>
     </>
   );
