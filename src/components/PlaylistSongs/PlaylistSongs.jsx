@@ -94,7 +94,7 @@ export default function PlaylistSongs() {
         <p className="mb-1" style={{ paddingLeft: "0.3rem" }}>
           Playlist
         </p>
-        <h1 style={{ fontSize: "5rem" }}>{playlistData.playlistName}</h1>
+        <h1 style={{ fontSize: "5rem" }} className="album-title">{playlistData.playlistName}</h1>
         <small className="text-white-50" style={{ paddingLeft: "0.3rem" }}>
           {playlistData.description}
         </small>

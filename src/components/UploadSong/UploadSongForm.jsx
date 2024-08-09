@@ -8,7 +8,6 @@ import Spinner from "../Spinner/Spinner";
 import ApiSelect from "../Select/ApiSelect";
 import NewAlbumModal from "../NewAlbum/NewAlbumModal";
 
-
 export default function UploadSongForm() {
     const { token } = useContext(AuthContext);
     const fileInputRef = useRef(null);
@@ -119,26 +118,20 @@ export default function UploadSongForm() {
     return (
         <>
             <h1 className="mb-4 mt-2 fw-bolder">Subir Canción</h1>
-            <div className="d-flex justify-content-center pt-5">
+            <div className="d-flex justify-content-center pt-1">
                 <form
                     onSubmit={handleSubmit}
                     encType="multipart/form-data"
-                    className="text-primary px-5 py-4 w-50 border rounded bg-dark bg-gradient needs-validation"
+                    className="text-center px-5 py-4 w-50 border rounded bg-dark bg-gradient needs-validation row"
                     noValidate
                 >
-                    <div className="input-group col-12">
-                        {/* <label htmlFor="title" className="me-2 mb-3">
-              Título:
-            </label> */}
-                        <span
-                            className="input-group-text bg-black bg-gradient text-primary"
-                            id="inputGroup-sizing-default"
-                        >
-                            Título
-                        </span>
+                    <div className="col-12 d-flex flex-column">
+                        <label htmlFor="title" className="me-2 mb-1">
+                            Título:
+                        </label>
                         <input
                             type="text"
-                            className="form-control"
+                            className="form-control input-color"
                             id="title"
                             name="title"
                             minLength={1}
@@ -151,17 +144,13 @@ export default function UploadSongForm() {
                     {errors.title && (
                         <small className="text-danger">{errors.title}</small>
                     )}
-                    <div className="input-group mt-3">
-                        {/* <label htmlFor="year" className="me-2 mb-3">Año de lanzamiento:</label> */}
-                        <span
-                            className="input-group-text bg-black bg-gradient text-primary"
-                            id="inputGroup-sizing-default"
-                        >
-                            Año de lanzamiento
-                        </span>
+                    <div className="mt-3">
+                        <label htmlFor="year" className="me-2 mb-1">
+                            Año de lanzamiento:
+                        </label>
                         <input
                             type="number"
-                            className="form-control"
+                            className="form-control input-color"
                             id="year"
                             name="year"
                             minLength={-2147483648}
@@ -170,17 +159,13 @@ export default function UploadSongForm() {
                             onChange={(e) => handleChange(e)}
                         />
                     </div>
-                    <div className="input-group mt-3">
-                        {/* <label htmlFor="duration" className="me-2 mb-3">Duración (segundos):</label> */}
-                        <span
-                            className="input-group-text bg-black bg-gradient text-primary"
-                            id="inputGroup-sizing-default"
-                        >
-                            Duración (segundos)
-                        </span>
+                    <div className="mt-3">
+                        <label htmlFor="duration" className="me-2 mb-1">
+                            Duración (segundos):
+                        </label>
                         <input
                             type="number"
-                            className="form-control"
+                            className="form-control input-color"
                             id="duration"
                             name="duration"
                             minLength={1}
@@ -189,35 +174,36 @@ export default function UploadSongForm() {
                             onChange={(e) => handleChange(e)}
                         />
                     </div>
-                    <div className="input-group mt-3">
-                        <span
-                            className="input-group-text bg-black bg-gradient text-primary"
-                            id="inputGroup-sizing-default"
-                        >
-                            Album
-                        </span>
-                        <div style={{ minWidth: "60%" }}>
-                            <ApiSelect
-                                id="album"
-                                name="album"
-                                getOptions={getAlbumOptions}
-                                handleChange={handleChange}
-                            />
+                    <div className="mt-3">
+                        <label htmlFor="album" className="me-2 mb-1">
+                            Album:
+                        </label>
+                        <div className="row">
+                            <div className="col-12">
+                                <ApiSelect
+                                    id="album"
+                                    name="album"
+                                    getOptions={getAlbumOptions}
+                                    handleChange={handleChange}
+                                />
+                            </div>
+                            <div className="col-12 mt-3">
+                                <span
+                                    className="btn btn-primary ms-2 rounded"
+                                    onClick={() => setShowNewAlbumModal(true)}
+                                >
+                                    Nuevo album
+                                </span>
+                            </div>
                         </div>
-                        <span
-                            className="btn btn-primary ms-2 rounded"
-                            onClick={() => setShowNewAlbumModal(true)}
-                        >
-                            Nuevo album
-                        </span>
                     </div>
-                    <div className="input-group mt-3">
+                    <div className=" mt-4">
                         {/* <label htmlFor="audio" className="me-2">Archivo de audio:</label> */}
                         {/* <br /> */}
                         <div className="input-group">
                             <input
                                 type="file"
-                                className="form-control"
+                                className="form-control input-color"
                                 id="song_file"
                                 name="song_file"
                                 accept="audio/*"
@@ -267,7 +253,10 @@ export default function UploadSongForm() {
                 >
                     {modalChildren}
                 </InfoModal>
-                <NewAlbumModal showModal={showNewAlbumModal} setShowModal={setShowNewAlbumModal}></NewAlbumModal>
+                <NewAlbumModal
+                    showModal={showNewAlbumModal}
+                    setShowModal={setShowNewAlbumModal}
+                ></NewAlbumModal>
             </div>
         </>
     );
