@@ -1,6 +1,6 @@
 # Melodify
 
-![](public\minilogo3.png)
+![](public/minilogo3.png)
 
 **Melodify :** Aplicación de música desarrollada por alumnos de la Tecnicatura de Desarollo de Software.
 
