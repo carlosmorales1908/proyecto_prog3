@@ -168,13 +168,17 @@ const UserProfile = () => {
             ) : (
               <div className="email-info d-flex">
                 <p className="fs-5">{!showEmail ? parseEmail(email) : email}</p>
-                <p
+                <span
                   onClick={handleShowEmail}
                   className="text-primary mx-2 fs-5"
                   style={{ cursor: "pointer" }}
                 >
-                  Mostrar
-                </p>
+                  {!showEmail ? (
+                    <i className="bi bi-eye"></i>
+                  ) : (
+                    <i className="bi bi-eye-slash"></i>
+                  )}
+                </span>
               </div>
             )}
           </div>
