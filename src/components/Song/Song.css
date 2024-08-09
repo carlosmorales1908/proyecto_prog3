@@ -2,11 +2,6 @@
     background-color: #1f1f1f;
 
 }
-
-.not-song:hover{
-    background-color: rgb(80, 16, 16);
-}
-
 .dropdown-menu{
     bottom: 0;
     right: 0;

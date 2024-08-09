@@ -29,9 +29,6 @@ const PlaylistList = () => {
   };
 
   if (isError) return <p>Error al cargar las playlists.</p>;
-  if (!filteredPlaylists.length && !isLoading) {
-    return <p>No hay playlists disponibles</p>;
-  }
 
   return (
     <>
@@ -57,6 +54,9 @@ const PlaylistList = () => {
         })}
       </div>
       {isLoading && <Spinner />}
+      {filteredPlaylists.length === 0 && !isLoading && (
+        <p className="text-center text-warning">No hay canciones disponibles</p>
+      )}
     </>
   );
 };

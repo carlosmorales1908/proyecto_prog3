@@ -14,7 +14,7 @@ class BaseService {
     };
 
     try {
-      let URI = `${this.baseURL}/${this.endpoint}`;
+      let URI = `${import.meta.env.VITE_BASE_URL}${this.endpoint}`;
       if (param) {
         URI += `/${param}`;
       }
