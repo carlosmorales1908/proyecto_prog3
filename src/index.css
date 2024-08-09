@@ -1,9 +1,15 @@
+.body {
+  scrollbar-color: #9338b7, red;
+}
+
 #root {
     font-family: 'Comfortaa', sans-serif;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-  }
+}
+
+
 
 
 .comfortaa-font {
@@ -82,4 +88,30 @@
   border-color: #9338b7;
   /* box-shadow: 0 0 5px rgba(110, 7, 255, 0.75);  */
   box-shadow: 0 0 0 1px #9338b7, 0 0 0 0.25rem rgba(110, 7, 255, 0.25);
+}
+
+
+
+/* Estilo de la barra de desplazamiento */
+::-webkit-scrollbar {
+  width: 12px; /* Ancho de la barra de desplazamiento */
+}
+
+/* Estilo del track (parte donde no está el thumb) */
+::-webkit-scrollbar-track {
+  background: #f1f1f12e; /* Color de fondo del track */
+  border-radius: 4px; /* Esquinas redondeadas del track */
+}
+
+/* Estilo del thumb (parte que se mueve) */
+::-webkit-scrollbar-thumb {
+  background: #652f82; /* Color del thumb */
+  /* 652f82 */
+  border-radius: 4px; /* Esquinas redondeadas del thumb */
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); /* Sombra del thumb */
+}
+
+/* Estilo del thumb cuando está en foco (hover) */
+::-webkit-scrollbar-thumb:hover {
+  background: #9338b7; /* Color del thumb cuando está en foco */
 }
