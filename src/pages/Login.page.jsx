@@ -10,12 +10,14 @@ const LoginPage = () => {
             <div className="card card-custom bg-black p-2 text-white bg-opacity-75 text-light shadow-lg">
               <div className="card-body p-4">
                 <div className="text-center mb-4">
-                  <i
-                    className="bi bi-music-note-beamed"
-                    style={{ fontSize: "2rem" }}
-                  ></i>
+                  <img
+                    src="/minilogo3.png"
+                    alt="melodify"
+                    className="img-fluid"
+                    style={{ maxWidth: "150px" }}
+                  />
                   <h2 className="card-title mt-3">
-                    <strong>Inicia sesión en Melodify</strong>
+                    <strong>Inicia sesión</strong>
                   </h2>
                 </div>
                 <LoginForm />
