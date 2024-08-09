@@ -164,6 +164,7 @@ const UserProfile = () => {
                 name="email"
                 value={data.email}
                 onChange={handleInputChange}
+                className="form-control input-color"
               />
             ) : (
               <div className="email-info d-flex">

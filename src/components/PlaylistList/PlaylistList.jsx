@@ -55,7 +55,7 @@ const PlaylistList = () => {
       </div>
       {isLoading && <Spinner />}
       {filteredPlaylists.length === 0 && !isLoading && (
-        <p className="text-center text-warning">No hay canciones disponibles</p>
+        <p className="text-center text-warning">No hay plyalist disponibles</p>
       )}
     </>
   );
