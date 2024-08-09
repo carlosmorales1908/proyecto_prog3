@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import Song from "./Song";
+import NewSongToPlaylistModal from "../NewSongToPlaylist/NewSongToPlaylistModal";
 
 const SongList = ({ songs = [], lastElementRef = null, onDelete }) => {
   const [playingAudio, setPlayingAudio] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+  const [selectedSongId, setSelectedSongId] = useState(null);
 
   const handlePlayAudio = (song) => {
     if (playingAudio && playingAudio !== song.id) {
@@ -15,13 +18,23 @@ const SongList = ({ songs = [], lastElementRef = null, onDelete }) => {
     setPlayingAudio(playingAudio === song.id ? null : song.id);
   };
 
+  const openModalWithSong = (songId) => {
+    setSelectedSongId(songId);
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+    setSelectedSongId(null);
+  };
+
   return (
-    <div className="overflow-auto" style={{ maxHeight: "calc(70vh - 70px)"}}>
+    <div className="overflow-auto" style={{ maxHeight: "calc(70vh - 70px)" }}>
       <div className="sticky-top bg-dark text-light p-2 z-1">
         <div className="d-flex justify-content-between align-items-center">
           <strong>#</strong>
           <strong
-            className=" text-center position-relative"
+            className="text-center position-relative"
             style={{ right: "36%" }}
           >
             Título
@@ -47,12 +60,20 @@ const SongList = ({ songs = [], lastElementRef = null, onDelete }) => {
                 onPlay={() => handlePlayAudio(song)}
                 isPlaying={playingAudio === song.id}
                 onDelete={onDelete ? () => onDelete(song.id) : null}
-               
+                onAddToPlaylist={() => openModalWithSong(song.id)}
               />
             </div>
           );
         })}
       </div>
+
+      {showModal && (
+        <NewSongToPlaylistModal
+          showModal={showModal}
+          setShowModal={closeModal}
+          songId={selectedSongId}
+        />
+      )}
     </div>
   );
 };
