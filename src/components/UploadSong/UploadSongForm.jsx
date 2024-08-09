@@ -118,7 +118,7 @@ export default function UploadSongForm() {
     return (
         <>
             <h1 className="mb-4 mt-2 fw-bolder">Subir Canción</h1>
-            <div className="d-flex justify-content-center pt-5">
+            <div className="d-flex justify-content-center pt-1">
                 <form
                     onSubmit={handleSubmit}
                     encType="multipart/form-data"
@@ -131,7 +131,7 @@ export default function UploadSongForm() {
                         </label>
                         <input
                             type="text"
-                            className="form-control"
+                            className="form-control input-color"
                             id="title"
                             name="title"
                             minLength={1}
@@ -150,7 +150,7 @@ export default function UploadSongForm() {
                         </label>
                         <input
                             type="number"
-                            className="form-control"
+                            className="form-control input-color"
                             id="year"
                             name="year"
                             minLength={-2147483648}
@@ -165,7 +165,7 @@ export default function UploadSongForm() {
                         </label>
                         <input
                             type="number"
-                            className="form-control"
+                            className="form-control input-color"
                             id="duration"
                             name="duration"
                             minLength={1}
@@ -203,7 +203,7 @@ export default function UploadSongForm() {
                         <div className="input-group">
                             <input
                                 type="file"
-                                className="form-control"
+                                className="form-control input-color"
                                 id="song_file"
                                 name="song_file"
                                 accept="audio/*"

@@ -44,7 +44,7 @@ export default function NewAlbumForm({ handleInputChange, values, errors }) {
                     type="text"
                     id="title"
                     name="title"
-                    className="form-control form-control-sm"
+                    className="form-control form-control-sm input-color"
                     required
                     value={values.name}
                     onChange={handleInputChange}
@@ -81,7 +81,7 @@ export default function NewAlbumForm({ handleInputChange, values, errors }) {
                     type="number"
                     id="year"
                     name="year"
-                    className="form-control form-control-sm"
+                    className="form-control form-control-sm  input-color"
                     minLength={4}
                     maxLength={4}
                     min={1700}
