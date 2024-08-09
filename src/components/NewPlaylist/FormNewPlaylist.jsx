@@ -1,4 +1,4 @@
-const FormNewPlaylist = ({ handleInputChange, values}) => {
+const FormNewPlaylist = ({ handleInputChange, values, required }) => {
   return (
     <form>
       <div className="mb-3">
@@ -27,6 +27,9 @@ const FormNewPlaylist = ({ handleInputChange, values}) => {
           onChange={handleInputChange}
         />
       </div>
+      {required && (
+        <p className="text-warning">Todos los campos son obligatorios</p>
+      )}
     </form>
   );
 };
