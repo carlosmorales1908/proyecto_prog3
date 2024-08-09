@@ -6,7 +6,7 @@ const FormNewPlaylist = ({ handleInputChange, values}) => {
           Nombre de la playlist:
         </label>
         <input
-          className="form-control"
+          className="form-control input-color"
           type="text"
           id="name"
           name="name"
@@ -19,7 +19,7 @@ const FormNewPlaylist = ({ handleInputChange, values}) => {
           Descripción:
         </label>
         <textarea
-          className="form-control"
+          className="form-control input-color"
           id="description"
           name="description"
           value={values.description}

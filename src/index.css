@@ -1,15 +1,117 @@
+.body {
+  scrollbar-color: #9338b7, red;
+}
+
 #root {
-    /* font-family: 'Ubuntu', sans-serif; */
     font-family: 'Comfortaa', sans-serif;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-  }
+}
+
+
 
 
 .comfortaa-font {
+  /* font-family: 'Ubuntu', sans-serif; */
   font-family: "Comfortaa", sans-serif;
   font-optical-sizing: auto;
   font-weight: 400;
   font-style: normal;
+}
+
+.album-title {
+  font-family: var(--bs-body-font-family);
+}
+
+.input-color {
+  border: var(--bs-border-width) solid #653791;
+}
+.input-color:focus {
+  border-color: #9338b7;
+  box-shadow: 0 0 0 0.25rem rgba(110, 7, 255, 0.25); 
+}
+
+.nav-link {
+  color: RGBA(135,65,170, var(--bs-link-opacity, 1)) !important;
+  -webkit-text-decoration-color: RGBA(var(--bs-primary-rgb), var(--bs-link-underline-opacity, 1)) !important;
+  text-decoration-color: RGBA(var(--bs-primary-rgb), var(--bs-link-underline-opacity, 1)) !important;
+}
+
+.nav-link:hover {
+  color: RGBA(117,55,180, var(--bs-link-opacity, 1)) !important;
+  -webkit-text-decoration-color: RGBA(var(--bs-primary-rgb), var(--bs-link-underline-opacity, 1)) !important;
+  text-decoration-color: RGBA(var(--bs-primary-rgb), var(--bs-link-underline-opacity, 1)) !important;
+}
+
+.nav-link:focus {
+    color: rgb(100, 45, 125) !important; 
+}
+
+/* For buttons */
+
+.btn-primary {
+  --bs-btn-color: #fff;
+  --bs-btn-bg: rgb(135, 65, 170);
+  --bs-btn-border-color: #980dfd;
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg:  rgb(117, 55, 150);
+  --bs-btn-hover-border-color: #151617;
+  --bs-btn-focus-shadow-rgb: 50, 132, 253;
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: #652f82;
+  --bs-btn-active-border-color: rgb(117, 55, 150);
+  --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+  --bs-btn-disabled-color: #fff;
+  --bs-btn-disabled-bg: #0d6efd;
+  --bs-btn-disabled-border-color: #0d6efd;
+}
+
+/* For the Song list */
+
+.bi-pause-fill, .bi-play-fill, .bi-three-dots{
+  color: rgb(135, 65, 170);
+}
+
+
+.form-range::-webkit-slider-thumb {
+  background: rgb(135, 65, 170); 
+}
+
+.form-range:focus::-webkit-slider-thumb {
+  box-shadow: 0 0 0 1px #fff, 0 0 0 0.25rem rgba(110, 7, 255, 0.25);
+  /* box-shadow: 0 0 0 0.25rem rgba(110, 7, 255, 0.25);  */
+}
+
+.form-range::-webkit-slider-thumb:active { 
+  background: #652f82; 
+  border-color: #9338b7;
+  /* box-shadow: 0 0 5px rgba(110, 7, 255, 0.75);  */
+  box-shadow: 0 0 0 1px #9338b7, 0 0 0 0.25rem rgba(110, 7, 255, 0.25);
+}
+
+
+
+/* Estilo de la barra de desplazamiento */
+::-webkit-scrollbar {
+  width: 12px; /* Ancho de la barra de desplazamiento */
+}
+
+/* Estilo del track (parte donde no está el thumb) */
+::-webkit-scrollbar-track {
+  background: #f1f1f12e; /* Color de fondo del track */
+  border-radius: 4px; /* Esquinas redondeadas del track */
+}
+
+/* Estilo del thumb (parte que se mueve) */
+::-webkit-scrollbar-thumb {
+  background: #652f82; /* Color del thumb */
+  /* 652f82 */
+  border-radius: 4px; /* Esquinas redondeadas del thumb */
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); /* Sombra del thumb */
+}
+
+/* Estilo del thumb cuando está en foco (hover) */
+::-webkit-scrollbar-thumb:hover {
+  background: #9338b7; /* Color del thumb cuando está en foco */
 }

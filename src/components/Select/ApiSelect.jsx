@@ -43,8 +43,9 @@ const styles = {
         return {
             ...styles,
             backgroundColor: "#212529",
-            borderColor: "#495057",
+            //borderColor: "#495057",
             color: "#dee2e6",
+            border: "1px solid #653791"
         };
     },
     //Estiliza el menú desplegable
