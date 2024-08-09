@@ -2,12 +2,17 @@ import React, { useRef, useState, useEffect, useContext } from "react";
 import "./Song.css";
 import { AuthContext } from "../../context/auth.contex";
 import SongService from "../../services/song.services";
-import NewSongToPlaylistModal from "../NewSongToPlaylist/NewSongToPlaylistModal";
 
-const Song = ({ song, onPlay, isPlaying, index, onDelete }) => {
+const Song = ({
+  song,
+  onPlay,
+  isPlaying,
+  index,
+  onDelete,
+  onAddToPlaylist,
+}) => {
   const [isHovered, setIsHovered] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
-  const [showModal, setShowModal] = useState(false);
   const [volume, setVolume] = useState(1);
   const audioRef = useRef(null);
   const iconRef = useRef(null);
@@ -59,17 +64,25 @@ const Song = ({ song, onPlay, isPlaying, index, onDelete }) => {
         console.log("No se puede eliminar la canción", error);
       }
     } else if (action === "add") {
-      setShowModal(true);
+      if (onAddToPlaylist) onAddToPlaylist();
     }
   };
 
   const handleVolumeChange = (event) => {
-    setVolume(event.target.value);
+    setVolume(parseFloat(event.target.value));
+  };
+
+  const getVolumeIcon = () => {
+    if (volume === 0) return "bi-volume-mute";
+    if (volume <= 0.7) return "bi-volume-down";
+    return "bi-volume-up";
   };
 
   return (
     <div
-      className={`song-container p-2 rounded-3 ${!song.song_file && "text-muted"}`}
+      className={`song-container p-2 rounded-3 ${
+        !song.song_file && "text-muted"
+      }`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       style={{ cursor: song.song_file ? "pointer" : "default" }}
@@ -78,7 +91,9 @@ const Song = ({ song, onPlay, isPlaying, index, onDelete }) => {
         <div className="col-1">
           {isHovered || isPlaying ? (
             <i
-              className={`bi ${isPlaying ? "bi-pause-fill" : "bi-play-fill"} fs-5`}
+              className={`bi ${
+                isPlaying ? "bi-pause-fill" : "bi-play-fill"
+              } fs-5`}
               role="button"
               onClick={song.song_file ? onPlay : null}
               style={{ pointerEvents: song.song_file ? "auto" : "none" }}
@@ -98,16 +113,24 @@ const Song = ({ song, onPlay, isPlaying, index, onDelete }) => {
           </h6>
         </div>
         <div className="col-auto d-flex align-items-center">
-          <input
-            type="range"
-            min="0"
-            max="1"
-            step="0.01"
-            value={volume}
-            onChange={handleVolumeChange}
-            className="form-range me-3"
-            disabled={!song.song_file}
-          />
+          {song.song_file && (
+            <>
+              <i
+                className={`bi ${getVolumeIcon()} fs-5 me-2`}
+                style={{ cursor: "pointer" }}
+              ></i>
+              <input
+                type="range"
+                min="0"
+                max="1"
+                step="0.001"
+                value={volume}
+                onChange={handleVolumeChange}
+                className="form-range me-3"
+                disabled={!song.song_file}
+              />
+            </>
+          )}
           <div
             className="text-light me-2"
             style={{ width: "60px", textAlign: "center" }}
@@ -122,11 +145,17 @@ const Song = ({ song, onPlay, isPlaying, index, onDelete }) => {
           {song.song_file && (
             <div className="dropdown" ref={menuRef}>
               <i
-                className={`bi bi-three-dots fs-5 ${isHovered ? "d-block" : "d-none"}`}
+                className={`bi bi-three-dots fs-5 ${
+                  isHovered ? "d-block" : "d-none"
+                }`}
                 ref={iconRef}
                 onClick={handleMenuClick}
               ></i>
-              <ul className={`dropdown-menu dropdown-menu-dark ${showMenu ? "show" : ""}`}>
+              <ul
+                className={`dropdown-menu dropdown-menu-dark ${
+                  showMenu ? "show" : ""
+                }`}
+              >
                 <li className="item">
                   <a
                     className="dropdown-item text-light"
@@ -150,11 +179,6 @@ const Song = ({ song, onPlay, isPlaying, index, onDelete }) => {
           )}
         </div>
       </div>
-      <NewSongToPlaylistModal
-        showModal={showModal}
-        setShowModal={setShowModal}
-        songId={song.id}
-      />
     </div>
   );
 };
