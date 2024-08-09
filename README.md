@@ -17,24 +17,29 @@
 Instruccinoes para ejectuar el proyecto localemnte:
 
 1. Clonar el repositorio:
+
 ```markdown
 $ git clone git@github.com:carlosmorales1908/proyecto_prog3.git
 ```
 
 2. Entra al directorio del proyecto:
+
 ```markdown
 cd tu-repositorio
 ```
 
 3. Instala las dependencias necsarias:
+
 ```markdown
 npm install
 ```
 
 4. Ejecuta la aplicación:
+
 ```markdown
-npm run dev 
+npm run dev
 ```
+
 ## Uso:
 
 - **Inicio de sesión :** acceder a la aplicación con usuario y contraseña.
