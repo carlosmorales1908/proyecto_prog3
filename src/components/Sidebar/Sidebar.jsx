@@ -6,7 +6,7 @@ export default function Sidebar({profile}) {
     <div className="sidebar d-flex flex-column sticky-top bg-black vh-100 p-0 border-end border-dark">
       <div className="ps-3 bg-black bg-gradient pt-3 pb-2">
         <div>
-          <img src="/assets/letras2.png" alt="logo" style={{width: "200px", height:"55px"}} />
+          <img src="/assets/letras2.png" alt="logo" style={{width: "170px", height:"45px"}} />
         </div>
 
       </div>
