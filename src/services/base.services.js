@@ -16,7 +16,7 @@ class BaseService {
     try {
       let URI = `${import.meta.env.VITE_BASE_URL}${this.endpoint}`;
       if (param) {
-        URI += `/${param}`;
+        URI += `${param}`;
       }
 
       const response = await fetch(URI, {
