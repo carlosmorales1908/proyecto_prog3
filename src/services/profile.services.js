@@ -21,7 +21,7 @@ class UserProfileService extends BaseService {
       const response = await fetch(
         `${import.meta.env.VITE_BASE_URL}${
           import.meta.env.VITE_URI_USER_PROFILE_BY_ID
-        }/${id}/`,
+        }${id}/`,
         {
           method: "PATCH",
           headers: {
@@ -36,9 +36,8 @@ class UserProfileService extends BaseService {
       }
 
       const updatedData = await response.json();
-      
-      return updatedData;
 
+      return updatedData;
     } catch (error) {
       console.error("Error en updateProfile:", error);
       throw error;
