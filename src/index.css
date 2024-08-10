@@ -24,6 +24,10 @@
   font-family: var(--bs-body-font-family);
 }
 
+.color-primary{
+  color: rgb(135, 65, 170);
+}
+
 .input-color {
   border: var(--bs-border-width) solid #653791;
 }
@@ -53,7 +57,7 @@
 .btn-primary {
   --bs-btn-color: #fff;
   --bs-btn-bg: rgb(135, 65, 170);
-  --bs-btn-border-color: #980dfd;
+  --bs-btn-border-color: rgb(152, 13, 253);
   --bs-btn-hover-color: #fff;
   --bs-btn-hover-bg:  rgb(117, 55, 150);
   --bs-btn-hover-border-color: #151617;
