@@ -29,43 +29,47 @@ const SongList = ({ songs = [], lastElementRef = null, onDelete }) => {
   };
 
   return (
-    <div className="overflow-auto" style={{ maxHeight: "calc(70vh - 70px)" }}>
-      <div className="sticky-top bg-dark text-light p-2 z-1">
-        <div className="d-flex justify-content-between align-items-center">
-          <strong>#</strong>
-          <strong
-            className="text-center position-relative"
-            style={{ right: "36%" }}
-          >
-            Título
-          </strong>
-          <i
-            className="bi bi-clock position-relative text-end"
-            style={{ right: "4%" }}
-          ></i>
-        </div>
-      </div>
-
-      <div className="list-group">
-        {songs.map((song, index) => {
-          const isLastElement = index === songs.length - 1;
-          return (
-            <div
-              key={`${song.id}-${index}`}
-              ref={isLastElement && lastElementRef ? lastElementRef : null}
-            >
-              <Song
-                song={song}
-                index={index + 1}
-                onPlay={() => handlePlayAudio(song)}
-                isPlaying={playingAudio === song.id}
-                onDelete={onDelete ? () => onDelete(song.id) : null}
-                onAddToPlaylist={() => openModalWithSong(song.id)}
-              />
-            </div>
-          );
-        })}
-      </div>
+    <div
+      className="overflow-auto bg-black bg-gradient container-fluid rounded px-0"
+      style={{ maxHeight: "calc(70vh - 70px)" }}
+    >
+      <table
+        className="table table-borderless  table-hover table-responsive w-100"
+        style={{ tableLayout: "fixed" }}
+      >
+        <thead className="border-bottom">
+          <tr className="sticky-top bg-dark">
+            <th style={{ width: "15%" }}>#</th>
+            <th style={{ width: "65%" }}>Título</th>
+            <th style={{ width: "20%" }}>
+              <i
+                className="bi bi-clock position-relative "
+                style={{ left: "60%" }}
+              ></i>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {songs.map((song, index) => {
+            const isLastElement = index === songs.length - 1;
+            return (
+              <tr
+                key={`${song.id}-${index}`}
+                ref={isLastElement && lastElementRef ? lastElementRef : null}
+              >
+                <Song
+                  song={song}
+                  index={index + 1}
+                  onPlay={() => handlePlayAudio(song)}
+                  isPlaying={playingAudio === song.id}
+                  onDelete={onDelete ? () => onDelete(song.id) : null}
+                  onAddToPlaylist={() => openModalWithSong(song.id)}
+                />
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
 
       {showModal && (
         <NewSongToPlaylistModal
