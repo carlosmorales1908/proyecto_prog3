@@ -55,7 +55,7 @@ const NewSongToPlaylistModal = ({ showModal, setShowModal, songId }) => {
       <InfoModal
         show={showModal}
         setShow={setShowModal}
-        title="Playlists"
+        title="Agregar a una playlist"
         handleClickAcept={handleSubmit}
       >
         <NewSongToPlaylistForm
