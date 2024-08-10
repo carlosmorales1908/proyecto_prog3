@@ -1,5 +1,4 @@
 import { useRef, useState, useEffect, useContext } from "react";
-import "./Song.css";
 import { AuthContext } from "../../context/auth.contex";
 import SongService from "../../services/song.services";
 
@@ -40,7 +39,6 @@ const Song = ({
     const handleClickOutside = (event) => {
       if (
         menuRef.current &&
-        iconRef.current &&
         !menuRef.current.contains(event.target) &&
         !iconRef.current.contains(event.target)
       ) {
@@ -54,9 +52,7 @@ const Song = ({
   }, []);
 
   const handleMenuClick = () => {
-    if (song.song_file) {
-      setShowMenu((prevShowMenu) => !prevShowMenu);
-    }
+    setShowMenu((prev) => !prev);
   };
 
   const handleMenuAction = async (action) => {
@@ -70,6 +66,7 @@ const Song = ({
     } else if (action === "add") {
       if (onAddToPlaylist) onAddToPlaylist();
     }
+    setShowMenu(false);
   };
 
   const handleVolumeChange = (event) => {
@@ -94,44 +91,46 @@ const Song = ({
   };
 
   return (
-    <div
-      className={`song-container p-2 rounded-3 ${
-        !song.song_file && "text-muted"
-      }`}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      style={{ cursor: song.song_file ? "pointer" : "default" }}
-    >
-      <div className="row align-items-center w-100 z-1">
-        <div className="col-1">
-          {isHovered || isPlaying ? (
-            <i
-              className={`bi ${
-                isPlaying ? "bi-pause-fill" : "bi-play-fill"
-              } fs-5`}
-              role="button"
-              onClick={song.song_file ? onPlay : null}
-              style={{ pointerEvents: song.song_file ? "auto" : "none" }}
-            ></i>
-          ) : (
-            index
-          )}
-        </div>
-        <div
-          className={`col text-truncate`}
-          onClick={song.song_file ? onPlay : null}
-          role="button"
-          style={{ pointerEvents: song.song_file ? "auto" : "none" }}
-        >
-          <h6 className={`mb-0 text-light ${!song.song_file && "text-muted"}`}>
-            {song.title}
-          </h6>
-        </div>
-        <div className="col-auto d-flex align-items-center">
-          {song.song_file && (
-            <>
+    <>
+      <td
+        style={{ width: "15%" }}
+        onMouseOver={() => setIsHovered(true)}
+        onMouseOut={() => setIsHovered(false)}
+      >
+        {isHovered || isPlaying ? (
+          <i
+            className={`bi ${
+              isPlaying ? "bi-pause-fill" : "bi-play-fill"
+            }`}
+            role="button"
+            onClick={song.song_file ? onPlay : null}
+            style={{ pointerEvents: song.song_file ? "auto" : "none" }}
+          ></i>
+        ) : (
+          index
+        )}
+      </td>
+      <td
+        style={{ width: "65%" }}
+        onClick={song.song_file ? onPlay : null}
+        role="button"
+        onMouseOver={() => setIsHovered(true)}
+        onMouseOut={() => setIsHovered(false)}
+      >
+        <h6 className={`mb-0 text-light ${!song.song_file && "text-muted"}`}>
+          {song.title}
+        </h6>
+      </td>
+      <td
+        style={{ width: "20%" }}
+        onMouseOver={() => setIsHovered(true)}
+        onMouseOut={() => setIsHovered(false)}
+      >
+        {song.song_file && (
+          <div className="d-flex align-items-center position-relative">
+            <div className="d-flex align-items-center me-2">
               <i
-                className={`bi ${getVolumeIcon()} fs-5 me-2`}
+                className={`bi ${getVolumeIcon()} fs-6 me-2`}
                 style={{ cursor: "pointer" }}
                 onClick={toggleMute}
               ></i>
@@ -142,36 +141,29 @@ const Song = ({
                 step="0.001"
                 value={volume}
                 onChange={handleVolumeChange}
-                className="form-range me-3"
+                className="form-range"
+                style={{ width: "80px" }}
               />
-            </>
-          )}
-          <div
-            className="text-light me-2"
-            style={{ width: "60px", textAlign: "center" }}
-          >
-            <small>{song.duration}</small>
-          </div>
-          <audio
-            ref={audioRef}
-            src={song.song_file}
-            onEnded={() => onPlay(null)}
-          />
-          {song.song_file && (
-            <div className="dropdown" ref={menuRef}>
-              <i
-                className={`bi bi-three-dots fs-5 ${
-                  isHovered ? "d-block" : "d-none"
-                }`}
-                ref={iconRef}
-                onClick={handleMenuClick}
-              ></i>
+            </div>
+            <div className="flex-grow-1 text-start ms-2">
+              <small>{song.duration}</small>
+            </div>
+            <div
+              className="dropdown"
+              ref={menuRef}
+            >
+              {isHovered && (
+                <i
+                  className="bi bi-three-dots fs-6"
+                  ref={iconRef}
+                  onClick={handleMenuClick}
+                ></i>
+              )}
               <ul
-                className={`dropdown-menu dropdown-menu-dark ${
-                  showMenu ? "show" : ""
-                }`}
+                className={`dropdown-menu dropdown-menu-dark ${showMenu ? "show" : ""}`}
+                style={{ right: "0", left: "auto" }}
               >
-                <li className="item">
+                <li>
                   <a
                     className="dropdown-item text-light"
                     role="button"
@@ -180,7 +172,7 @@ const Song = ({
                     Eliminar Canción
                   </a>
                 </li>
-                <li className="item">
+                <li>
                   <a
                     className="dropdown-item text-light"
                     role="button"
@@ -191,10 +183,15 @@ const Song = ({
                 </li>
               </ul>
             </div>
-          )}
-        </div>
-      </div>
-    </div>
+          </div>
+        )}
+        <audio
+          ref={audioRef}
+          src={song.song_file}
+          onEnded={() => onPlay(null)}
+        />
+      </td>
+    </>
   );
 };
 
