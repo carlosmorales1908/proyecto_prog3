@@ -28,12 +28,12 @@ import { AuthContext } from "../../context/auth.contex";
     }
 
     return (
-        <form className="container px-5">
-            <div className="input-group">
+        <form className="px-3">
+            <div className="">
                 <label htmlFor="playlist" className="form-label me-3">
-                    Playlist:
+                    Playlist
                 </label>
-                <div style={{ minWidth: "60%" }}>
+                <div style={{ minWidth: "90%" }}>
                     <ApiSelect
                         id="playlist"
                         name="playlist"
