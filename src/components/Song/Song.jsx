@@ -39,17 +39,21 @@ const Song = ({
     const handleClickOutside = (event) => {
       if (
         menuRef.current &&
+        iconRef.current &&
         !menuRef.current.contains(event.target) &&
         !iconRef.current.contains(event.target)
       ) {
         setShowMenu(false);
       }
     };
+  
     document.addEventListener("mousedown", handleClickOutside);
+  
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+  
 
   const handleMenuClick = () => {
     setShowMenu((prev) => !prev);
