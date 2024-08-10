@@ -29,12 +29,23 @@ const useForm = (initialState, callback, validate) => {
     return refs.current[name];
   };
 
+  const clearForm = () => {
+    Object.keys(values).forEach((key) => {
+        if (key == "song_file") {
+            values[key] = null;
+        } else {
+            values[key] = "";
+        }
+    });
+  }
+
   return {
     values,
     errors,
     handleChange,
     handleSubmit,
-    getRef
+    getRef,
+    clearForm
   };
 };
 

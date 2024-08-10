@@ -15,7 +15,7 @@ class AlbumService extends BaseService {
 
     async createAlbum(data) {
         try {
-            const URI = `${this.baseURL}${this.endpoint}/`;
+            const URI = `${this.baseURL}${this.endpoint}`;
             const formData = new FormData();
       
             for (const key in data) {
@@ -47,6 +47,15 @@ class AlbumService extends BaseService {
             return { success: false, error: error.message || "Unknown error" };
           }
     }
+
+    // async createAlbum(data) {
+    //   try {
+    //       return this.post(data);
+    //     } catch (error) {
+    //       this.error = error.message || "Unknown error";
+    //       return { success: false, error: error.message || "Unknown error" };
+    //     }
+    // }
 
     async updateAlbum(id, data) {
         return this.put(id, data);
