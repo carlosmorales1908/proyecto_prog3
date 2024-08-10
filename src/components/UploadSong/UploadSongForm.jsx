@@ -14,7 +14,7 @@ export default function UploadSongForm() {
     //    For Spinner
     const [isLoading, setIsLoading] = useState(false);
     //    For InfoModal
-    const [showModal, setShowModal] = useState(false);
+    const [showInfoModal, setInfoShowModal] = useState(false);
     const [modalTitle, setModalTitle] = useState("");
     const [modalChildren, setModalChildren] = useState("");
     //     For NewAlbumModal
@@ -24,7 +24,7 @@ export default function UploadSongForm() {
     function handleOpenModal(title, children) {
         setModalTitle(title);
         setModalChildren(children);
-        setShowModal(true);
+        setInfoShowModal(true);
     }
 
     //    For Select
@@ -73,17 +73,19 @@ export default function UploadSongForm() {
             if (response.success) {
                 console.log("Success:", response.data);
                 handleOpenModal(
-                    "Completado",
-                    <p>"La canción ha sido subida correctamente."</p>
+                    "",
+                    <p>La canción ha sido subida correctamente.</p>
                 );
                 setIsLoading(false);
+                fileInputRef.current.value = null;
                 clearForm();
             } else {
-                handleOpenModal("Error", <p>{response.error}</p>);
+                handleOpenModal("Ups...", <p>{response.error}</p>);
                 setIsLoading(false);
             }
         } catch (error) {
             console.log("Unexpected error:", error);
+            showInfoModal("Error", <p>{error}</p>);
         } finally {
             setIsLoading(false);
         }
@@ -97,22 +99,22 @@ export default function UploadSongForm() {
         return errors;
     }
 
-    const { values, errors, handleChange, handleSubmit } = useForm(
+    const { values, errors, handleChange, handleSubmit, clearForm } = useForm(
         initialState,
         handleUploadSong,
         validateSongForm
     );
 
-    function clearForm() {
-        fileInputRef.current.value = null;
-        Object.keys(values).forEach((key) => {
-            if (key == "song_file") {
-                values[key] = null;
-            } else {
-                values[key] = "";
-            }
-        });
-    }
+    // function clearForm() {
+    //     fileInputRef.current.value = null;
+    //     Object.keys(values).forEach((key) => {
+    //         if (key == "song_file") {
+    //             values[key] = null;
+    //         } else {
+    //             values[key] = "";
+    //         }
+    //     });
+    // }
 
     //    UploadSongForm
     return (
@@ -122,12 +124,12 @@ export default function UploadSongForm() {
                 <form
                     onSubmit={handleSubmit}
                     encType="multipart/form-data"
-                    className="text-center px-5 py-4 w-50 border rounded bg-dark bg-gradient needs-validation row"
+                    className="px-5 py-4 w-50 border rounded bg-dark bg-gradient needs-validation row"
                     noValidate
                 >
-                    <div className="col-12 d-flex flex-column">
+                    <div className="col-12 d-flex flex-column  text-start">
                         <label htmlFor="title" className="me-2 mb-1">
-                            Título:
+                            Título
                         </label>
                         <input
                             type="text"
@@ -144,9 +146,9 @@ export default function UploadSongForm() {
                     {errors.title && (
                         <small className="text-danger">{errors.title}</small>
                     )}
-                    <div className="mt-3">
+                    <div className="mt-3  text-start">
                         <label htmlFor="year" className="me-2 mb-1">
-                            Año de lanzamiento:
+                            Año de lanzamiento
                         </label>
                         <input
                             type="number"
@@ -159,7 +161,7 @@ export default function UploadSongForm() {
                             onChange={(e) => handleChange(e)}
                         />
                     </div>
-                    <div className="mt-3">
+                    {/* <div className="mt-3">
                         <label htmlFor="duration" className="me-2 mb-1">
                             Duración (segundos):
                         </label>
@@ -173,28 +175,27 @@ export default function UploadSongForm() {
                             value={values.duration}
                             onChange={(e) => handleChange(e)}
                         />
-                    </div>
-                    <div className="mt-3">
-                        <label htmlFor="album" className="me-2 mb-1">
-                            Album:
-                        </label>
-                        <div className="row">
-                            <div className="col-12">
+                    </div> */}
+                    <div className="mt-3 d-flex align-items-end">
+                        <div className="col-7 text-start">
+                            <label htmlFor="album" className="me-2 mb-1">
+                                Album
+                            </label>
                                 <ApiSelect
                                     id="album"
                                     name="album"
                                     getOptions={getAlbumOptions}
                                     handleChange={handleChange}
                                 />
-                            </div>
-                            <div className="col-12 mt-3">
-                                <span
-                                    className="btn btn-primary ms-2 rounded"
-                                    onClick={() => setShowNewAlbumModal(true)}
-                                >
-                                    Nuevo album
-                                </span>
-                            </div>
+                         
+                        </div>
+                        <div className="col-5 mt-3 text-end">
+                            <span
+                                className="btn btn-primary ms-2 rounded"
+                                onClick={() => setShowNewAlbumModal(true)}
+                            >
+                                Nuevo album
+                            </span>
                         </div>
                     </div>
                     <div className=" mt-4">
@@ -246,16 +247,18 @@ export default function UploadSongForm() {
                     </div>
                 </form>
                 <InfoModal
-                    show={showModal}
-                    setShow={setShowModal}
+                    show={showInfoModal}
+                    setShow={setInfoShowModal}
                     handleOpen={handleOpenModal}
                     title={modalTitle}
+                    index={3}
                 >
                     {modalChildren}
                 </InfoModal>
                 <NewAlbumModal
                     showModal={showNewAlbumModal}
                     setShowModal={setShowNewAlbumModal}
+                    showInfoModal={handleOpenModal}
                 ></NewAlbumModal>
             </div>
         </>

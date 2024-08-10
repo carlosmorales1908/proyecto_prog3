@@ -1,63 +1,63 @@
 import { useContext, useState } from "react";
 import InfoModal from "../InfoModal/InfoModal";
 import { AuthContext } from "../../context/auth.contex";
-import NewAlbumForm from "./NewAlbumForm";
-import AlbumService from "../../services/album.services";
 import useForm from "../../hooks/useForm";
-import NewArtistModal from "../NewArtist/NewArtistModal";
+import ArtistService from "../../services/artist.services";
+import NewArtistForm from "./NewArtistForm";
 
-export default function NewAlbumModal({ showModal, setShowModal, showInfoModal }) {
+export default function NewArtistModal({
+    showModal,
+    setShowModal,
+    showInfoModal,
+}) {
     const { token } = useContext(AuthContext);
+    //    For Spinner
     const [isLoading, setIsLoading] = useState(false);
-    const [showNewArtistModal, setShowNewArtistModal] = useState(false);
-    
 
-    async function createNewAlbum() {        
+    async function createNewArtist() {
         try {
             setIsLoading(true);
-            const albumService = new AlbumService(token);
-            const response = await albumService.createAlbum(values);
+            const artistService = new ArtistService(token);
+            const response = await artistService.createArtist(values);
             console.log(response);
             if (response.success) {
-                showInfoModal("", <p>Album creado con exito.</p>);
-                setShowModal(false);
+                showInfoModal("", <p>Artista creado con exito.</p>);
                 clearForm();
+                setShowModal(false);
             }
             else {
                 showInfoModal("Ups...", <p>{response.error}</p>);
+                //setShowModal(false);
             }
         } catch (error) {
             console.log("Unexpected error:", error);
-            showInfoModal("Error", <p>{error}</p>);
+            showInfoModal("Ups...", <p>{response.error}</p>);
         } finally {
             setIsLoading(false);
         }
     }
 
     const initialState = {
-        title: "",
-        artist: "",
-        year: "",
+        name: "",
+        bio: "",
+        website: "",
     };
 
     function validateForm(values) {
         let errors = {};
-        !values.title && (errors.title = "Debe escribir un nombre.");
-        !values.artist &&
-            (errors.artist = "Debe seleccionar un artista.");
+        !values.name && (errors.name = "Debe escribir un nombre.");
         return errors;
     }
 
-    const { values, errors, handleChange, handleSubmit, clearForm } = useForm(
+    const { values, errors, handleChange, handleSubmit, clearForm} = useForm(
         initialState,
-        createNewAlbum,
+        createNewArtist,
         validateForm
     );
 
     const handleOpenModal = () => {
         setShowModal(true);
     };
-
 
     return (
         <>
@@ -66,22 +66,15 @@ export default function NewAlbumModal({ showModal, setShowModal, showInfoModal }
                 setShow={setShowModal}
                 handleOpen={handleOpenModal}
                 handleClickAcept={handleSubmit}
-                title="Nuevo Album"
-                index={1}
+                title="Nuevo artista"
+                index={2}
             >
-                <NewAlbumForm
+                <NewArtistForm
                     handleInputChange={handleChange}
                     values={values}
                     errors={errors}
-                    showInfoModal={showInfoModal}
-                    setShowNewArtistModal={setShowNewArtistModal}
                 />
             </InfoModal>
-            <NewArtistModal
-                showModal={showNewArtistModal}
-                setShowModal={setShowNewArtistModal}
-                showInfoModal={showInfoModal}
-            />
         </>
     );
 }
