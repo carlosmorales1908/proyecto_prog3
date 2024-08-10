@@ -115,7 +115,7 @@ class SongService extends BaseService {
   async addSongToPlaylist(songId, playlistId) {
     try {
       console.log("Adding song to playlist with IDs:", { songId, playlistId });
-      const response = await fetch(`https://sandbox.academiadevelopers.com/harmonyhub/playlist-entries/`, {
+      const response = await fetch(`${ import.meta.env.VITE_BASE_URL}harmonyhub/playlist-entries/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

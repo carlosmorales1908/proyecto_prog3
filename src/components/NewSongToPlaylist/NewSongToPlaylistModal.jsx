@@ -21,11 +21,11 @@ const NewSongToPlaylistModal = ({ showModal, setShowModal, songId }) => {
 
       if (response) {
         setShowModal(false);
+        clearForm();
       }
     } catch (error) {
-      console.log("Unexpected error:", error);
       setApiError(
-        "No se pudo agregar la canción a la playlist. Inténtalo nuevamente."
+        "Esta playlist no le pertenece"
       );
     } finally {
       setIsLoading(false);
@@ -44,7 +44,7 @@ const NewSongToPlaylistModal = ({ showModal, setShowModal, songId }) => {
     return errors;
   }
 
-  const { values, errors, handleChange, handleSubmit, getRef } = useForm(
+  const { values, errors, handleChange, handleSubmit, getRef,clearForm } = useForm(
     initialState,
     addSongToPlaylist,
     validateForm
