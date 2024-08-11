@@ -34,7 +34,7 @@ const SongList = ({ songs = [], lastElementRef = null, onDelete }) => {
       style={{ maxHeight: "calc(80vh - 70px)" }}
     >
       <table
-        className="table table-borderless  table-hover table-responsive w-100"
+        className="table table-borderless  table-hover table-responsive w-100 mb-0"
         style={{ tableLayout: "fixed" }}
       >
         <thead className="border-bottom">
