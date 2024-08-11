@@ -120,7 +120,7 @@ const UserProfile = () => {
 
   return (
     <>
-      <div className="container card-profile g-0 mt-2" style={{ width: "60%" }}>
+      <div className="container card-profile bg-dark bg-gradient rounded g-0 mt-2" style={{ width: "60%" }}>
         <div className="user-info">
           <HeaderCard
             userProfile={userProfile}
@@ -171,7 +171,7 @@ const UserProfile = () => {
                 <p className="fs-5">{!showEmail ? parseEmail(email) : email}</p>
                 <span
                   onClick={handleShowEmail}
-                  className="text-primary mx-2 fs-5"
+                  className="color-primary mx-2 fs-5"
                   style={{ cursor: "pointer" }}
                 >
                   {!showEmail ? (

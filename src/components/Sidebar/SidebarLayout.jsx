@@ -39,7 +39,7 @@ export default function SidebarLayout() {
         <>
             {isLoading ? (
                 <div className="d-flex justify-content-center align-content-center align-items-center vh-100 mt-4 px-4">
-                    <Spinner />
+                    <Spinner layout={true} />
                 </div>
             ) : (
                 <div className="bg-black bg-gradient row g-0">

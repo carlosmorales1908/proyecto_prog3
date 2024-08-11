@@ -1,6 +1,6 @@
 const HeaderCard = (props) => {
   return (
-    <div className="header-card d-flex">
+    <div className="header-card d-flex justify-content-start align-items-center">
       <div>
         <img
           src={
@@ -8,7 +8,7 @@ const HeaderCard = (props) => {
               ? `${props.profileImg}`
               : "/assets/sin_perfil.jpeg"
           }
-          className={`header-card-img object-fit-cover rounded-circle m-2 ${
+          className={`header-card-img object-fit-cover rounded-circle m-2 mx-3 ${
             props.editMode && "img-edit"
           }`}
           onClick={props.handleImageClick}
@@ -24,7 +24,7 @@ const HeaderCard = (props) => {
           />
         )}
       </div>
-      <div className="user-name-header d-block mx-5 mt-5 fw-bold">
+      <div className="user-name-header d-block fw-bold ms-3">
         <h2>{props.userProfile.first_name}</h2>
       </div>
     </div>
