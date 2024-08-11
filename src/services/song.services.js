@@ -30,8 +30,8 @@ class SongService extends BaseService {
   async getSongsById(songIds) {
         try {
             let songs = [];
-            let nextPageUrl = `${import.meta.env.VITE_BASE_URL}harmonyhub/songs/?ordering=created_at&page=1&page_size=10`;
-            while (nextPageUrl && songIds.size != 0) {
+            let nextPageUrl = `${import.meta.env.VITE_BASE_URL}harmonyhub/songs/?ordering=created_at&page=1&page_size=50`;
+            while (nextPageUrl && songIds.length != 0) {
                 const response = await fetch(nextPageUrl, {
                     headers: {
                         Authorization: `Token ${this.token}`,
@@ -44,7 +44,7 @@ class SongService extends BaseService {
                 data.results.forEach(song => {                    
                     if (songIds.includes(song.id)) {
                         songs.push(song);
-                        songIds = songIds.filter(object => object.id !== song.id);
+                        songIds = songIds.filter(id => id != song.id);
                     }
                 });
             

@@ -119,3 +119,8 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #9338b7; /* Color del thumb cuando está en foco */
 }
+
+
+.table {
+  --bs-table-bg: #21252900;
+}
