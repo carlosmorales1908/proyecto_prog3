@@ -33,7 +33,7 @@ const PlaylistList = () => {
   return (
     <>
       <div className="header d-flex justify-content-between">
-        <h1 className="mb-4 mt-2 fw-bolder">Playlist</h1>
+        <h1 className="mb-4 mt-2 fw-bolder">Playlists</h1>
         <div>
           <NewPlaylist />
         </div>
