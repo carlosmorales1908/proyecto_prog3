@@ -1,6 +1,5 @@
 import { useState, useContext, useEffect, useRef } from "react";
 import SongList from "../Song/SongList";
-import Spinner from "../Spinner/Spinner";
 import Search from "../Search/Search";
 import SongService from "../../services/song.services";
 import { AuthContext } from "../../context/auth.contex";
@@ -64,7 +63,6 @@ const AllSongList = () => {
         lastElementRef={nextUrl ? lastElementRef : null}
         onDelete={handleDelete}
       />
-      {isLoading && <Spinner />}
       {!isLoading && filteredSongs.length === 0 && (
         <p className="text-center text-warning">
           No hay canciones disponibles
