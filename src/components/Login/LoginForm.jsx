@@ -13,23 +13,23 @@ const LoginForm = () => {
     let errors = {};
 
     if (!values.username) {
-      errors.username = 'Username is required';
+      errors.username = "Username is required";
     }
 
     if (!values.password) {
-      errors.password = 'Password is required';
+      errors.password = "Password is required";
     } else if (values.password.length < 6) {
-      errors.password = 'Password must be at least 6 characters long';
+      errors.password = "Password must be at least 6 characters long";
     }
 
     return errors;
   };
 
   const handleLogin = async () => {
-      await login({ username: values.username, password: values.password });
-      navigate(PrivateRoutes.HOME, { replace: true });
+    await login({ username: values.username, password: values.password });
+    navigate(PrivateRoutes.HOME, { replace: true });
   };
-  
+
   const { values, errors, handleChange, handleSubmit, getRef } = useForm(
     initialState,
     handleLogin,
@@ -48,7 +48,7 @@ const LoginForm = () => {
             </label>
             <input
               type="text"
-              className="form-control bg-transparent text-light border border-success "
+              className="form-control input-color "
               id="inputUsername"
               name="username"
               placeholder="Nombre de usuario"
@@ -56,7 +56,9 @@ const LoginForm = () => {
               onChange={handleChange}
               ref={getRef("username")}
             />
-            {errors.username&&(<div className="text-danger mb-3">{errors.username}</div>)}
+            {errors.username && (
+              <div className="text-danger mb-3">{errors.username}</div>
+            )}
           </div>
 
           <div className="mb-3">
@@ -65,7 +67,7 @@ const LoginForm = () => {
             </label>
             <input
               type="password"
-              className="form-control bg-transparent text-light border border-success"
+              className="form-control input-color"
               id="inputPassword"
               name="password"
               placeholder="Contraseña"
@@ -73,12 +75,14 @@ const LoginForm = () => {
               onChange={handleChange}
               ref={getRef("password")}
             />
-            {errors.password&&(<div className="text-danger mb-3">{errors.password}</div>)}
+            {errors.password && (
+              <div className="text-danger mb-3">{errors.password}</div>
+            )}
           </div>
-          <button type="submit" className="btn btn-outline-success w-100">
+          <button type="submit" className="btn btn-primary w-100">
             Iniciar Sesión
           </button>
-          {fetchError&&(<div className="text-danger mb-3">{fetchError}</div>)}
+          {fetchError && <div className="text-danger mb-3">{fetchError}</div>}
         </form>
       )}
     </>

@@ -54,7 +54,10 @@ const AllSongList = () => {
     return <p className="text-warning">Error al cargar las canciones.</p>;
 
   return (
-    <div>
+    <>
+      <h1 className="mb-4 mt-2 fw-bolder">
+        Biblioteca
+      </h1>
       <Search onSearch={handleSearch} />
       <SongList
         songs={filteredSongs}
@@ -67,7 +70,7 @@ const AllSongList = () => {
           No hay canciones disponibles
         </p>
       )}
-    </div>
+    </>
   );
 };
 
