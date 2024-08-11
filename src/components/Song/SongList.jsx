@@ -31,7 +31,7 @@ const SongList = ({ songs = [], lastElementRef = null, onDelete }) => {
   return (
     <div
       className="overflow-auto bg-black bg-gradient container-fluid rounded px-0"
-      style={{ maxHeight: "calc(70vh - 70px)" }}
+      style={{ maxHeight: "calc(80vh - 70px)" }}
     >
       <table
         className="table table-borderless  table-hover table-responsive w-100"
