@@ -161,6 +161,7 @@ const Song = ({
                   className="bi bi-three-dots fs-6"
                   ref={iconRef}
                   onClick={handleMenuClick}
+                  style={{cursor:"pointer"}}
                 ></i>
               )}
               <ul
