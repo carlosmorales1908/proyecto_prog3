@@ -14,7 +14,7 @@
 
 ## Instalación:
 
-Instruccinoes para ejectuar el proyecto localemnte:
+Instrucciones para ejectuar el proyecto localemnte:
 
 1. Clonar el repositorio:
 
@@ -28,13 +28,13 @@ $ git clone git@github.com:carlosmorales1908/proyecto_prog3.git
 cd tu-repositorio
 ```
 
-3. Instala las dependencias necsarias:
+3. Instalar las dependencias necesarias:
 
 ```markdown
 npm install
 ```
 
-4. Ejecuta la aplicación:
+4. Ejecutar la aplicación:
 
 ```markdown
 npm run dev
